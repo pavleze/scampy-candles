@@ -82,7 +82,6 @@
       const sel = isGift ? { pack: p.options[0].choices[0] } : {};   // packaging pre-selected
       let qty = 1;
       let missing = [];     // required options still to pick
-      let lightboxAt = 0;
       let showDedication = false;
 
       root.innerHTML = `
@@ -110,50 +109,48 @@
 
       // ----- gallery -----
       const slides = () => {
-        if (p.images?.length) return p.images.map((src) => ({ img: src, label: 'Fotografija' }));
-        return isGift
-          ? [{ view: 'plain', label: 'Samo sveća' }, { view: 'tulle', label: 'U tilu' }, { view: 'box', label: 'U kartonskoj kutijici' }]
-          : [{ view: 'plain', label: 'Sveća' }];
+        if (p.images?.length) return p.images.map((src) => ({ img: src, label: p.name }));
+        // Placeholder pictures until real photos are added (5 per candle).
+        return [
+          { view: 'plain', label: 'Samo sveća' }, { view: 'tulle', label: 'U tilu' },
+          { view: 'box', label: 'U kartonskoj kutijici' }, { view: 'duo', label: 'Dva komada' },
+          { view: 'close', label: 'Detalj' },
+        ];
       };
-      const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(p.name)}" loading="lazy">` : SC.packSVG(p, sel, s.view));
-      // With illustrations, each tile is also a packaging choice.
-      const choiceForView = (view) => {
-        const re = { plain: /samo/i, tulle: /til/i, box: /kutij/i }[view];
-        return p.options?.find((o) => o.key === 'pack')?.choices.find((c) => re.test(c));
-      };
+      const SHOWN = 5;
+      const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(s.label)}" loading="lazy">` : SC.packSVG(p, sel, s.view));
       const renderGallery = () => {
         const list = slides();
-        $('#pdp-bento').className = `bento bento--${Math.min(list.length, 4)}`;
-        $('#pdp-bento').innerHTML = list.map((s, i) => {
-          const choice = !s.img && isGift ? choiceForView(s.view) : null;
-          const active = choice && sel.pack === choice;
-          return `
-            <button type="button" class="tile${active ? ' is-active' : ''}" style="--tone:${p.color}" data-tile="${i}"
-              aria-label="${esc(s.label)}"${choice ? ` aria-pressed="${!!active}"` : ''}>
-              ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
-              ${slideHTML(s)}
-              ${isGift && !s.img ? `<span class="tile__cap">${esc(s.label)}</span>` : ''}
-              ${active ? '<span class="tile__check" aria-hidden="true">✓</span>' : ''}
-            </button>`;
-        }).join('');
+        const shown = list.slice(0, SHOWN);
+        const more = list.length - SHOWN;
+        $('#pdp-bento').className = `bento bento--${shown.length}`;
+        $('#pdp-bento').innerHTML = shown.map((s, i) => `
+          <button type="button" class="tile" style="--tone:${p.color}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
+            ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
+            ${slideHTML(s)}
+            ${more > 0 && i === SHOWN - 1 ? `<span class="tile__more">+${more}</span>` : ''}
+          </button>`).join('');
       };
 
-      // Lightbox for real photos
+      // Lightbox
+      let lightboxAt = 0;
       const lightbox = document.createElement('div');
       lightbox.className = 'lightbox';
       lightbox.hidden = true;
-      lightbox.innerHTML = '<button type="button" class="lightbox__close" aria-label="Zatvori">×</button><button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="Prethodna">‹</button><img alt=""><button type="button" class="lightbox__nav lightbox__nav--next" aria-label="Sledeća">›</button>';
+      lightbox.innerHTML = '<button type="button" class="lightbox__close" aria-label="Zatvori">×</button><button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="Prethodna">‹</button><div class="lightbox__stage"></div><button type="button" class="lightbox__nav lightbox__nav--next" aria-label="Sledeća">›</button>';
       document.body.appendChild(lightbox);
       const showLightbox = (i) => {
         const list = slides();
         lightboxAt = (i + list.length) % list.length;
-        $('img', lightbox).src = list[lightboxAt].img;
+        const stage = $('.lightbox__stage', lightbox);
+        stage.style.setProperty('--tone', p.color);
+        stage.innerHTML = slideHTML(list[lightboxAt]);
         lightbox.hidden = false;
       };
       lightbox.addEventListener('click', (e) => {
         if (e.target.closest('.lightbox__nav--prev')) showLightbox(lightboxAt - 1);
         else if (e.target.closest('.lightbox__nav--next')) showLightbox(lightboxAt + 1);
-        else if (e.target === lightbox || e.target.closest('.lightbox__close')) lightbox.hidden = true;
+        else if (!e.target.closest('.lightbox__stage')) lightbox.hidden = true;
       });
       document.addEventListener('keydown', (e) => {
         if (lightbox.hidden) return;
@@ -224,13 +221,7 @@
         const qs = e.target.closest('[data-qset]');
         if (qs) return setQty(Number(qs.dataset.qset));
         const tile = e.target.closest('[data-tile]');
-        if (tile) {
-          const s = slides()[Number(tile.dataset.tile)];
-          if (s.img) return showLightbox(Number(tile.dataset.tile));
-          const choice = isGift && choiceForView(s.view);
-          if (choice) { sel.pack = choice; renderOpts(); renderGallery(); }
-          return;
-        }
+        if (tile) return showLightbox(Number(tile.dataset.tile));
         if (e.target.closest('[data-ded]')) {
           showDedication = true;
           renderOpts();

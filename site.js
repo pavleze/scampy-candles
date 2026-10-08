@@ -178,6 +178,13 @@
   function packSVG(p, opts = {}, view = 'plain') {
     const fig = productSVG(p, opts);
     if (view === 'plain' || !p.shape) return fig;
+    if (view === 'duo') {
+      const at = (x) => fig.replace('<svg ', `<svg x="${x}" y="28" width="62" height="62" `);
+      return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="96" rx="48" ry="4" fill="rgba(0,0,0,.08)"/>${at(2)}${at(56)}</svg>`;
+    }
+    if (view === 'close') {
+      return `<svg viewBox="0 0 120 120" aria-hidden="true">${fig.replace('<svg ', '<svg x="-26" y="-22" width="172" height="172" ')}</svg>`;
+    }
     const ribbon = optHex(p, 'ribbon', opts.ribbon) || '#d4b062';
     const inner = fig.replace('<svg ', '<svg x="22" y="6" width="76" height="76" ');
     const front = view === 'box'

@@ -22,7 +22,7 @@
 
   // Options a customer picks on a gift candle's page.
   const GIFT_OPTIONS = [
-    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: ['Kartonsko pakovanje', 'Pakovanje u tilu'] },
+    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: ['Samo sveća', 'U tilu', 'U kartonskoj kutijici'] },
     { key: 'color',      label: 'Boja sveće',    type: 'swatch', choices: COLORS },
     { key: 'scent',      label: 'Miris',         type: 'choice', choices: GIFT_SCENTS },
     { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 60, placeholder: 'npr. Hvala što ste bili deo našeg dana' },

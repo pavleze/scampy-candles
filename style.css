@@ -887,3 +887,5 @@ a.btn.is-disabled { opacity: .4; pointer-events: none; }
   .qty--lg button { width: 38px; }
   .qty--lg input { width: 48px; }
 }
+
+@media (max-width: 480px) { .seg button { font-size: .88rem; padding: 10px 4px; line-height: 1.2; } }

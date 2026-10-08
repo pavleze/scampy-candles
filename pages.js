@@ -116,7 +116,7 @@
       const slides = () => {
         if (p.images?.length) return p.images.map((src) => ({ img: src, label: 'Fotografija' }));
         return isGift
-          ? [{ view: 'plain', label: 'Sveća' }, { view: 'box', label: 'Kartonsko pakovanje' }, { view: 'tulle', label: 'Pakovanje u tilu' }]
+          ? [{ view: 'plain', label: 'Samo sveća' }, { view: 'tulle', label: 'U tilu' }, { view: 'box', label: 'U kartonskoj kutijici' }]
           : [{ view: 'plain', label: 'Sveća' }];
       };
       const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(p.name)}">` : SC.packSVG(p, sel, s.view));
@@ -202,7 +202,10 @@
           sel[opt.dataset.opt] = opt.dataset.val;
           missing = missing.filter((k) => k !== opt.dataset.opt);
           // Show the matching packaging picture
-          if (opt.dataset.opt === 'pack' && !p.images?.length) slide = /karton/i.test(opt.dataset.val) ? 1 : 2;
+          if (opt.dataset.opt === 'pack' && !p.images?.length) {
+            const view = /kutij/i.test(opt.dataset.val) ? 'box' : /til/i.test(opt.dataset.val) ? 'tulle' : 'plain';
+            slide = Math.max(0, slides().findIndex((s) => s.view === view));
+          }
           renderOpts();
           renderArt();
           return;

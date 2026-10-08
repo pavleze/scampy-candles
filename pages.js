@@ -78,26 +78,29 @@
       $('#crumb-name').textContent = p.name;
 
       const MAX = SC.MAX_QTY;
-      const sel = {};            // chosen options
+      const isGift = !!p.options;
+      const sel = isGift ? { pack: p.options[0].choices[0] } : {};   // packaging pre-selected
       let qty = 1;
-      let missing = [];          // option keys the customer still has to pick
-      const meta = [p.family, p.size].filter(Boolean).join(' · ');
+      let missing = [];     // required options still to pick
+      let slide = 0;
+      let showDedication = false;
 
       root.innerHTML = `
-        <div class="pdp__media" style="--tone:${p.color}">
-          ${p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
-          <div id="pdp-art" style="display:contents"></div>
+        <div class="pdp__gallery">
+          <div class="pdp__media" style="--tone:${p.color}">
+            ${p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
+            <div id="pdp-art" style="display:contents"></div>
+          </div>
+          <div class="pdp__thumbs" id="pdp-thumbs"></div>
         </div>
         <div class="pdp__info">
-          <p class="eyebrow">${meta}</p>
           <h1 class="pdp__name">${p.name}</h1>
           <div id="pdp-price"></div>
-          <p class="pdp__desc">${p.desc}</p>
-          ${p.options ? '<div id="pdp-opts"></div>' : `
+          ${isGift ? '<div id="pdp-opts"></div>' : `
+            <p class="pdp__desc">${p.desc}</p>
             <dl class="notes">
               ${Object.entries(p.notes || {}).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
               ${p.burn ? `<div><dt>Vreme gorenja</dt><dd>oko ${p.burn} sati</dd></div>` : ''}
-              <div><dt>Vosak</dt><dd>100% sojin, pamučni fitilj</dd></div>
             </dl>`}
           <div class="pdp__buy">
             <div class="qty qty--lg">
@@ -105,56 +108,73 @@
               <input type="number" id="pdp-qty" inputmode="numeric" min="1" max="${MAX}" value="1" aria-label="Količina">
               <button type="button" data-q="1" aria-label="Više">+</button>
             </div>
-            <button class="btn btn--solid" id="pdp-add" type="button">Dodaj u korpu</button>
+            <button class="btn btn--solid" id="pdp-add" type="button"></button>
           </div>
-          ${p.bulkMin ? `<div class="quick" aria-label="Brz izbor količine">${[10, 25, p.bulkMin, 100].map((n) => `<button type="button" class="chip" data-qset="${n}">${n} kom</button>`).join('')}</div>` : ''}
-          <p class="muted pdp__ship">Dostava 2–3 radna dana · besplatna preko ${money(SC.FREE_OVER)}</p>
         </div>`;
 
-      const renderArt = () => { $('#pdp-art').innerHTML = SC.productSVG(p, sel); };
+      // ----- gallery -----
+      const slides = () => {
+        if (p.images?.length) return p.images.map((src) => ({ img: src, label: 'Fotografija' }));
+        return isGift
+          ? [{ view: 'plain', label: 'Sveća' }, { view: 'box', label: 'Kartonsko pakovanje' }, { view: 'tulle', label: 'Pakovanje u tilu' }]
+          : [{ view: 'plain', label: 'Sveća' }];
+      };
+      const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(p.name)}">` : SC.packSVG(p, sel, s.view));
+      const renderArt = () => {
+        const list = slides();
+        slide = Math.min(slide, list.length - 1);
+        $('#pdp-art').innerHTML = slideHTML(list[slide]);
+        $('#pdp-thumbs').innerHTML = list.length < 2 ? '' : list.map((s, i) => `
+          <button type="button" class="thumb${i === slide ? ' is-active' : ''}" data-slide="${i}" style="--tone:${p.color}" aria-label="${s.label}" aria-pressed="${i === slide}">${slideHTML(s)}</button>`).join('');
+      };
 
+      // ----- price + button -----
       const renderPrice = () => {
         const inCart = SC.cartSummary().perProduct[p.id] || 0;
         const eff = qty + inCart;
         const unit = SC.unitPrice(p, eff);
         const total = Math.round(unit * qty * 100) / 100;
-        let html = `<p class="pdp__price">${money(unit)}${p.bulkMin ? ' <small>po komadu</small>' : ''}</p>`;
+        let html = `<p class="pdp__price">${money(unit)} <small>/ kom</small></p>`;
         if (p.bulkMin) {
-          html += `
-            <div class="tiers">
-              <div class="${eff < p.bulkMin ? 'is-on' : ''}"><span>1–${p.bulkMin - 1} kom</span><strong>${money(SC.unitPrice(p, 1))}</strong></div>
-              <div class="${eff >= p.bulkMin ? 'is-on' : ''}"><span>${p.bulkMin}+ kom</span><strong>${money(p.price)}</strong></div>
-            </div>
-            <p class="pdp__hint">${eff < p.bulkMin
-              ? `Poruči još ${p.bulkMin - eff} kom za cenu od ${money(p.price)} po komadu.`
-              : 'Imaš cenu na veliko 🐾'}${inCart ? ` U korpi već imaš ${inCart} kom.` : ''}</p>`;
+          const need = p.bulkMin - inCart;
+          html += eff < p.bulkMin
+            ? `<p class="pdp__tier">${money(p.price)} / kom od ${p.bulkMin} kom · <button type="button" class="linkbtn" data-qset="${need}">podesi na ${need}</button></p>`
+            : '<p class="pdp__tier is-on">Cena na veliko ✓</p>';
         }
-        html += `<p class="pdp__total">Ukupno za ${qty} kom: <strong>${money(total)}</strong></p>`;
         $('#pdp-price').innerHTML = html;
+        $('#pdp-add').textContent = `Dodaj u korpu · ${money(total)}`;
       };
 
+      // ----- options -----
+      const swatchGroup = (o) => `<div class="opt__chips">${o.choices.map((c) => `
+        <button type="button" class="swatch${sel[o.key] === c.name ? ' is-active' : ''}" style="--sw:${c.hex}" data-opt="${o.key}" data-val="${esc(c.name)}" aria-label="${esc(c.name)}" aria-pressed="${sel[o.key] === c.name}" title="${esc(c.name)}"></button>`).join('')}</div>`;
+
       const renderOpts = () => {
-        if (!p.options) return;
+        if (!isGift) return;
         $('#pdp-opts').innerHTML = p.options.map((o) => {
           const err = missing.includes(o.key);
-          let control = '';
-          if (o.type === 'choice') {
-            control = `<div class="opt__chips">${o.choices.map((c) =>
-              `<button type="button" class="chip${sel[o.key] === c ? ' is-active' : ''}" data-opt="${o.key}" data-val="${esc(c)}" aria-pressed="${sel[o.key] === c}">${esc(c)}</button>`).join('')}</div>`;
+          let control;
+          let shown = '';
+          if (o.type === 'choice' && o.choices.length <= 3) {
+            control = `<div class="seg">${o.choices.map((c) =>
+              `<button type="button" class="${sel[o.key] === c ? 'is-active' : ''}" data-opt="${o.key}" data-val="${esc(c)}" aria-pressed="${sel[o.key] === c}">${esc(c)}</button>`).join('')}</div>`;
+          } else if (o.type === 'choice') {
+            control = `<select class="opt__select" data-select="${o.key}" aria-label="${o.label}">
+              <option value="">Izaberi…</option>
+              ${o.choices.map((c) => `<option value="${esc(c)}"${sel[o.key] === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>`;
           } else if (o.type === 'swatch') {
-            control = `<div class="opt__chips">${o.choices.map((c) =>
-              `<button type="button" class="swatch${sel[o.key] === c.name ? ' is-active' : ''}" style="--sw:${c.hex}" data-opt="${o.key}" data-val="${esc(c.name)}" aria-label="${esc(c.name)}" aria-pressed="${sel[o.key] === c.name}" title="${esc(c.name)}"></button>`).join('')}</div>`;
+            control = swatchGroup(o);
+            shown = sel[o.key] || '';
+          } else if (showDedication || sel[o.key]) {
+            control = `<input class="opt__text" type="text" id="opt-${o.key}" maxlength="${o.maxLength}" placeholder="${esc(o.placeholder || '')}" value="${esc(sel[o.key] || '')}">`;
           } else {
-            control = `<input class="opt__text" type="text" id="opt-${o.key}" maxlength="${o.maxLength}" placeholder="${esc(o.placeholder || '')}" value="${esc(sel[o.key] || '')}">
-              <span class="opt__count"><span id="opt-${o.key}-n">${(sel[o.key] || '').length}</span>/${o.maxLength}</span>`;
+            return `<div class="opt opt--inline"><button type="button" class="linkbtn" data-ded>＋ Dodaj posvetu</button></div>`;
           }
-          const shown = o.type === 'text' ? (o.optional ? '(nije obavezno)' : '') : (sel[o.key] || '');
           return `
-            <fieldset class="opt${err ? ' has-error' : ''}" data-group="${o.key}">
-              <legend>${o.label} <span class="opt__val">${esc(shown)}</span></legend>
+            <div class="opt${err ? ' has-error' : ''}">
+              <div class="opt__label">${o.label}${shown ? ` <span class="opt__val">· ${esc(shown)}</span>` : ''}${err ? ' <span class="opt__err">· izaberi</span>' : ''}</div>
               ${control}
-              ${err ? `<p class="opt__err">Izaberi: ${o.label.toLowerCase()}</p>` : ''}
-            </fieldset>`;
+            </div>`;
         }).join('');
       };
 
@@ -169,23 +189,32 @@
         if (q) return setQty(qty + Number(q.dataset.q));
         const qs = e.target.closest('[data-qset]');
         if (qs) return setQty(Number(qs.dataset.qset));
+        const sl = e.target.closest('[data-slide]');
+        if (sl) { slide = Number(sl.dataset.slide); return renderArt(); }
+        if (e.target.closest('[data-ded]')) {
+          showDedication = true;
+          renderOpts();
+          return $('#opt-dedication')?.focus();
+        }
 
         const opt = e.target.closest('[data-opt]');
         if (opt) {
           sel[opt.dataset.opt] = opt.dataset.val;
           missing = missing.filter((k) => k !== opt.dataset.opt);
+          // Show the matching packaging picture
+          if (opt.dataset.opt === 'pack' && !p.images?.length) slide = /karton/i.test(opt.dataset.val) ? 1 : 2;
           renderOpts();
           renderArt();
           return;
         }
 
         if (e.target.closest('#pdp-add')) {
-          if (p.options) {
+          if (isGift) {
             missing = p.options.filter((o) => !o.optional && !sel[o.key]).map((o) => o.key);
             if (missing.length) {
               renderOpts();
               $('.opt.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              SC.toast('Izaberi sve opcije pre dodavanja u korpu');
+              SC.toast('Izaberi označene opcije');
               return;
             }
           }
@@ -204,12 +233,18 @@
           const n = Math.floor(Number(e.target.value));
           if (n >= 1) { qty = Math.min(MAX, n); renderPrice(); }
         } else if (e.target.matches('.opt__text')) {
-          const key = e.target.id.replace('opt-', '');
-          sel[key] = e.target.value;
-          $(`#opt-${key}-n`).textContent = e.target.value.length;
+          sel[e.target.id.replace('opt-', '')] = e.target.value;
         }
       });
-      root.addEventListener('change', (e) => { if (e.target.id === 'pdp-qty') setQty(Number(e.target.value)); });
+      root.addEventListener('change', (e) => {
+        if (e.target.id === 'pdp-qty') setQty(Number(e.target.value));
+        const s = e.target.closest('[data-select]');
+        if (s) {
+          sel[s.dataset.select] = s.value;
+          missing = missing.filter((k) => k !== s.dataset.select);
+          renderOpts();
+        }
+      });
 
       const related = $('#related');
       const renderRelated = () => {

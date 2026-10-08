@@ -35,6 +35,9 @@
     id, name, shape, price, color, bulkMin: 50,
     category: 'pokloncici', family: 'Poklončić', size: '',
     desc: GIFT_DESC, options: GIFT_OPTIONS,
+    // Real photos: put files in assets/products/ and list them here, e.g.
+    // images: ['assets/products/mali-meda-1.jpg', 'assets/products/mali-meda-2.jpg']
+    images: [],
   });
 
   const PRODUCTS = [
@@ -171,6 +174,28 @@
     ? giftSVG(p.shape, optHex(p, 'color', opts.color) || p.color, optHex(p, 'ribbon', opts.ribbon) || '#d4b062')
     : candleSVG(p.color));
 
+  // The figurine shown inside its packaging (view: 'plain' | 'box' | 'tulle').
+  function packSVG(p, opts = {}, view = 'plain') {
+    const fig = productSVG(p, opts);
+    if (view === 'plain' || !p.shape) return fig;
+    const ribbon = optHex(p, 'ribbon', opts.ribbon) || '#d4b062';
+    const inner = fig.replace('<svg ', '<svg x="22" y="6" width="76" height="76" ');
+    const front = view === 'box'
+      ? `<path d="M22 62h76l-4 42H26Z" fill="#c9a77c" stroke="rgba(0,0,0,.18)"/>
+         <path d="M22 62h76v7H22Z" fill="#b8935f" stroke="rgba(0,0,0,.18)"/>
+         <rect x="44" y="80" width="32" height="14" rx="2" fill="rgba(255,255,255,.8)"/>
+         <circle cx="60" cy="87" r="3.5" fill="#c2a67b"/>`
+      : `<path d="M28 58Q60 48 92 58L80 100Q60 108 40 100Z" fill="rgba(255,255,255,.6)" stroke="rgba(0,0,0,.16)"/>
+         <path d="M40 66l6 30M60 62v38M80 66l-6 30" stroke="rgba(0,0,0,.08)" fill="none"/>
+         <path d="M60 100l-13-8v16ZM60 100l13-8v16Z" fill="${ribbon}" stroke="rgba(0,0,0,.14)"/><circle cx="60" cy="100" r="4" fill="${ribbon}" stroke="rgba(0,0,0,.14)"/>`;
+    return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="110" rx="36" ry="4" fill="rgba(0,0,0,.08)"/>${inner}${front}</svg>`;
+  }
+
+  // Photo if the product has one, otherwise the illustration.
+  const mediaHTML = (p) => (p.images?.length
+    ? `<img src="${esc(p.images[0])}" alt="${esc(p.name)}" loading="lazy">`
+    : productSVG(p));
+
   // "Pakovanje: Kartonsko pakovanje", "Posveta: „…“" …
   const describeOpts = (p, opts = {}) => (p.options || [])
     .filter((o) => opts[o.key])
@@ -183,7 +208,7 @@
     <article class="card">
       <a class="card__media" href="proizvod.html?id=${p.id}" style="--tone:${p.color}" aria-label="${esc(p.name)}">
         ${p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
-        ${productSVG(p)}
+        ${mediaHTML(p)}
       </a>
       <div class="card__body">
         <p class="card__family">${meta}</p>
@@ -489,7 +514,7 @@
 
   window.SC = {
     PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
-    money, shippingFor, unitPrice, candleSVG, productSVG, describeOpts, cardHTML,
+    money, shippingFor, unitPrice, candleSVG, productSVG, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,

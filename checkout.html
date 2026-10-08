@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/seal.png">
+  <title>Plaćanje · Scampy Candles</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="checkout">
+  <header class="header" id="site-header"></header>
+
+  <main>
+    <section class="page-head">
+      <p class="eyebrow">Poručivanje</p>
+      <h1 class="page-head__title">Podaci za dostavu</h1>
+    </section>
+
+    <section class="notfound" id="checkout-empty" hidden>
+      <p>Tvoja korpa je prazna.</p>
+      <a class="btn btn--solid" href="prodavnica.html">Nazad u prodavnicu</a>
+    </section>
+
+    <section class="checkout" id="checkout-wrap">
+      <form class="form" id="checkout-form" novalidate>
+        <fieldset>
+          <legend>Kontakt</legend>
+          <div class="row">
+            <div class="field"><label for="f-first">Ime</label><input id="f-first" name="firstName" required autocomplete="given-name"></div>
+            <div class="field"><label for="f-last">Prezime</label><input id="f-last" name="lastName" required autocomplete="family-name"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required autocomplete="email"></div>
+            <div class="field"><label for="f-phone">Telefon</label><input id="f-phone" name="phone" type="tel" required pattern="[0-9 +\(\)\/\-]{6,}" title="Unesi broj telefona, npr. 060 123 4567" autocomplete="tel"></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Adresa dostave</legend>
+          <div class="field"><label for="f-address">Ulica i broj</label><input id="f-address" name="address" required autocomplete="street-address"></div>
+          <div class="row">
+            <div class="field"><label for="f-zip">Poštanski broj</label><input id="f-zip" name="zip" required inputmode="numeric" pattern="[0-9]{5}" title="Poštanski broj ima 5 cifara" autocomplete="postal-code"></div>
+            <div class="field"><label for="f-city">Grad</label><input id="f-city" name="city" required autocomplete="address-level2"></div>
+          </div>
+          <p class="muted hint">Za sada dostavljamo samo na teritoriji Srbije.</p>
+          <div class="field"><label for="f-note">Napomena (nije obavezno)</label><textarea id="f-note" name="note" rows="3"></textarea></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Način plaćanja</legend>
+          <label class="pay">
+            <input type="radio" name="payment" value="pouzecem" checked>
+            <span>
+              <strong>Plaćanje pouzećem</strong>
+              <small>Plaćaš kuriru gotovinom prilikom preuzimanja paketa.</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <button class="btn btn--solid btn--block btn--lg" type="submit">Potvrdi porudžbinu</button>
+        <p class="muted hint center">Klikom na dugme potvrđuješ porudžbinu. Ništa ne plaćaš unapred.</p>
+      </form>
+
+      <aside class="summary" aria-label="Pregled porudžbine">
+        <h2>Tvoja porudžbina</h2>
+        <div id="sum-items"></div>
+        <dl class="totals">
+          <div><dt>Međuzbir</dt><dd id="sum-sub"></dd></div>
+          <div><dt>Dostava</dt><dd id="sum-ship"></dd></div>
+          <div class="totals__grand"><dt>Ukupno</dt><dd id="sum-total"></dd></div>
+        </dl>
+        <p class="muted hint">Plaćaš pri preuzimanju.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer" id="site-footer"></footer>
+  <script src="site.js"></script>
+  <script src="pages.js"></script>
+</body>
+</html>

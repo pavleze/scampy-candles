@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/seal.png">
+  <title>Prodavnica · Scampy Candles</title>
+  <meta name="description" content="Sve Scampy sveće na jednom mestu: cvetne, slatke, drvenaste i sveže.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="shop">
+  <header class="header" id="site-header"></header>
+
+  <main>
+    <section class="page-head">
+      <p class="eyebrow">Prodavnica</p>
+      <h1 class="page-head__title">Sve sveće</h1>
+      <p class="muted">Ručno sipane, sa sojinim voskom i pamučnim fitiljem.</p>
+    </section>
+
+    <section class="section section--flush">
+      <div class="filters" id="filters" role="group" aria-label="Filter">
+        <button type="button" class="chip is-active" data-filter="all">Sve</button>
+        <button type="button" class="chip" data-filter="Cvetno">Cvetno</button>
+        <button type="button" class="chip" data-filter="Slatko">Slatko</button>
+        <button type="button" class="chip" data-filter="Drvenasto">Drvenasto</button>
+        <button type="button" class="chip" data-filter="Svež">Sveže</button>
+      </div>
+      <p class="muted center result-count" id="result-count" aria-live="polite"></p>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden>Nema rezultata. Probaj drugu reč.</p>
+    </section>
+  </main>
+
+  <footer class="footer" id="site-footer"></footer>
+  <script src="site.js"></script>
+  <script src="pages.js"></script>
+</body>
+</html>

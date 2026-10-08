@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/seal.png">
+  <title>Hvala · Scampy Candles</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="thanks">
+  <header class="header" id="site-header"></header>
+
+  <main>
+    <section class="page-head">
+      <img class="thanks__seal" src="assets/seal.png" alt="" width="96" height="96">
+      <p class="eyebrow">Porudžbina primljena</p>
+      <h1 class="page-head__title">Hvala ti!</h1>
+      <p class="muted">Broj porudžbine: <strong id="order-id"></strong></p>
+      <p class="muted">Potvrdu šaljemo na <span id="order-email"></span>. Paket stiže za 2–3 radna dana, a plaćaš kuriru pouzećem.</p>
+    </section>
+
+    <section class="thanks">
+      <div class="summary">
+        <h2>Pregled</h2>
+        <div id="order-items"></div>
+        <dl class="totals">
+          <div><dt>Međuzbir</dt><dd id="order-sub"></dd></div>
+          <div><dt>Dostava</dt><dd id="order-ship"></dd></div>
+          <div class="totals__grand"><dt>Za plaćanje pouzećem</dt><dd id="order-total"></dd></div>
+        </dl>
+      </div>
+      <div class="summary">
+        <h2>Adresa dostave</h2>
+        <p id="order-address"></p>
+        <p class="center thanks__cta"><a class="btn btn--solid" href="prodavnica.html">Nastavi kupovinu</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="site-footer"></footer>
+  <script src="site.js"></script>
+  <script src="pages.js"></script>
+</body>
+</html>

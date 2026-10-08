@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/seal.png">
+  <title>Kontakt · Scampy Candles</title>
+  <meta name="description" content="Pišite nam: pitanja o porudžbinama, poklon paketima i saradnji.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="contact">
+  <header class="header" id="site-header"></header>
+
+  <main>
+    <section class="page-head">
+      <p class="eyebrow">Kontakt</p>
+      <h1 class="page-head__title">Javi nam se</h1>
+      <p class="muted">Pitanja o porudžbini, poklon paketi ili saradnja. Odgovaramo u roku od jednog radnog dana.</p>
+    </section>
+
+    <section class="contact">
+      <div class="contact__info">
+        <h2>Podaci</h2>
+        <p><strong>Email</strong><br><a href="mailto:hello@scampycandles.com">hello@scampycandles.com</a></p>
+        <p><strong>Telefon</strong><br>+381 60 000 0000</p>
+        <p><strong>Radno vreme</strong><br>Pon–Pet, 10–18h</p>
+        <p><strong>Instagram</strong><br><a href="#">@scampycandles</a></p>
+      </div>
+
+      <div>
+        <form class="form" id="contact-form">
+          <div class="field"><label for="c-name">Ime</label><input id="c-name" name="name" required autocomplete="name"></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="c-msg">Poruka</label><textarea id="c-msg" name="message" rows="6" required></textarea></div>
+          <button class="btn btn--solid" type="submit">Pošalji poruku</button>
+        </form>
+        <p class="newsletter__ok" id="contact-ok" hidden>Hvala na poruci! Javljamo se uskoro 🐾</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="site-footer"></footer>
+  <script src="site.js"></script>
+  <script src="pages.js"></script>
+</body>
+</html>

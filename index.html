@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Scampy Candles</title>
+  <link rel="icon" href="assets/seal.png">
+  <title>Scampy Candles · Ručno rađene sojine sveće</title>
   <meta name="description" content="Ručno rađene sojine sveće. Pawsitively handcrafted, with love.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>try { if (sessionStorage.getItem('sc.seen')) document.documentElement.classList.add('seen'); } catch (e) {}</script>
 </head>
-<body class="is-loading">
+<body class="is-loading" data-page="home">
 
+  <!-- Loader: plays once per browser session -->
   <div id="loader" role="status" aria-live="polite" aria-label="Loading">
     <div class="loader__inner">
       <img class="loader__seal" src="assets/seal.png" alt="" width="270" height="270">
@@ -25,58 +28,17 @@
     <p class="loader__est">est 2025</p>
   </div>
 
-  <!-- ================= Header ================= -->
-  <header class="header" id="header">
-    <div class="header__bar">
-      <button class="icon-btn menu-btn" id="menu-btn" aria-label="Meni" aria-expanded="false" aria-controls="nav">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
+  <header class="header" id="site-header"></header>
 
-      <a class="brand" href="#pocetna" aria-label="Scampy Candles – početna">
-        <img src="assets/seal.png" alt="" width="34" height="34">
-        <span>Scampy Candles</span>
-      </a>
-
-      <nav class="nav" id="nav" aria-label="Glavni meni">
-        <a href="#pocetna">Početna</a>
-        <a href="#prodavnica">Prodavnica</a>
-        <a href="#o-nama">O nama</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-
-      <div class="header__actions">
-        <div class="currency" role="group" aria-label="Valuta">
-          <button type="button" data-currency="EUR" class="is-active">EUR</button>
-          <button type="button" data-currency="RSD">RSD</button>
-        </div>
-
-        <button class="icon-btn" id="search-btn" aria-label="Pretraga" aria-expanded="false" aria-controls="search">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
-        </button>
-
-        <button class="icon-btn cart-btn" id="cart-btn" aria-label="Korpa">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-          <span class="cart-count" id="cart-count" hidden>0</span>
-        </button>
-      </div>
-    </div>
-
-    <form class="search" id="search" role="search" hidden>
-      <input type="search" id="search-input" placeholder="Pretraži sveće (npr. lavanda, vanila…)" aria-label="Pretraga" autocomplete="off">
-    </form>
-  </header>
-
-  <main id="site">
-
-    <!-- ================= Hero ================= -->
-    <section class="hero" id="pocetna">
+  <main>
+    <section class="hero">
       <div class="hero__text">
         <p class="eyebrow">Nova kolekcija · Jesen 2025</p>
         <h2 class="hero__title">Pawsitively<br><em>handcrafted</em></h2>
         <p class="hero__lead">Sojine sveće, ručno sipane u malim serijama, sa mirisima koji greju dom. Deo svake prodaje ide azilima za napuštene životinje.</p>
         <div class="hero__cta">
-          <a class="btn btn--solid" href="#prodavnica">Pogledaj prodavnicu</a>
-          <a class="btn btn--ghost" href="#o-nama">Naša priča</a>
+          <a class="btn btn--solid" href="prodavnica.html">Pogledaj prodavnicu</a>
+          <a class="btn btn--ghost" href="o-nama.html">Naša priča</a>
         </div>
       </div>
       <div class="hero__art" aria-hidden="true">
@@ -86,7 +48,6 @@
       </div>
     </section>
 
-    <!-- ================= Features ================= -->
     <section class="features" aria-label="Zašto Scampy">
       <div><strong>100% sojin vosak</strong><span>Čisto sagorevanje, bez parafina</span></div>
       <div><strong>Ručno sipano</strong><span>Male serije, velika pažnja</span></div>
@@ -94,27 +55,16 @@
       <div><strong>Dostava 2–3 dana</strong><span>Besplatna preko 40 €</span></div>
     </section>
 
-    <!-- ================= Shop ================= -->
-    <section class="section" id="prodavnica">
+    <section class="section">
       <header class="section__head">
-        <p class="eyebrow">Prodavnica</p>
+        <p class="eyebrow">Izdvajamo</p>
         <h2 class="section__title">Omiljene sveće</h2>
       </header>
-
-      <div class="filters" id="filters" role="group" aria-label="Filter">
-        <button type="button" class="chip is-active" data-filter="all">Sve</button>
-        <button type="button" class="chip" data-filter="Cvetno">Cvetno</button>
-        <button type="button" class="chip" data-filter="Slatko">Slatko</button>
-        <button type="button" class="chip" data-filter="Drvenasto">Drvenasto</button>
-        <button type="button" class="chip" data-filter="Svež">Sveže</button>
-      </div>
-
-      <div class="grid" id="grid"></div>
-      <p class="empty" id="empty" hidden>Nema rezultata. Probaj drugu reč.</p>
+      <div class="grid" id="featured"></div>
+      <p class="center"><a class="btn btn--ghost" href="prodavnica.html">Sve sveće</a></p>
     </section>
 
-    <!-- ================= Story / About ================= -->
-    <section class="story" id="o-nama">
+    <section class="story story--compact">
       <div class="story__art" aria-hidden="true">
         <div class="paw">
           <svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="14" cy="28" rx="7" ry="9" transform="rotate(-18 14 28)"/><ellipse cx="26" cy="15" rx="7" ry="10" transform="rotate(-6 26 15)"/><ellipse cx="40" cy="15" rx="7" ry="10" transform="rotate(6 40 15)"/><ellipse cx="52" cy="28" rx="7" ry="9" transform="rotate(18 52 28)"/><path d="M32 30c-9 0-17 9-17 17 0 6 4 9 9 9 3 0 5-1 8-1s5 1 8 1c5 0 9-3 9-9 0-8-8-17-17-17Z"/></svg>
@@ -123,17 +73,11 @@
       <div class="story__text">
         <p class="eyebrow">O nama</p>
         <h2 class="section__title">Sveće sa srcem (i šapom)</h2>
-        <p>Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom po imenu Scampy. Dok je on čuvao stražu, nastale su prve sveće.</p>
-        <p>Danas svaku sveću i dalje ručno sipamo, sa sojinim voskom, pamučnim fitiljem i mirisima koje smo sami birali. Zato svaka ima malo drugačiji karakter.</p>
-        <ul class="stats">
-          <li><strong>1.200+</strong><span>prodatih sveća</span></li>
-          <li><strong>6</strong><span>autorskih mirisa</span></li>
-          <li><strong>5%</strong><span>za azile</span></li>
-        </ul>
+        <p>Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom. Danas svaku sveću i dalje ručno sipamo, sa mirisima koje smo sami birali.</p>
+        <p><a class="link" href="o-nama.html">Pročitaj celu priču →</a></p>
       </div>
     </section>
 
-    <!-- ================= Testimonials ================= -->
     <section class="section section--tint" aria-label="Utisci">
       <header class="section__head">
         <p class="eyebrow">Utisci</p>
@@ -146,7 +90,6 @@
       </div>
     </section>
 
-    <!-- ================= Newsletter ================= -->
     <section class="newsletter">
       <h2 class="section__title">Budi u toku</h2>
       <p>Prijavi se i dobij 10% popusta na prvu porudžbinu.</p>
@@ -156,58 +99,12 @@
       </form>
       <p class="newsletter__ok" id="newsletter-ok" hidden>Hvala! Javljamo se uskoro 🐾</p>
     </section>
-
   </main>
 
-  <!-- ================= Footer / Contact ================= -->
-  <footer class="footer" id="kontakt">
-    <div class="footer__grid">
-      <div>
-        <p class="footer__brand">Scampy Candles</p>
-        <p class="muted">Pawsitively handcrafted, with love.</p>
-      </div>
-      <div>
-        <h3>Kontakt</h3>
-        <p><a href="mailto:hello@scampycandles.com">hello@scampycandles.com</a></p>
-        <p>+381 60 000 0000</p>
-        <p class="muted">Pon–Pet, 10–18h</p>
-      </div>
-      <div>
-        <h3>Pratite nas</h3>
-        <p><a href="#">Instagram</a></p>
-        <p><a href="#">TikTok</a></p>
-        <p><a href="#">Facebook</a></p>
-      </div>
-      <div>
-        <h3>Informacije</h3>
-        <p><a href="#">Dostava i plaćanje</a></p>
-        <p><a href="#">Povraćaj</a></p>
-        <p><a href="#">Uslovi korišćenja</a></p>
-      </div>
-    </div>
-    <p class="footer__copy">© 2025 Scampy Candles · est 2025</p>
-  </footer>
-
-  <!-- ================= Cart drawer ================= -->
-  <div class="overlay" id="overlay" hidden></div>
-  <aside class="drawer" id="drawer" aria-label="Korpa" aria-hidden="true">
-    <div class="drawer__head">
-      <h2>Tvoja korpa</h2>
-      <button class="icon-btn" id="drawer-close" aria-label="Zatvori">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
-      </button>
-    </div>
-    <div class="drawer__items" id="drawer-items"></div>
-    <div class="drawer__foot">
-      <div class="drawer__total"><span>Ukupno</span><strong id="drawer-total">0</strong></div>
-      <button class="btn btn--solid btn--block" id="checkout" type="button">Poruči</button>
-      <p class="muted drawer__note">Mock korpa. Plaćanje još nije povezano.</p>
-    </div>
-  </aside>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="footer" id="site-footer"></footer>
 
   <script src="script.js"></script>
-  <script src="app.js"></script>
+  <script src="site.js"></script>
+  <script src="pages.js"></script>
 </body>
 </html>

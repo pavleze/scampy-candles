@@ -1,6 +1,16 @@
 (() => {
   const MIN_VISIBLE_MS = 3000; // loader stays at least this long so the animation can play
   const loader = document.getElementById('loader');
+  if (!loader) return;
+
+  // Already played this session: skip straight to the site.
+  if (document.documentElement.classList.contains('seen')) {
+    loader.remove();
+    document.body.classList.remove('is-loading');
+    return;
+  }
+  try { sessionStorage.setItem('sc.seen', '1'); } catch { /* ignore */ }
+
   const bar = document.getElementById('loader-progress');
   const start = performance.now();
 

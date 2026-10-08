@@ -929,11 +929,6 @@ a.btn.is-disabled { opacity: .4; pointer-events: none; }
 .bento--3 .tile:first-child { grid-row: 1 / 3; }
 .bento--3 .tile svg { width: 74%; }
 .bento--3 .tile:first-child svg { width: 62%; }
-/* 4+: wide hero tile, then a grid */
-.bento--4 { grid-template-columns: 1fr 1fr; }
-.bento--4 .tile { aspect-ratio: 1; }
-.bento--4 .tile:first-child { grid-column: 1 / 3; aspect-ratio: 4 / 3; }
-
 /* Lightbox (real photos) */
 .lightbox {
   position: fixed; inset: 0; z-index: 90;
@@ -949,28 +944,65 @@ a.btn.is-disabled { opacity: .4; pointer-events: none; }
 .lightbox__nav--next { right: 4px; }
 .tile__cap { max-width: calc(100% - 20px); line-height: 1.3; }
 
-/* ---------- Gallery: 5 pictures ---------- */
-.bento--5 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); aspect-ratio: 1; }
-.bento--5 .tile:first-child { grid-column: 1 / 3; grid-row: 1 / 3; }
-.bento--5 .tile svg { width: 88%; }
-.bento--5 .tile:first-child svg { width: 66%; }
-.tile__more {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  background: rgba(20, 15, 8, .5); color: #fff;
-  font-size: 1.5rem; letter-spacing: .06em;
-}
-.tile { cursor: zoom-in; }
-
-@media (max-width: 820px) {
-  /* one big picture, the rest in a row beneath */
-  .bento--5 { grid-template-rows: auto; aspect-ratio: auto; }
-  .bento--5 .tile { aspect-ratio: 1; }
-  .bento--5 .tile:first-child { grid-column: 1 / -1; grid-row: auto; }
-  .bento--5 .tile svg { width: 90%; }
-  .bento--5 .tile:first-child svg { width: 62%; }
-}
-
 .lightbox__stage { display: grid; place-items: center; background: color-mix(in srgb, var(--tone, #eee) 28%, #fff); }
 .lightbox__stage svg { width: min(86vw, 620px); height: auto; padding: 8%; }
 .lightbox__stage img { max-width: 92vw; max-height: 88vh; width: auto; height: auto; object-fit: contain; }
+
+/* ---------- Gallery mosaic (4–6 pictures) ---------- */
+
+.pdp__gallery { position: sticky; }
+.bento--4, .bento--5, .bento--6 {
+  grid-template-columns: 1fr 1fr .8fr;
+  grid-template-rows: 1.2fr .95fr .85fr;
+  aspect-ratio: 2.8 / 3;
+}
+/* hero spans 2×2; the rest fill around it */
+.bento--4 .tile:nth-child(1), .bento--5 .tile:nth-child(1), .bento--6 .tile:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; }
+.bento--4 .tile:nth-child(2), .bento--5 .tile:nth-child(2), .bento--6 .tile:nth-child(2) { grid-column: 3; grid-row: 1; }
+.bento--4 .tile:nth-child(3), .bento--5 .tile:nth-child(3), .bento--6 .tile:nth-child(3) { grid-column: 3; grid-row: 2; }
+.bento--4 .tile:nth-child(4) { grid-column: 1 / 4; grid-row: 3; }
+.bento--5 .tile:nth-child(4) { grid-column: 1; grid-row: 3; }
+.bento--5 .tile:nth-child(5) { grid-column: 2 / 4; grid-row: 3; }
+.bento--6 .tile:nth-child(4) { grid-column: 1; grid-row: 3; }
+.bento--6 .tile:nth-child(5) { grid-column: 2; grid-row: 3; }
+.bento--6 .tile:nth-child(6) { grid-column: 3; grid-row: 3; }
+
+.bento--4 .tile svg, .bento--5 .tile svg, .bento--6 .tile svg { width: 78%; }
+.bento--4 .tile:first-child svg, .bento--5 .tile:first-child svg, .bento--6 .tile:first-child svg { width: 64%; }
+
+.tile { border-radius: 8px; box-shadow: 0 0 0 0 rgba(60, 40, 10, 0); transition: box-shadow .3s, transform .3s var(--ease); }
+.tile:hover { box-shadow: 0 10px 28px rgba(60, 40, 10, .14); transform: translateY(-2px); }
+
+/* staggered entrance, first render only */
+.bento--intro .tile { animation: tile-in .7s var(--ease) backwards; animation-delay: calc(var(--i) * 80ms); }
+@keyframes tile-in { from { opacity: 0; transform: translateY(18px) scale(.98); } }
+
+.bento__count { display: none; }
+
+@media (min-width: 821px) {
+  .pdp { grid-template-columns: 1.25fr 1fr; }
+}
+
+/* phones: swipeable strip, one big picture at a time */
+@media (max-width: 820px) {
+  .bento, .bento--2, .bento--3, .bento--4, .bento--5, .bento--6 {
+    display: flex; aspect-ratio: auto;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    gap: 8px; margin-inline: -24px; padding-inline: 24px;
+    scroll-padding-inline: 24px; scrollbar-width: none;
+  }
+  .bento::-webkit-scrollbar { display: none; }
+  .bento .tile, .bento .tile:nth-child(n) {
+    flex: 0 0 84%; aspect-ratio: 1; grid-area: auto;
+    scroll-snap-align: start;
+  }
+  .bento--1 .tile { flex-basis: 100%; }
+  .bento .tile svg, .bento .tile:first-child svg { width: 70%; }
+  .bento__count {
+    display: block; position: absolute; right: 12px; bottom: 12px;
+    background: rgba(255, 255, 255, .92); padding: 2px 11px;
+    font-size: .8rem; letter-spacing: .1em; border-radius: 999px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) { .bento--intro .tile { animation: none; } .tile { transition: none; } }

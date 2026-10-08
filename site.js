@@ -182,6 +182,10 @@
       const at = (x) => fig.replace('<svg ', `<svg x="${x}" y="28" width="62" height="62" `);
       return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="96" rx="48" ry="4" fill="rgba(0,0,0,.08)"/>${at(2)}${at(56)}</svg>`;
     }
+    if (view === 'trio') {
+      const at = (x, y) => fig.replace('<svg ', `<svg x="${x}" y="${y}" width="52" height="52" `);
+      return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="100" rx="50" ry="4" fill="rgba(0,0,0,.08)"/>${at(34, 20)}${at(6, 52)}${at(62, 52)}</svg>`;
+    }
     if (view === 'close') {
       return `<svg viewBox="0 0 120 120" aria-hidden="true">${fig.replace('<svg ', '<svg x="-26" y="-22" width="172" height="172" ')}</svg>`;
     }

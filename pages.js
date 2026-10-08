@@ -87,6 +87,7 @@
       root.innerHTML = `
         <div class="pdp__gallery">
           <div class="bento" id="pdp-bento"></div>
+          <span class="bento__count" id="pdp-count" aria-hidden="true"></span>
         </div>
         <div class="pdp__info">
           <h1 class="pdp__name">${p.name}</h1>
@@ -110,27 +111,38 @@
       // ----- gallery -----
       const slides = () => {
         if (p.images?.length) return p.images.map((src) => ({ img: src, label: p.name }));
-        // Placeholder pictures until real photos are added (5 per candle).
+        // Placeholder pictures until real photos are added (6 per candle).
         return [
           { view: 'plain', label: 'Samo sveća' }, { view: 'tulle', label: 'U tilu' },
           { view: 'box', label: 'U kartonskoj kutijici' }, { view: 'duo', label: 'Dva komada' },
-          { view: 'close', label: 'Detalj' },
+          { view: 'close', label: 'Detalj' }, { view: 'trio', label: 'Set' },
         ];
       };
-      const SHOWN = 5;
+      const SHOWN = 6;
+      let introPlayed = false;
       const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(s.label)}" loading="lazy">` : SC.packSVG(p, sel, s.view));
       const renderGallery = () => {
         const list = slides();
         const shown = list.slice(0, SHOWN);
         const more = list.length - SHOWN;
-        $('#pdp-bento').className = `bento bento--${shown.length}`;
+        $('#pdp-bento').className = `bento bento--${shown.length}${introPlayed ? '' : ' bento--intro'}`;
+        introPlayed = true;
+        $('#pdp-count').textContent = `1 / ${list.length}`;
         $('#pdp-bento').innerHTML = shown.map((s, i) => `
-          <button type="button" class="tile" style="--tone:${p.color}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
+          <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
             ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
             ${slideHTML(s)}
             ${more > 0 && i === SHOWN - 1 ? `<span class="tile__more">+${more}</span>` : ''}
           </button>`).join('');
       };
+
+      $('#pdp-bento').addEventListener('scroll', () => {
+        const el = $('#pdp-bento');
+        const tile = el.firstElementChild;
+        if (!tile) return;
+        const i = Math.round(el.scrollLeft / (tile.offsetWidth + 8));
+        $('#pdp-count').textContent = `${Math.min(i + 1, el.children.length)} / ${slides().length}`;
+      }, { passive: true });
 
       // Lightbox
       let lightboxAt = 0;

@@ -4,23 +4,65 @@
   const SHIPPING = 3.5;    // EUR
   const FREE_OVER = 40;    // EUR
 
+  const SMALL_ORDER_MARKUP = 1.10;   // gift candles cost 10% more below their bulk quantity
+
+  const COLORS = [
+    { name: 'Bela',   hex: '#f6f3ee' }, { name: 'Krem',   hex: '#eadfc8' },
+    { name: 'Roze',   hex: '#efc3cb' }, { name: 'Crvena', hex: '#c8444f' },
+    { name: 'Lila',   hex: '#c6b4df' }, { name: 'Plava',  hex: '#a9c4e4' },
+    { name: 'Zelena', hex: '#b4d3bc' }, { name: 'Žuta',   hex: '#f1dc8d' },
+  ];
+  const RIBBONS = [
+    { name: 'Bela',   hex: '#f6f3ee' }, { name: 'Zlatna', hex: '#d4b062' },
+    { name: 'Roze',   hex: '#efa3b4' }, { name: 'Crvena', hex: '#c8444f' },
+    { name: 'Lila',   hex: '#a98bd0' }, { name: 'Plava',  hex: '#7ea3d6' },
+    { name: 'Zelena', hex: '#7fb08f' }, { name: 'Crna',   hex: '#2b2b2b' },
+  ];
+  const GIFT_SCENTS = ['Lavanda', 'Vanila', 'Ruža', 'Eukaliptus', 'Cimet & jabuka', 'Cedar & ambra', 'Med'];
+
+  // Options a customer picks on a gift candle's page.
+  const GIFT_OPTIONS = [
+    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: ['Kartonsko pakovanje', 'Pakovanje u tilu'] },
+    { key: 'color',      label: 'Boja sveće',    type: 'swatch', choices: COLORS },
+    { key: 'scent',      label: 'Miris',         type: 'choice', choices: GIFT_SCENTS },
+    { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 60, placeholder: 'npr. Hvala što ste bili deo našeg dana' },
+    { key: 'ribbon',     label: 'Boja mašnice',  type: 'swatch', choices: RIBBONS },
+  ];
+
+  const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu biraš sam/a.';
+  // `price` is the per-piece price from `bulkMin` pieces up; below that it is 10% higher.
+  const gift = (id, name, shape, price, color) => ({
+    id, name, shape, price, color, bulkMin: 50,
+    category: 'pokloncici', family: 'Poklončić', size: '',
+    desc: GIFT_DESC, options: GIFT_OPTIONS,
+  });
+
   const PRODUCTS = [
-    { id: 1, name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,
+    gift(7,  'Mali meda',             'bear',       1.7, '#eadfc8'),
+    gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb'),
+    gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d'),
+    gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4'),
+    gift(11, 'Božur',                 'peony',      2.0, '#efc3cb'),
+    gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f'),
+    gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df'),
+
+    // Mock scented candles (placeholders until the real range is added)
+    { id: 1, category: 'mirisne', name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,
       desc: 'Smirujući miris lavande sa toplom notom domaćeg meda. Savršena za večernje opuštanje.',
       notes: { 'Gornje note': 'lavanda, bergamot', 'Srednje note': 'med, kamilica', 'Donje note': 'bela mošusna nota' } },
-    { id: 2, name: 'Vanila & Karamel',   family: 'Slatko',    size: '200 g', price: 15.9, color: '#ecd3a3', tag: 'Novo', burn: 45,
+    { id: 2, category: 'mirisne', name: 'Vanila & Karamel',   family: 'Slatko',    size: '200 g', price: 15.9, color: '#ecd3a3', tag: 'Novo', burn: 45,
       desc: 'Kremasta vanila i slani karamel. Miris kao iz kuhinje u kojoj se peku kolači.',
       notes: { 'Gornje note': 'mleko, šećer', 'Srednje note': 'vanila, karamel', 'Donje note': 'tonka pasulj' } },
-    { id: 3, name: 'Cedar & Amber',      family: 'Drvenasto', size: '300 g', price: 19.9, color: '#c9a77c', burn: 65,
+    { id: 3, category: 'mirisne', name: 'Cedar & Amber',      family: 'Drvenasto', size: '300 g', price: 19.9, color: '#c9a77c', burn: 65,
       desc: 'Duboka, topla drvenasta kompozicija. Dobro dođe u većim prostorijama i hladnim danima.',
       notes: { 'Gornje note': 'bors, citrus', 'Srednje note': 'cedar, ćilibar', 'Donje note': 'sandalovina' } },
-    { id: 4, name: 'Bela čaj ruža',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#efc9cf', burn: 45,
+    { id: 4, category: 'mirisne', name: 'Bela čaj ruža',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#efc9cf', burn: 45,
       desc: 'Nežna ruža sa belim čajem. Lagana, elegantna i nikad previše nametljiva.',
       notes: { 'Gornje note': 'beli čaj, pelargonija', 'Srednje note': 'ruža, božur', 'Donje note': 'mošus' } },
-    { id: 5, name: 'Eukaliptus & Mesec', family: 'Svež',      size: '200 g', price: 14.9, color: '#bcd5c7', burn: 45,
+    { id: 5, category: 'mirisne', name: 'Eukaliptus & Mesec', family: 'Svež',      size: '200 g', price: 14.9, color: '#bcd5c7', burn: 45,
       desc: 'Hladan eukaliptus i mirisni vazduh planinskog jutra. Čisti, sveži i bistri.',
       notes: { 'Gornje note': 'eukaliptus, nana', 'Srednje note': 'zeleni čaj', 'Donje note': 'bela šuma' } },
-    { id: 6, name: 'Cimet & Jabuka',     family: 'Slatko',    size: '300 g', price: 19.9, color: '#e0a98b', tag: 'Sezonski', burn: 65,
+    { id: 6, category: 'mirisne', name: 'Cimet & Jabuka',     family: 'Slatko',    size: '300 g', price: 19.9, color: '#e0a98b', tag: 'Sezonski', burn: 65,
       desc: 'Pečena jabuka, cimet i karanfilić. Jesen u tegli, dostupna samo ove sezone.',
       notes: { 'Gornje note': 'jabuka, narandža', 'Srednje note': 'cimet, karanfilić', 'Donje note': 'vanila' } },
   ];
@@ -36,7 +78,7 @@
 
   const state = {
     currency: store.get('sc.currency', 'EUR'),
-    cart: store.get('sc.cart', {}),   // { [id]: qty }
+    cart: store.get('sc.cart2', []),   // [{ key, id, qty, opts }]
   };
 
   const listeners = [];
@@ -49,6 +91,11 @@
     : `${Math.round(eur * RATE).toLocaleString('sr-RS')} RSD`;
 
   const shippingFor = (subtotal) => (subtotal === 0 || subtotal >= FREE_OVER ? 0 : SHIPPING);
+
+  // ---------- Pricing ----------
+  const round2 = (n) => Math.round(n * 100) / 100;
+  // Per-piece price for a product, given how many pieces of it are ordered in total.
+  const unitPrice = (p, qty) => (p.bulkMin && qty < p.bulkMin ? round2(p.price * SMALL_ORDER_MARKUP) : p.price);
 
   // ---------- Illustration ----------
   const candleSVG = (c) => `
@@ -63,46 +110,139 @@
       <circle cx="60" cy="85" r="4" fill="#c2a67b"/>
     </svg>`;
 
-  const cardHTML = (p) => `
+  // Simple figurine illustrations for the gift candles (placeholders until real photos).
+  const bow = (x, y, c) => `<path d="M${x} ${y}l-14-8v16ZM${x} ${y}l14-8v16Z" fill="${c}"/><circle cx="${x}" cy="${y}" r="4" fill="${c}"/>`;
+  const FACE = '<circle cx="50" cy="50" r="3" fill="#3b2f2a" stroke="none"/><circle cx="70" cy="50" r="3" fill="#3b2f2a" stroke="none"/><ellipse cx="60" cy="59" rx="4" ry="3" fill="#3b2f2a" stroke="none"/>';
+  const HEART = 'M60 104C20 76 20 40 44 38 54 37 60 44 60 50 60 44 66 37 76 38 100 40 100 76 60 104Z';
+
+  function giftSVG(shape, c = '#efc3cb', r = '#d4b062') {
+    let body = '';
+    switch (shape) {
+      case 'bear':
+      case 'bear-heart':
+        body = `<circle cx="36" cy="32" r="12" fill="${c}"/><circle cx="84" cy="32" r="12" fill="${c}"/>
+          <circle cx="36" cy="32" r="6" fill="rgba(255,255,255,.4)" stroke="none"/><circle cx="84" cy="32" r="6" fill="rgba(255,255,255,.4)" stroke="none"/>
+          <ellipse cx="60" cy="94" rx="28" ry="22" fill="${c}"/><circle cx="60" cy="54" r="28" fill="${c}"/>
+          <ellipse cx="60" cy="63" rx="12" ry="9" fill="rgba(255,255,255,.55)" stroke="none"/>${FACE}
+          ${shape === 'bear-heart' ? '<path d="M60 108C44 97 41 89 44 84 48 78 57 79 60 86 63 79 72 78 76 84 79 89 76 97 60 108Z" fill="rgba(255,255,255,.85)" stroke="none"/>' : ''}
+          ${bow(60, 79, r)}`;
+        break;
+      case 'lion': {
+        const tufts = Array.from({ length: 12 }, (_, i) => {
+          const a = (i / 12) * Math.PI * 2;
+          return `<circle cx="${(60 + Math.cos(a) * 34).toFixed(1)}" cy="${(56 + Math.sin(a) * 34).toFixed(1)}" r="10" fill="${c}"/>`;
+        }).join('');
+        body = `<ellipse cx="60" cy="100" rx="24" ry="16" fill="${c}"/>${tufts}
+          <circle cx="60" cy="56" r="38" fill="rgba(0,0,0,.16)" stroke="none"/><circle cx="60" cy="56" r="27" fill="${c}"/>
+          <ellipse cx="60" cy="64" rx="11" ry="8" fill="rgba(255,255,255,.55)" stroke="none"/>${FACE}${bow(60, 92, r)}`;
+        break;
+      }
+      case 'bubble': {
+        const dots = [56, 74, 92].flatMap((y) => [42, 60, 78].map((x) => `<circle cx="${x}" cy="${y}" r="9.5" fill="rgba(255,255,255,.35)"/>`)).join('');
+        body = `<path d="M60 14c4 6 6 9 6 12a6 6 0 0 1-12 0c0-3 2-6 6-12Z" fill="#f2c26b" stroke="none"/>
+          <rect x="28" y="40" width="64" height="62" rx="12" fill="${c}"/>${dots}${bow(88, 44, r)}`;
+        break;
+      }
+      case 'peony': {
+        const ring = (n, cy, rx, ry, off, fill) => Array.from({ length: n }, (_, i) =>
+          `<ellipse cx="60" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${(i * 360) / n + off} 60 62)" fill="${fill}"/>`).join('');
+        body = `${ring(8, 40, 13, 22, 0, c)}${ring(8, 46, 9, 15, 22.5, 'rgba(255,255,255,.3)')}
+          <circle cx="60" cy="62" r="9" fill="rgba(0,0,0,.14)" stroke="none"/>${bow(60, 100, r)}`;
+        break;
+      }
+      case 'heart':
+        body = `<path d="${HEART}" fill="${c}"/><ellipse cx="42" cy="54" rx="7" ry="12" transform="rotate(-30 42 54)" fill="rgba(255,255,255,.3)" stroke="none"/>
+          <text x="60" y="80" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="16" fill="rgba(255,255,255,.92)" stroke="none">A&amp;F</text>${bow(60, 40, r)}`;
+        break;
+      case 'diamond':
+        body = `<clipPath id="sc-heart-clip"><path d="${HEART}"/></clipPath><path d="${HEART}" fill="${c}"/>
+          <g clip-path="url(#sc-heart-clip)" stroke="rgba(255,255,255,.55)" stroke-width="1.2" fill="none">
+            <path d="M14 56H106M44 36L60 104M76 36L60 104M26 44L60 104M94 44L60 104M60 50V104M30 70H90"/></g>${bow(60, 40, r)}`;
+        break;
+      default:
+        return candleSVG(c);
+    }
+    return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="112" rx="34" ry="4" fill="rgba(0,0,0,.08)"/>
+      <g stroke="rgba(0,0,0,.14)" stroke-width="1" stroke-linejoin="round">${body}</g></svg>`;
+  }
+
+  const optHex = (p, key, name) => p.options?.find((o) => o.key === key)?.choices.find((c) => c.name === name)?.hex;
+  const productSVG = (p, opts = {}) => (p.shape
+    ? giftSVG(p.shape, optHex(p, 'color', opts.color) || p.color, optHex(p, 'ribbon', opts.ribbon) || '#d4b062')
+    : candleSVG(p.color));
+
+  // "Pakovanje: Kartonsko pakovanje", "Posveta: „…“" …
+  const describeOpts = (p, opts = {}) => (p.options || [])
+    .filter((o) => opts[o.key])
+    .map((o) => `${o.label}: ${o.type === 'text' ? `„${opts[o.key]}“` : opts[o.key]}`);
+
+  const cardHTML = (p) => {
+    const meta = [p.family, p.size].filter(Boolean).join(' · ');
+    const isGift = !!p.options;
+    return `
     <article class="card">
       <a class="card__media" href="proizvod.html?id=${p.id}" style="--tone:${p.color}" aria-label="${esc(p.name)}">
         ${p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
-        ${candleSVG(p.color)}
+        ${productSVG(p)}
       </a>
       <div class="card__body">
-        <p class="card__family">${p.family} · ${p.size}</p>
+        <p class="card__family">${meta}</p>
         <h3 class="card__name"><a href="proizvod.html?id=${p.id}">${p.name}</a></h3>
         <div class="card__row">
-          <span class="card__price">${money(p.price)}</span>
-          <button class="btn btn--small" type="button" data-add="${p.id}">Dodaj</button>
+          <span class="card__price">${money(unitPrice(p, 1))}${isGift ? `<small class="card__bulk">${money(p.price)} od ${p.bulkMin} kom</small>` : ''}</span>
+          ${isGift
+            ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberi</a>`
+            : `<button class="btn btn--small" type="button" data-add="${p.id}">Dodaj</button>`}
         </div>
       </div>
     </article>`;
+  };
 
   // ---------- Cart ----------
-  const saveCart = () => store.set('sc.cart', state.cart);
+  const saveCart = () => store.set('sc.cart2', state.cart);
+  const MAX_QTY = 999;
+  const lineKey = (id, opts) => `${id}|${JSON.stringify(Object.keys(opts).sort().map((k) => [k, opts[k]]))}`;
 
   function cartSummary() {
-    const rows = Object.entries(state.cart)
-      .map(([id, qty]) => ({ p: PRODUCTS.find((x) => x.id == id), qty }))
-      .filter((r) => r.p && r.qty > 0);
+    const lines = state.cart
+      .map((l) => ({ ...l, p: PRODUCTS.find((x) => x.id == l.id) }))
+      .filter((l) => l.p && l.qty > 0);
+    // Bulk pricing counts every variant of the same product together.
+    const perProduct = {};
+    lines.forEach((l) => { perProduct[l.id] = (perProduct[l.id] || 0) + l.qty; });
+    const rows = lines.map((l) => {
+      const unit = unitPrice(l.p, perProduct[l.id]);
+      return { ...l, unit, sum: round2(unit * l.qty) };
+    });
     const count = rows.reduce((n, r) => n + r.qty, 0);
-    const subtotal = rows.reduce((s, r) => s + r.qty * r.p.price, 0);
+    const subtotal = round2(rows.reduce((t, r) => t + r.sum, 0));
     const shipping = shippingFor(subtotal);
-    return { rows, count, subtotal, shipping, total: subtotal + shipping };
+    return { rows, count, subtotal, shipping, total: round2(subtotal + shipping), perProduct };
   }
 
-  function addToCart(id, qty = 1, { silent = false } = {}) {
-    state.cart[id] = (state.cart[id] || 0) + qty;
+  function addToCart(id, qty = 1, opts = {}) {
+    const key = lineKey(id, opts);
+    const line = state.cart.find((l) => l.key === key);
+    if (line) line.qty = Math.min(MAX_QTY, line.qty + qty);
+    else state.cart.push({ key, id: Number(id), qty: Math.min(MAX_QTY, qty), opts });
     saveCart();
     emit();
     const p = PRODUCTS.find((x) => x.id == id);
-    if (!silent && p) toast(`${p.name} je u korpi`);
+    if (p) toast(`${p.name} je u korpi`);
     const b = $('#cart-btn');
     if (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
   }
 
-  function clearCart() { state.cart = {}; saveCart(); emit(); }
+  function setQty(key, qty) {
+    const line = state.cart.find((l) => l.key === key);
+    if (!line) return;
+    line.qty = Math.min(MAX_QTY, Math.floor(qty) || 0);
+    if (line.qty <= 0) state.cart = state.cart.filter((l) => l.key !== key);
+    saveCart();
+    emit();
+  }
+
+  function clearCart() { state.cart = []; saveCart(); emit(); }
 
   // ---------- Toast ----------
   let toastTimer;
@@ -171,7 +311,7 @@
       </div>
       <div>
         <h3>Pratite nas</h3>
-        <p><a href="#">Instagram</a></p>
+        <p><a href="https://www.instagram.com/scampy_candles/" target="_blank" rel="noopener">Instagram</a></p>
         <p><a href="#">TikTok</a></p>
         <p><a href="#">Facebook</a></p>
       </div>
@@ -229,33 +369,43 @@
     $('#drawer-note').textContent = count === 0 ? ''
       : left > 0 ? `Još ${money(left)} do besplatne dostave.` : 'Imaš besplatnu dostavu 🐾';
 
-    itemsEl.innerHTML = rows.length ? rows.map(({ p, qty }) => `
-      <div class="line">
-        <div class="line__thumb" style="--tone:${p.color}">${candleSVG(p.color)}</div>
+    // Don't rebuild the list while the user is typing a quantity.
+    if (itemsEl.contains(document.activeElement) && document.activeElement.matches('[data-qty]')) return;
+
+    itemsEl.innerHTML = rows.length ? rows.map(({ p, qty, key, opts, unit, sum }) => {
+      const parts = describeOpts(p, opts);
+      return `
+      <div class="line" data-key="${esc(key)}">
+        <div class="line__thumb" style="--tone:${p.color}">${productSVG(p, opts)}</div>
         <div class="line__info">
           <a href="proizvod.html?id=${p.id}"><strong>${p.name}</strong></a>
-          <span class="muted">${p.size} · ${money(p.price)}</span>
+          ${parts.length ? `<span class="line__opts">${esc(parts.join(' · '))}</span>` : ''}
+          <span class="muted">${money(unit)} / kom</span>
           <div class="qty">
-            <button type="button" data-dec="${p.id}" aria-label="Manje">−</button>
-            <span>${qty}</span>
-            <button type="button" data-inc="${p.id}" aria-label="Više">+</button>
+            <button type="button" data-dec aria-label="Manje">−</button>
+            <input type="number" inputmode="numeric" min="1" max="${MAX_QTY}" value="${qty}" data-qty aria-label="Količina">
+            <button type="button" data-inc aria-label="Više">+</button>
           </div>
+          <button type="button" class="line__remove" data-remove>Ukloni</button>
         </div>
-        <div class="line__sum">${money(p.price * qty)}</div>
-      </div>`).join('')
+        <div class="line__sum">${money(sum)}</div>
+      </div>`;
+    }).join('')
       : '<p class="drawer__empty">Korpa je prazna.<br>Dodaj neku sveću 🕯️</p>';
   }
 
   itemsEl.addEventListener('click', (e) => {
-    const inc = e.target.closest('[data-inc]');
-    const dec = e.target.closest('[data-dec]');
-    if (inc) state.cart[inc.dataset.inc] += 1;
-    if (dec) {
-      const id = dec.dataset.dec;
-      state.cart[id] -= 1;
-      if (state.cart[id] <= 0) delete state.cart[id];
-    }
-    if (inc || dec) { saveCart(); emit(); }
+    const line = e.target.closest('.line');
+    if (!line) return;
+    const key = line.dataset.key;
+    const cur = state.cart.find((l) => l.key === key)?.qty || 0;
+    if (e.target.closest('[data-inc]')) setQty(key, cur + 1);
+    else if (e.target.closest('[data-dec]')) setQty(key, cur - 1);
+    else if (e.target.closest('[data-remove]')) setQty(key, 0);
+  });
+  itemsEl.addEventListener('change', (e) => {
+    const input = e.target.closest('[data-qty]');
+    if (input) setQty(input.closest('.line').dataset.key, Number(input.value));
   });
 
   function openCart() {
@@ -280,7 +430,10 @@
   // Any "Dodaj" button on any page
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-add]');
-    if (b) addToCart(b.dataset.add);
+    if (!b) return;
+    const p = PRODUCTS.find((x) => x.id == b.dataset.add);
+    if (p?.options) location.href = `proizvod.html?id=${p.id}`;   // needs choices first
+    else addToCart(p.id);
   });
 
   // ---------- Search ----------
@@ -336,8 +489,9 @@
 
   window.SC = {
     PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
-    money, shippingFor, candleSVG, cardHTML,
-    cartSummary, addToCart, clearCart, openCart, closeCart,
+    money, shippingFor, unitPrice, candleSVG, productSVG, describeOpts, cardHTML,
+    SMALL_ORDER_MARKUP, MAX_QTY,
+    cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,
     openSearch: (value) => toggleSearch(true, value),
     setSearchHandler: (fn) => { search.handler = fn; },

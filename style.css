@@ -889,3 +889,62 @@ a.btn.is-disabled { opacity: .4; pointer-events: none; }
 }
 
 @media (max-width: 480px) { .seg button { font-size: .88rem; padding: 10px 4px; line-height: 1.2; } }
+
+/* ---------- Product gallery: bento tiles ---------- */
+
+.bento { display: grid; gap: 8px; }
+.tile {
+  position: relative;
+  display: grid; place-items: center;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--tone) 28%, #fff);
+  outline: 2px solid transparent; outline-offset: -2px;
+  transition: outline-color .2s;
+}
+.tile svg { width: 68%; transition: transform .5s var(--ease); }
+.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.tile:hover svg { transform: scale(1.06); }
+.tile:hover img { transform: scale(1.04); }
+.tile.is-active { outline-color: var(--ink); }
+.tile__cap {
+  position: absolute; left: 10px; bottom: 10px;
+  background: rgba(255, 255, 255, .92);
+  padding: 3px 11px;
+  font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.tile__check {
+  position: absolute; top: 10px; right: 10px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  font-size: .8rem; line-height: 24px; text-align: center;
+}
+
+/* 1 photo: a single square */
+.bento--1 .tile { aspect-ratio: 1; }
+/* 2: side by side */
+.bento--2 { grid-template-columns: 1fr 1fr; }
+.bento--2 .tile { aspect-ratio: 3 / 4; }
+/* 3: one tall tile + two stacked */
+.bento--3 { grid-template-columns: 1.35fr 1fr; grid-template-rows: 1fr 1fr; aspect-ratio: 1 / 1.02; }
+.bento--3 .tile:first-child { grid-row: 1 / 3; }
+.bento--3 .tile svg { width: 74%; }
+.bento--3 .tile:first-child svg { width: 62%; }
+/* 4+: wide hero tile, then a grid */
+.bento--4 { grid-template-columns: 1fr 1fr; }
+.bento--4 .tile { aspect-ratio: 1; }
+.bento--4 .tile:first-child { grid-column: 1 / 3; aspect-ratio: 4 / 3; }
+
+/* Lightbox (real photos) */
+.lightbox {
+  position: fixed; inset: 0; z-index: 90;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(15, 11, 6, .9);
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: min(92vw, 1000px); max-height: 88vh; object-fit: contain; }
+.lightbox button { position: absolute; color: #fff; font-size: 2.4rem; line-height: 1; padding: 12px 18px; opacity: .8; }
+.lightbox button:hover { opacity: 1; }
+.lightbox__close { top: 8px; right: 8px; }
+.lightbox__nav--prev { left: 4px; }
+.lightbox__nav--next { right: 4px; }
+.tile__cap { max-width: calc(100% - 20px); line-height: 1.3; }

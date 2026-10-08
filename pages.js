@@ -82,16 +82,12 @@
       const sel = isGift ? { pack: p.options[0].choices[0] } : {};   // packaging pre-selected
       let qty = 1;
       let missing = [];     // required options still to pick
-      let slide = 0;
+      let lightboxAt = 0;
       let showDedication = false;
 
       root.innerHTML = `
         <div class="pdp__gallery">
-          <div class="pdp__media" style="--tone:${p.color}">
-            ${p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
-            <div id="pdp-art" style="display:contents"></div>
-          </div>
-          <div class="pdp__thumbs" id="pdp-thumbs"></div>
+          <div class="bento" id="pdp-bento"></div>
         </div>
         <div class="pdp__info">
           <h1 class="pdp__name">${p.name}</h1>
@@ -119,14 +115,52 @@
           ? [{ view: 'plain', label: 'Samo sveća' }, { view: 'tulle', label: 'U tilu' }, { view: 'box', label: 'U kartonskoj kutijici' }]
           : [{ view: 'plain', label: 'Sveća' }];
       };
-      const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(p.name)}">` : SC.packSVG(p, sel, s.view));
-      const renderArt = () => {
-        const list = slides();
-        slide = Math.min(slide, list.length - 1);
-        $('#pdp-art').innerHTML = slideHTML(list[slide]);
-        $('#pdp-thumbs').innerHTML = list.length < 2 ? '' : list.map((s, i) => `
-          <button type="button" class="thumb${i === slide ? ' is-active' : ''}" data-slide="${i}" style="--tone:${p.color}" aria-label="${s.label}" aria-pressed="${i === slide}">${slideHTML(s)}</button>`).join('');
+      const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(p.name)}" loading="lazy">` : SC.packSVG(p, sel, s.view));
+      // With illustrations, each tile is also a packaging choice.
+      const choiceForView = (view) => {
+        const re = { plain: /samo/i, tulle: /til/i, box: /kutij/i }[view];
+        return p.options?.find((o) => o.key === 'pack')?.choices.find((c) => re.test(c));
       };
+      const renderGallery = () => {
+        const list = slides();
+        $('#pdp-bento').className = `bento bento--${Math.min(list.length, 4)}`;
+        $('#pdp-bento').innerHTML = list.map((s, i) => {
+          const choice = !s.img && isGift ? choiceForView(s.view) : null;
+          const active = choice && sel.pack === choice;
+          return `
+            <button type="button" class="tile${active ? ' is-active' : ''}" style="--tone:${p.color}" data-tile="${i}"
+              aria-label="${esc(s.label)}"${choice ? ` aria-pressed="${!!active}"` : ''}>
+              ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
+              ${slideHTML(s)}
+              ${isGift && !s.img ? `<span class="tile__cap">${esc(s.label)}</span>` : ''}
+              ${active ? '<span class="tile__check" aria-hidden="true">✓</span>' : ''}
+            </button>`;
+        }).join('');
+      };
+
+      // Lightbox for real photos
+      const lightbox = document.createElement('div');
+      lightbox.className = 'lightbox';
+      lightbox.hidden = true;
+      lightbox.innerHTML = '<button type="button" class="lightbox__close" aria-label="Zatvori">×</button><button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="Prethodna">‹</button><img alt=""><button type="button" class="lightbox__nav lightbox__nav--next" aria-label="Sledeća">›</button>';
+      document.body.appendChild(lightbox);
+      const showLightbox = (i) => {
+        const list = slides();
+        lightboxAt = (i + list.length) % list.length;
+        $('img', lightbox).src = list[lightboxAt].img;
+        lightbox.hidden = false;
+      };
+      lightbox.addEventListener('click', (e) => {
+        if (e.target.closest('.lightbox__nav--prev')) showLightbox(lightboxAt - 1);
+        else if (e.target.closest('.lightbox__nav--next')) showLightbox(lightboxAt + 1);
+        else if (e.target === lightbox || e.target.closest('.lightbox__close')) lightbox.hidden = true;
+      });
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') lightbox.hidden = true;
+        if (e.key === 'ArrowLeft') showLightbox(lightboxAt - 1);
+        if (e.key === 'ArrowRight') showLightbox(lightboxAt + 1);
+      });
 
       // ----- price + button -----
       const renderPrice = () => {
@@ -189,8 +223,14 @@
         if (q) return setQty(qty + Number(q.dataset.q));
         const qs = e.target.closest('[data-qset]');
         if (qs) return setQty(Number(qs.dataset.qset));
-        const sl = e.target.closest('[data-slide]');
-        if (sl) { slide = Number(sl.dataset.slide); return renderArt(); }
+        const tile = e.target.closest('[data-tile]');
+        if (tile) {
+          const s = slides()[Number(tile.dataset.tile)];
+          if (s.img) return showLightbox(Number(tile.dataset.tile));
+          const choice = isGift && choiceForView(s.view);
+          if (choice) { sel.pack = choice; renderOpts(); renderGallery(); }
+          return;
+        }
         if (e.target.closest('[data-ded]')) {
           showDedication = true;
           renderOpts();
@@ -201,13 +241,8 @@
         if (opt) {
           sel[opt.dataset.opt] = opt.dataset.val;
           missing = missing.filter((k) => k !== opt.dataset.opt);
-          // Show the matching packaging picture
-          if (opt.dataset.opt === 'pack' && !p.images?.length) {
-            const view = /kutij/i.test(opt.dataset.val) ? 'box' : /til/i.test(opt.dataset.val) ? 'tulle' : 'plain';
-            slide = Math.max(0, slides().findIndex((s) => s.view === view));
-          }
           renderOpts();
-          renderArt();
+          renderGallery();
           return;
         }
 
@@ -257,7 +292,7 @@
       };
 
       subscribe(() => { renderPrice(); renderRelated(); });
-      renderArt();
+      renderGallery();
       renderOpts();
       renderPrice();
       renderRelated();

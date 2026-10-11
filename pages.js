@@ -160,6 +160,35 @@
       }, { passive: true });
       phone.addEventListener('change', () => { bentoEl.scrollLeft = 0; renderGallery(); });
 
+      // ----- price list window: your own picture if there is one, otherwise a table -----
+      const slug = (str) => str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/&/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const priceImg = `assets/cenovnik/${slug(p.name)}.jpg`;
+      const priceModal = document.createElement('div');
+      priceModal.className = 'modal';
+      priceModal.hidden = true;
+      priceModal.innerHTML = `<div class="modal__box" role="dialog" aria-modal="true" aria-label="Cene po količini">
+        <button type="button" class="modal__close" aria-label="Zatvori">×</button>
+        <h3 class="modal__title">Cene po komadu · ${p.name}</h3>
+        <div class="modal__body"></div></div>`;
+      document.body.appendChild(priceModal);
+      const priceTable = () => {
+        const rows = [[`${MIN}–${p.bulkMin - 1} kom`, SC.unitPrice(p, MIN)], [`${p.bulkMin}+ kom`, p.price]];
+        return `<table class="ptable"><thead><tr><th>Količina</th><th>Cena po komadu</th></tr></thead><tbody>
+          ${rows.map(([q, v]) => `<tr><td>${q}</td><td><strong>${money(v)}</strong></td></tr>`).join('')}</tbody></table>
+          <p class="opt__help">Cena važi za sva pakovanja.</p>`;
+      };
+      const openPrices = () => {
+        const body = $('.modal__body', priceModal);
+        body.innerHTML = priceTable();
+        priceModal.hidden = false;
+        const img = new Image();                                  // a picture in assets/cenovnik/ replaces the table
+        img.onload = () => { if (!priceModal.hidden) body.innerHTML = `<img class="modal__img" src="${priceImg}" alt="Cene po količini">`; };
+        img.src = priceImg;
+      };
+      priceModal.addEventListener('click', (e) => { if (e.target === priceModal || e.target.closest('.modal__close')) priceModal.hidden = true; });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') priceModal.hidden = true; });
+      subscribe(() => { if (!priceModal.hidden && !$('.modal__img', priceModal)) $('.modal__body', priceModal).innerHTML = priceTable(); });
+
       // Lightbox
       let lightboxAt = 0;
       const lightbox = document.createElement('div');
@@ -195,10 +224,7 @@
         const total = Math.round(unit * qty * 100) / 100;
         let html = `<p class="pdp__price">${money(unit)} <small>/ kom</small></p>`;
         if (p.bulkMin) {
-          const need = p.bulkMin - inCart;
-          html += eff < p.bulkMin
-            ? `<p class="pdp__tier">${money(p.price)} / kom od ${p.bulkMin} kom · <button type="button" class="linkbtn" data-qset="${need}">podesi na ${need}</button></p>`
-            : '<p class="pdp__tier is-on">Cena na veliko ✓</p>';
+          html += `<p class="pdp__tier${eff >= p.bulkMin ? ' is-on' : ''}">${eff >= p.bulkMin ? 'Cena na veliko ✓' : 'Sa većom količinom cena po komadu je manja'} · <button type="button" class="linkbtn" data-prices>pogledaj cene</button></p>`;
         }
         $('#pdp-price').innerHTML = html;
         $('#pdp-add').textContent = `Dodaj u korpu · ${money(total)}`;
@@ -260,6 +286,7 @@
       root.addEventListener('click', (e) => {
         const q = e.target.closest('[data-q]');
         if (q) return setQty(qty + Number(q.dataset.q));
+        if (e.target.closest('[data-prices]')) return openPrices();
         const qs = e.target.closest('[data-qset]');
         if (qs) return setQty(Number(qs.dataset.qset));
         const tile = e.target.closest('[data-tile]');

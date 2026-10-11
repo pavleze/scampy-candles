@@ -1097,3 +1097,16 @@ html { overflow-x: hidden; overscroll-behavior-x: none; }
 .seg.seg--4 button:nth-child(even) { border-left: 1px solid var(--line); }
 textarea.opt__text { resize: vertical; min-height: 84px; line-height: 1.4; }
 .opt__help { font-size: .88rem; color: var(--muted); margin-top: 4px; }
+
+/* ---------- Price list window ---------- */
+.modal { position: fixed; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(20, 15, 8, .55); }
+.modal[hidden] { display: none; }
+.modal__box { position: relative; width: min(460px, 100%); max-height: 90vh; overflow: auto; background: #fff; padding: 28px 24px 24px; }
+.modal__title { font-weight: 500; font-size: 1.5rem; line-height: 1.2; margin: 0 28px 16px 0; }
+.modal__close { position: absolute; top: 8px; right: 8px; width: 40px; height: 40px; font-size: 1.8rem; line-height: 1; color: var(--muted); }
+.modal__close:hover { color: var(--ink); }
+.modal__img { display: block; width: 100%; height: auto; }
+.ptable { width: 100%; border-collapse: collapse; }
+.ptable th { text-align: left; font-weight: 400; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; }
+.ptable td { padding: 12px 0; border-top: 1px solid var(--line); }
+.ptable td:last-child, .ptable th:last-child { text-align: right; }

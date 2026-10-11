@@ -90,7 +90,7 @@
     'Priča iza Scampy Candles: ručno rađene sojine sveće i dizajn od početka do kraja.': 'The story behind Scampy Candles: handmade soy candles and design from start to finish.',
 
     // ----- contact -----
-    'Za najbrže odgovore pišite nam na Instagramu.': 'For the fastest replies, message us on Instagram.', 'Pišite nam na Instagramu': 'Message us on Instagram',
+    'Za najbrže odgovore pišite nam na Instagramu -': 'For the fastest replies, message us on Instagram -',
     'Javite nam se': 'Get in touch', 'Pitanja o porudžbini, poklon paketi ili saradnja. Odgovaramo u roku od jednog radnog dana.': 'Questions about an order, gift packages or collaboration. We reply within one working day.',
     'Podaci': 'Details', 'Telefon': 'Phone', 'Radno vreme': 'Opening hours', 'Ime': 'Name', 'Poruka': 'Message',
     'Pošaljite poruku': 'Send message', 'Hvala na poruci! Javljamo se uskoro 🐾': 'Thank you for your message! We will be in touch soon 🐾',

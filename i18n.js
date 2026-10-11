@@ -91,11 +91,11 @@
 
     // ----- contact -----
     'Za najbrže odgovore pišite nam na Instagramu -': 'For the fastest replies, message us on Instagram -',
-    'Javite nam se': 'Get in touch', 'Pitanja o porudžbini, poklon paketi ili saradnja. Odgovaramo u roku od jednog radnog dana.': 'Questions about an order, gift packages or collaboration. We reply within one working day.',
+    'Javite nam se': 'Get in touch', 'Pitanja o porudžbini, poklončićima za goste ili saradnji. Odgovaramo u roku od jednog radnog dana.': 'Questions about an order, guest favours or collaboration. We reply within one working day.',
     'Podaci': 'Details', 'Telefon': 'Phone', 'Radno vreme': 'Opening hours', 'Ime': 'Name', 'Poruka': 'Message',
     'Pošaljite poruku': 'Send message', 'Hvala na poruci! Javljamo se uskoro 🐾': 'Thank you for your message! We will be in touch soon 🐾',
     'Kontakt · Scampy Candles': 'Contact · Scampy Candles',
-    'Pišite nam: pitanja o porudžbinama, poklon paketima i saradnji.': 'Write to us: questions about orders, gift packages and collaboration.',
+    'Pišite nam: pitanja o porudžbinama, poklončićima za goste i saradnji.': 'Write to us: questions about orders, guest favours and collaboration.',
 
     // ----- product page -----
     '/ kom': '/ pc', '/ po komadu': '/ per piece', 'od': 'from', 'Sa većom količinom cena po komadu je manja ·': 'The price per piece is lower with a larger quantity ·', 'Najniža cena ✓ ·': 'Lowest price ✓ ·',

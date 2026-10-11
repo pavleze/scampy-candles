@@ -1136,3 +1136,8 @@ textarea.opt__text { resize: vertical; min-height: 84px; line-height: 1.4; }
   .ptable th { font-size: .56rem; letter-spacing: .03em; overflow-wrap: anywhere; }
   .ptable th:first-child, .ptable td:first-child { padding-left: 8px; }
 }
+
+/* Quantity row sits inside the options, right under the packaging */
+.opt--qty { margin-top: 2px; }
+.pdp__buy .qty { margin: 0; }
+@media (max-width: 820px) { .pdp__buy .btn { width: 100%; } }

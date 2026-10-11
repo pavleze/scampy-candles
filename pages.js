@@ -99,14 +99,10 @@
               ${p.burn ? `<div><dt>Vreme gorenja</dt><dd>oko ${p.burn} sati</dd></div>` : ''}
             </dl>`}
           <div class="pdp__buy">
-            <div class="qty qty--lg">
-              <button type="button" data-q="-1" aria-label="Manje">−</button>
-              <input type="number" id="pdp-qty" inputmode="numeric" min="${MIN}" max="${MAX}" value="${MIN}" aria-label="Količina">
-              <button type="button" data-q="1" aria-label="Više">+</button>
-            </div>
+            ${isGift ? '' : '<div id="pdp-qty-slot"></div>'}
             <button class="btn btn--solid" id="pdp-add" type="button"></button>
           </div>
-          ${MIN > 1 ? `<p class="opt__help">Minimalna količina: ${MIN} kom po stavci.</p>` : ''}
+          ${MIN > 1 && !isGift ? `<p class="opt__help">Minimalna količina: ${MIN} kom po stavci.</p>` : ''}
         </div>`;
 
       // ----- gallery -----
@@ -239,6 +235,14 @@
       };
 
       // ----- options -----
+      const qtyControl = () => `<div class="qty qty--lg">
+          <button type="button" data-q="-1" aria-label="Manje">−</button>
+          <input type="number" id="pdp-qty" inputmode="numeric" min="${MIN}" max="${MAX}" value="${qty}" aria-label="Količina">
+          <button type="button" data-q="1" aria-label="Više">+</button>
+        </div>`;
+      // gift candles: the counter sits right under the packaging
+      const qtyRow = () => `<div class="opt opt--qty"><div class="opt__label">Količina${MIN > 1 ? ` <span class="opt__hint">· minimalno ${MIN} kom</span>` : ''}</div>${qtyControl()}</div>`;
+
       const swatchGroup = (o) => `<div class="opt__chips">${o.choices.map((c) => `
         <button type="button" class="swatch${sel[o.key] === c.name ? ' is-active' : ''}" style="--sw:${c.hex}" data-opt="${o.key}" data-val="${esc(c.name)}" aria-label="${esc(c.name)}" aria-pressed="${sel[o.key] === c.name}" title="${esc(c.name)}"></button>`).join('')}</div>`;
 
@@ -281,7 +285,7 @@
             <div class="opt${err ? ' has-error' : ''}">
               <div class="opt__label">${o.label}${shown ? ` <span class="opt__val">· ${esc(shown)}</span>` : ''}${err ? ` <span class="opt__err">· ${needsText && !missing.includes(o.key) ? 'upiši tekst posvete' : 'izaberi'}</span>` : ''}</div>
               ${control}
-            </div>`;
+            </div>${o.key === 'pack' ? qtyRow() : ''}`;
         }).join('');
       };
 
@@ -368,6 +372,7 @@
 
       subscribe(() => { renderPrice(); renderRelated(); });
       renderGallery();
+      if (!isGift) $('#pdp-qty-slot').innerHTML = qtyControl();   // other candles: counter next to the button
       renderOpts();
       renderPrice();
       renderRelated();

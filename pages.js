@@ -174,9 +174,15 @@
           const to = tiers[i + 1] ? tiers[i + 1].from - 1 : null;
           return { label: to ? `${from}–${to} kom` : `${from}+ kom`, qty: from };
         });
-        const packs = p.packPrices ? Object.keys(p.packPrices) : [null];
-        const head = packs.map((k) => `<th>${k ? esc(k) : 'Cena po komadu'}</th>`).join('');
-        const body = rows.map((r) => `<tr><td>${r.label}</td>${packs.map((k) => `<td><strong>${money(SC.unitPrice(p, r.qty, k))}</strong></td>`).join('')}</tr>`).join('');
+        // packagings with the same price share one column (e.g. "Kartončić sa posvetom / U tilu")
+        const groups = [];
+        Object.keys(p.packPrices || { x: 0 }).forEach((k) => {
+          const g = groups.find((x) => p.packPrices && x.price === p.packPrices[k]);
+          if (g) g.names.push(k);
+          else groups.push({ price: p.packPrices?.[k], names: [p.packPrices ? k : null], pack: k });
+        });
+        const head = groups.map((g) => `<th>${g.names[0] ? g.names.map(esc).join(' / ') : 'Cena po komadu'}</th>`).join('');
+        const body = rows.map((r) => `<tr><td>${r.label}</td>${groups.map((g) => `<td><strong>${money(SC.unitPrice(p, r.qty, p.packPrices ? g.pack : undefined))}</strong></td>`).join('')}</tr>`).join('');
         return `<div class="ptable-wrap"><table class="ptable"><thead><tr><th>Količina</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
           ${p.packPrices ? '' : '<p class="opt__help">Cena važi za sva pakovanja.</p>'}`;
       };

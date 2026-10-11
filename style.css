@@ -1147,3 +1147,8 @@ textarea.opt__text { min-height: 0; height: auto; resize: none; overflow: hidden
 #opt-dedication { min-height: 46px; }
 #opt-note { min-height: 46px; }
 @media (max-width: 560px) { #opt-dedication, #opt-note { min-height: 68px; } }   /* the example text wraps to two lines on a phone */
+
+/* Final price on checkout: clearly bigger than the item prices */
+.summary .totals__grand { align-items: baseline; font-size: 1.7rem; border-top-color: var(--ink); }
+.summary .totals__grand dt { color: var(--ink); }
+.summary .totals__grand dd { font-weight: 700; font-size: 1.9rem; }

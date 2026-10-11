@@ -24,7 +24,7 @@
 
     // ----- navigation, header, footer, cart -----
     'Početna': 'Home', 'Prodavnica': 'Shop', 'O nama': 'About us', 'Kontakt': 'Contact',
-    'Scampy Candles – početna': 'Scampy Candles – home', 'Glavni meni': 'Main menu', 'Meni': 'Menu',
+    'Scampy Candles Studio – početna': 'Scampy Candles Studio – home', 'Glavni meni': 'Main menu', 'Meni': 'Menu',
     'Jezik': 'Language', 'Valuta': 'Currency', 'Pretraga': 'Search', 'Korpa': 'Cart', 'Zatvori': 'Close',
     'Pretražite sveće (npr. vanila, limun…)': 'Search candles (e.g. vanilla, lemon…)',
     'Stranice': 'Pages', 'Pratite nas': 'Follow us', 'Pon–Pet, 10–18h': 'Mon–Fri, 10 am–6 pm',

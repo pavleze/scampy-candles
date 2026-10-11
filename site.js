@@ -354,9 +354,9 @@
       <button class="icon-btn menu-btn" id="menu-btn" aria-label="Meni" aria-expanded="false" aria-controls="nav">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
-      <a class="brand" href="index.html" aria-label="Scampy Candles – početna">
+      <a class="brand" href="index.html" aria-label="Scampy Candles Studio – početna">
         <img src="assets/seal.png" alt="" width="34" height="34">
-        <span>Scampy Candles</span>
+        <span>Scampy Candles Studio</span>
       </a>
       <nav class="nav" id="nav" aria-label="Glavni meni">
         ${NAV.map(([key, href, label]) => `<a href="${href}"${key === PAGE ? ' class="is-active" aria-current="page"' : ''}>${label}</a>`).join('')}

@@ -1500,3 +1500,8 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 .hero-dot:hover::before { background: rgba(255, 255, 255, .5); }
 .hero-dot.is-on::before { background: #fff; transform: scale(1.1); }
 .hero-dot:focus-visible { outline: 2px solid #e3c99b; outline-offset: 0; }
+
+/* "Scampy Candles Studio" is longer, so it is set a little smaller on laptops */
+@media (min-width: 1100px) and (max-width: 1500px) { .brand span { font-size: 1.28rem; } .nav { gap: 28px; } }
+@media (min-width: 1100px) and (max-width: 1280px) { .brand span { font-size: 1.16rem; letter-spacing: .02em; } .nav { gap: 22px; } .nav a { font-size: .84rem; letter-spacing: .1em; } .dd__btn { padding-inline: 5px; } }
+@media (min-width: 821px) and (max-width: 1099px) { .brand span { font-size: 1.02rem; letter-spacing: .02em; } .nav { gap: 14px; } .nav a { font-size: .74rem; letter-spacing: .06em; } }

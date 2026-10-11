@@ -71,7 +71,11 @@
       packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
       tiers: TIERS_FULL,
     }),
-    gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
+    gift(10, 'Bubble',                'bubble',     1.7, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg'], {
+      // box (2.00) is the base from 50 pieces; tulle/card 10% below (1.80), plain 15% below (1.70)
+      packPrices: { [PLAIN_PACK]: 1.7, [CARD_PACK]: 1.8, 'U tilu': 1.8, 'U kartonskoj kutijici': 2.0 },
+      tiers: TIERS_FULL,
+    }),
     gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg']),
     gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),
     gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df', ['dijamant-srce-1.jpg']),

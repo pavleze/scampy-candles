@@ -1339,3 +1339,8 @@ html.i18n-pending body { visibility: hidden; }
 
 /* the old native-select styles are not used any more */
 .select { display: none !important; }
+
+/* Brand name in the header: script lettering (only here; the rest of the site stays in the printed face) */
+.brand span { font-family: "Pinyon Script", "Snell Roundhand", cursive; font-weight: 400; letter-spacing: 0; font-size: 2.1rem; line-height: 1; padding-top: 4px; }
+@media (max-width: 1180px) { .brand span { font-size: 1.9rem; } }
+@media (max-width: 960px)  { .brand span { font-size: 1.7rem; } }

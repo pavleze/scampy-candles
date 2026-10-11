@@ -127,7 +127,7 @@
         const more = list.length - SHOWN;
         $('#pdp-bento').className = `bento bento--${shown.length}${p.images?.length ? ' bento--photos' : ''}${introPlayed ? '' : ' bento--intro'}`;
         introPlayed = true;
-        $('#pdp-count').textContent = `1 / ${list.length}`;
+        $('#pdp-count').textContent = list.length > 1 ? `1 / ${list.length}` : '';
         $('#pdp-bento').innerHTML = shown.map((s, i) => `
           <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
             ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}

@@ -46,7 +46,6 @@
     'Poklončići za goste': 'Guest favours', 'Mali pokloni sa velikim srcem': 'Small gifts with a big heart',
     'Za venčanja, krštenja i rođendane. Boju, miris, pakovanje i posvetu birate Vi.': 'For weddings, christenings and birthdays. You choose the color, scent, packaging and message.',
     'Poklončić za goste': 'Guest favour', 'Odaberite': 'Choose', 'Sve sveće': 'All candles',
-    'Sveće sa srcem (i šapom)': 'Candles with heart (and a paw)',
     'Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom. Danas svaku sveću i dalje ručno livamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali.':
       'Scampy started in a small kitchen, with one pot of wax and one very curious dog. Today we still pour every candle by hand, from soy wax with a cotton wick and scents we chose ourselves.',
     'Pročitajte celu priču →': 'Read the full story →',

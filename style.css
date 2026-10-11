@@ -1291,3 +1291,51 @@ html.i18n-pending body { visibility: hidden; }
 .hero__title em { display: inline-block; }
 .hero__title { font-size: clamp(2.2rem, 4.1vw, 3.7rem); }
 @media (max-width: 820px) { .hero__title { font-size: clamp(2rem, 8.4vw, 3.2rem); } }
+
+/* ---------- Custom dropdown (currency, language): plain HTML + CSS, not the browser's <select> ---------- */
+.dd { position: relative; display: inline-block; }
+.dd__btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 8px; border-radius: 8px;
+  font: inherit; font-size: 1rem; letter-spacing: .02em; color: inherit; white-space: nowrap;
+  transition: background .2s;
+}
+.dd__btn:hover, .dd.is-open .dd__btn { background: rgba(0, 0, 0, .05); }
+.dd__chev { transition: transform .2s var(--ease); flex: none; }
+.dd.is-open .dd__chev { transform: rotate(180deg); }
+.dd__menu {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 70;
+  min-width: 100%; margin: 0; padding: 6px; list-style: none;
+  background: #fff; color: #1c1712;
+  border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(40, 28, 10, .16);
+  outline: 0;
+}
+.dd__menu[hidden] { display: none; }
+.dd.is-open .dd__menu { animation: dd-in .16s var(--ease); }
+@keyframes dd-in { from { opacity: 0; transform: translateY(-4px); } }
+.dd__menu li {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 9px 12px; border-radius: 8px; cursor: pointer; white-space: nowrap; font-size: .98rem;
+}
+.dd__menu li.is-active { background: var(--cream); }
+.dd__menu li[aria-selected="true"] { font-weight: 600; }
+.dd__menu li[aria-selected="true"]::after { content: "✓"; color: var(--gold-deep); font-size: .9rem; }
+.header__actions .dd + .dd { margin-right: 6px; }
+.dd--lang .dd__menu { right: 0; }
+
+/* on the scrolled (gold) header the button hover/open tint is dark, and the open menu stays white */
+.header.is-scrolled .dd__btn:hover, .header.is-scrolled .dd.is-open .dd__btn { background: rgba(28, 23, 18, .1); }
+
+/* phones: the language lives inside the opened menu, the list opens upwards-left of the button */
+@media (max-width: 820px) {
+  .header__actions .dd--lang { display: none; }
+  .nav__prefs .dd { display: block; }
+  .nav__prefs .dd__btn { padding-left: 0; }
+  .nav__prefs .dd__menu { left: 0; right: auto; min-width: 180px; }
+  .dd__btn { font-size: .92rem; padding: 8px 6px; }
+}
+@media (max-width: 400px) { .dd__btn { font-size: .8rem; gap: 5px; padding: 8px 4px; } }
+
+/* the old native-select styles are not used any more */
+.select { display: none !important; }

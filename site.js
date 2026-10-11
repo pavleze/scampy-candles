@@ -360,20 +360,11 @@
       </a>
       <nav class="nav" id="nav" aria-label="Glavni meni">
         ${NAV.map(([key, href, label]) => `<a href="${href}"${key === PAGE ? ' class="is-active" aria-current="page"' : ''}>${label}</a>`).join('')}
-        <div class="nav__prefs"><label class="select"><select class="lang-select" aria-label="Jezik">
-          <option value="sr">Srpski</option>
-          <option value="en">English</option>
-        </select></label></div>
+        <div class="nav__prefs"><div class="dd" data-dd="lang"></div></div>
       </nav>
       <div class="header__actions">
-        <label class="select"><select id="currency-select" aria-label="Valuta">
-          <option value="EUR">EUR (€)</option>
-          <option value="RSD">RSD (din)</option>
-        </select></label>
-        <label class="select select--lang"><select class="lang-select" aria-label="Jezik">
-          <option value="sr">Srpski</option>
-          <option value="en">English</option>
-        </select></label>
+        <div class="dd" id="currency-dd" data-dd="currency"></div>
+        <div class="dd dd--lang" data-dd="lang"></div>
         <button class="icon-btn" id="search-btn" aria-label="Pretraga" aria-expanded="false" aria-controls="search">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
         </button>
@@ -435,20 +426,89 @@
   document.body.insertAdjacentHTML('beforeend', drawerHTML);
 
   // ---------- Currency and language dropdowns ----------
-  const currencySelect = $('#currency-select');
-  function renderCurrency() { currencySelect.value = state.currency; }
-  currencySelect.addEventListener('change', () => {
-    state.currency = currencySelect.value;
-    store.set('sc.currency', state.currency);
-    emit();
-  });
+  // A dropdown built from plain HTML + CSS (no native <select>), so it looks the same everywhere.
+  // Keyboard: Enter/Space/↓ open, ↑/↓ move, Enter picks, Esc closes, Tab leaves.
+  const dropdowns = [];
+  function makeDropdown(root, { label, options, get, set }) {
+    const id = `dd-${dropdowns.length}`;
+    root.innerHTML = `
+      <button type="button" class="dd__btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="${id}" aria-label="${esc(label)}"><span class="dd__value"></span><svg class="dd__chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 4.2 6 8l4-3.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <ul class="dd__menu" id="${id}" role="listbox" aria-label="${esc(label)}" tabindex="-1" hidden>
+        ${options.map((o) => `<li role="option" data-value="${o.value}" id="${id}-${o.value}">${esc(o.label)}</li>`).join('')}
+      </ul>`;
+    const btn = $('.dd__btn', root);
+    const menu = $('.dd__menu', root);
+    const items = $$('li', menu);
+    let active = 0;
+    const render = () => {
+      const cur = options.find((o) => o.value === get()) || options[0];
+      $('.dd__value', btn).textContent = cur.label;
+      items.forEach((li) => li.setAttribute('aria-selected', String(li.dataset.value === cur.value)));
+    };
+    const mark = (i) => {
+      active = (i + items.length) % items.length;
+      items.forEach((li, k) => li.classList.toggle('is-active', k === active));
+      menu.setAttribute('aria-activedescendant', items[active].id);
+    };
+    const open = () => {
+      dropdowns.forEach((d) => d !== api && d.close());
+      menu.hidden = false;
+      root.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      mark(Math.max(0, options.findIndex((o) => o.value === get())));
+      menu.focus({ preventScroll: true });
+    };
+    const close = (refocus) => {
+      if (menu.hidden) return;
+      menu.hidden = true;
+      root.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      if (refocus) btn.focus({ preventScroll: true });
+    };
+    const pick = (i) => {
+      const v = options[i].value;
+      close(true);
+      if (v !== get()) set(v);
+      render();
+    };
+    btn.addEventListener('click', () => (menu.hidden ? open() : close(true)));
+    btn.addEventListener('keydown', (e) => { if (['ArrowDown', 'ArrowUp'].includes(e.key)) { e.preventDefault(); open(); } });
+    menu.addEventListener('click', (e) => { const li = e.target.closest('li'); if (li) pick(items.indexOf(li)); });
+    menu.addEventListener('mousemove', (e) => { const li = e.target.closest('li'); if (li) mark(items.indexOf(li)); });
+    menu.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); mark(active + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); mark(active - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); mark(0); }
+      else if (e.key === 'End') { e.preventDefault(); mark(items.length - 1); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(active); }
+      else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); }
+      else if (e.key === 'Tab') close(false);
+    });
+    menu.addEventListener('blur', () => setTimeout(() => { if (!root.contains(document.activeElement)) close(false); }, 0));
+    const api = { render, close };
+    dropdowns.push(api);
+    render();
+    return api;
+  }
+  document.addEventListener('click', (e) => { if (!e.target.closest('.dd')) dropdowns.forEach((d) => d.close()); });
 
-  // The language is saved and the page reloads, so every text is drawn again in that language.
   const currentLang = store.get('sc.lang', 'sr');
-  $$('.lang-select').forEach((sel) => {
-    sel.value = currentLang;
-    sel.addEventListener('change', () => { store.set('sc.lang', sel.value); location.reload(); });
+  $$('[data-dd="currency"]').forEach((root) => {
+    const dd = makeDropdown(root, {
+      label: 'Valuta',
+      options: [{ value: 'EUR', label: 'EUR (€)' }, { value: 'RSD', label: 'RSD (din)' }],
+      get: () => state.currency,
+      set: (v) => { state.currency = v; store.set('sc.currency', v); emit(); },
+    });
+    subscribe(dd.render);
   });
+  // The language is saved and the page reloads, so every text is drawn again in that language.
+  $$('[data-dd="lang"]').forEach((root) => makeDropdown(root, {
+    label: 'Jezik',
+    options: [{ value: 'sr', label: 'Srpski' }, { value: 'en', label: 'English' }],
+    get: () => currentLang,
+    set: (v) => { store.set('sc.lang', v); location.reload(); },
+  }));
 
   // ---------- Drawer ----------
   const drawer = $('#drawer');
@@ -579,9 +639,7 @@
   });
 
   // ---------- Wire up ----------
-  subscribe(renderCurrency);
   subscribe(renderDrawer);
-  renderCurrency();
   renderDrawer();
 
   window.SC = {

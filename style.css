@@ -1650,3 +1650,7 @@ body[data-head="caps"] .page-head__title { text-transform: uppercase; font-size:
 
 .collections + .center { margin-top: 36px; }
 
+
+/* Contact page: the Instagram tag is underlined so it clearly reads as a link (the collections page keeps it plain) */
+body[data-page="contact"] .page-head .muted a.link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: currentColor; border-bottom: 0; }
+body[data-page="contact"] .page-head .muted a.link:hover { color: var(--ink); text-decoration: underline; }

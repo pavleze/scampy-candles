@@ -1553,12 +1553,20 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 .collection__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
 .collection__media svg { width: 24%; }
 .collection:hover .collection__media img { transform: scale(1.05); }
-.collection__body { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
-.collection__name { font-size: 1.5rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; }
-.collection__count { font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.collection__name { display: block; text-align: center; font-size: 1.35rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; line-height: 1.25; padding: 0 6px; }
 .collection:hover .collection__name { color: var(--gold-deep); }
+/* on hover the picture gets a dark layer with the name and a "View" button on top of it */
+.collection__hover { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 20px; text-align: center; color: #fff; background: rgba(28, 19, 12, .58); opacity: 0; transition: opacity .35s var(--ease); pointer-events: none; }
+.collection__hover-name { font-size: clamp(1.7rem, 2.6vw, 2.6rem); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; line-height: 1.15; text-shadow: 0 2px 16px rgba(0, 0, 0, .35); }
+.collection__view { display: inline-block; background: #fff; color: #1c1712; padding: 13px 46px; border-radius: 6px; font-size: 1.15rem; letter-spacing: .04em; transform: translateY(8px); transition: transform .35s var(--ease); }
+.collection:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 4px; }
+.collection:focus-visible .collection__hover { opacity: 1; }
+.collection:focus-visible .collection__view { transform: none; }
+@media (hover: hover) {
+  .collection:hover .collection__hover { opacity: 1; }
+  .collection:hover .collection__view { transform: none; }
+}
 .back { color: var(--gold-deep); letter-spacing: .12em; }
 .back:hover { color: var(--ink); text-decoration: underline; }
-@media (max-width: 900px) { .collections { grid-template-columns: repeat(2, 1fr); gap: 16px; } .collection, .collection:nth-child(n+4) { grid-column: span 1; } .collection:last-child { grid-column: 1 / -1; } .collection:nth-child(n+4) .collection__media { aspect-ratio: 4 / 5; } .collection:last-child .collection__media { aspect-ratio: 16 / 10; } .collection__name { font-size: 1.15rem; } }
-@media (max-width: 560px) { .collections { padding: 0 16px; } .collection__body { flex-direction: column; gap: 2px; } .collection__name { font-size: 1rem; letter-spacing: .08em; } }
-@media (min-width: 901px) { .collection:nth-child(-n+3) .collection__body { align-items: flex-start; min-height: 5.4rem; } .collection__count { padding-top: .45rem; } }
+@media (max-width: 900px) { .collections { grid-template-columns: repeat(2, 1fr); gap: 16px; } .collection, .collection:nth-child(n+4) { grid-column: span 1; } .collection:last-child { grid-column: 1 / -1; } .collection:nth-child(n+4) .collection__media { aspect-ratio: 4 / 5; } .collection:last-child .collection__media { aspect-ratio: 16 / 10; } .collection__name { font-size: 1.1rem; letter-spacing: .1em; } }
+@media (max-width: 560px) { .collections { padding: 0 16px; } .collection__name { font-size: .95rem; letter-spacing: .07em; } }

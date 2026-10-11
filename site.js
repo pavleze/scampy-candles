@@ -18,7 +18,7 @@
     { name: 'Lila',   hex: '#a98bd0' }, { name: 'Plava',  hex: '#7ea3d6' },
     { name: 'Zelena', hex: '#7fb08f' }, { name: 'Crna',   hex: '#2b2b2b' },
   ];
-  const GIFT_SCENTS = ['Lavanda', 'Vanila', 'Ruža', 'Eukaliptus', 'Cimet & jabuka', 'Cedar & ambra', 'Med'];
+  const GIFT_SCENTS = ['Bez mirisa', 'Lavanda', 'Vanila', 'Ruža', 'Eukaliptus', 'Cimet & jabuka', 'Cedar & ambra', 'Med'];
 
   // Options a customer picks on a gift candle's page.
   const PLAIN_PACK = 'Samo sveća';             // the only packaging that has no text
@@ -37,7 +37,7 @@
   const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu biraš sam/a.';
   // `price` is the per-piece price from `bulkMin` pieces up; below that it is 10% higher.
   const gift = (id, name, shape, price, color, images = []) => ({
-    id, name, shape, price, color, bulkMin: 50,
+    id, name, shape, price, color, bulkMin: 50, minQty: 10,   // at least 10 pieces per item
     category: 'pokloncici', family: 'Poklončić', size: '',
     desc: GIFT_DESC, options: GIFT_OPTIONS,
     // Real photos live in assets/products/. The first one is the main picture.
@@ -260,6 +260,9 @@
 
   // ---------- Cart ----------
   const saveCart = () => store.set('sc.cart2', state.cart);
+  const minQtyOf = (id) => PRODUCTS.find((x) => x.id == id)?.minQty || 1;
+  // carts saved before the minimum existed: lift them to it
+  state.cart.forEach((l) => { l.qty = Math.max(l.qty, minQtyOf(l.id)); });
   const MAX_QTY = 999;
   const lineKey = (id, opts) => `${id}|${JSON.stringify(Object.keys(opts).sort().map((k) => [k, opts[k]]))}`;
 
@@ -283,8 +286,9 @@
   function addToCart(id, qty = 1, opts = {}) {
     const key = lineKey(id, opts);
     const line = state.cart.find((l) => l.key === key);
+    const min = minQtyOf(id);
     if (line) line.qty = Math.min(MAX_QTY, line.qty + qty);
-    else state.cart.push({ key, id: Number(id), qty: Math.min(MAX_QTY, qty), opts });
+    else state.cart.push({ key, id: Number(id), qty: Math.min(MAX_QTY, Math.max(qty, min)), opts });
     saveCart();
     emit();
     const p = PRODUCTS.find((x) => x.id == id);
@@ -296,8 +300,9 @@
   function setQty(key, qty) {
     const line = state.cart.find((l) => l.key === key);
     if (!line) return;
-    line.qty = Math.min(MAX_QTY, Math.floor(qty) || 0);
-    if (line.qty <= 0) state.cart = state.cart.filter((l) => l.key !== key);
+    const n = Math.floor(qty) || 0;
+    if (n <= 0) state.cart = state.cart.filter((l) => l.key !== key);          // 0 = remove
+    else line.qty = Math.min(MAX_QTY, Math.max(n, minQtyOf(line.id)));
     saveCart();
     emit();
   }
@@ -440,10 +445,10 @@
         <div class="line__info">
           <a href="proizvod.html?id=${p.id}"><strong>${p.name}</strong></a>
           ${parts.length ? `<span class="line__opts">${esc(parts.join(' · '))}</span>` : ''}
-          <span class="muted">${money(unit)} / kom</span>
+          <span class="muted">${money(unit)} / kom${p.minQty > 1 ? ` · min. ${p.minQty} kom` : ''}</span>
           <div class="qty">
             <button type="button" data-dec aria-label="Manje">−</button>
-            <input type="number" inputmode="numeric" min="1" max="${MAX_QTY}" value="${qty}" data-qty aria-label="Količina">
+            <input type="number" inputmode="numeric" min="${p.minQty || 1}" max="${MAX_QTY}" value="${qty}" data-qty aria-label="Količina">
             <button type="button" data-inc aria-label="Više">+</button>
           </div>
           <button type="button" class="line__remove" data-remove>Ukloni</button>
@@ -459,8 +464,9 @@
     if (!line) return;
     const key = line.dataset.key;
     const cur = state.cart.find((l) => l.key === key)?.qty || 0;
+    const min = minQtyOf(state.cart.find((l) => l.key === key)?.id);
     if (e.target.closest('[data-inc]')) setQty(key, cur + 1);
-    else if (e.target.closest('[data-dec]')) setQty(key, cur - 1);
+    else if (e.target.closest('[data-dec]')) setQty(key, Math.max(cur - 1, min));
     else if (e.target.closest('[data-remove]')) setQty(key, 0);
   });
   itemsEl.addEventListener('change', (e) => {
@@ -550,7 +556,7 @@
   window.SC = {
     PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
     money, shippingFor, unitPrice, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
-    SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK,
+    SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK, minQtyOf,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,
     openSearch: (value) => toggleSearch(true, value),

@@ -80,7 +80,8 @@
       const MAX = SC.MAX_QTY;
       const isGift = !!p.options;
       const sel = isGift ? { pack: p.options[0].choices[0] } : {};   // packaging pre-selected
-      let qty = 1;
+      const MIN = p.minQty || 1;
+      let qty = MIN;
       let missing = [];     // required options still to pick
 
       root.innerHTML = `
@@ -100,11 +101,12 @@
           <div class="pdp__buy">
             <div class="qty qty--lg">
               <button type="button" data-q="-1" aria-label="Manje">−</button>
-              <input type="number" id="pdp-qty" inputmode="numeric" min="1" max="${MAX}" value="1" aria-label="Količina">
+              <input type="number" id="pdp-qty" inputmode="numeric" min="${MIN}" max="${MAX}" value="${MIN}" aria-label="Količina">
               <button type="button" data-q="1" aria-label="Više">+</button>
             </div>
             <button class="btn btn--solid" id="pdp-add" type="button"></button>
           </div>
+          ${MIN > 1 ? `<p class="opt__help">Minimalna količina: ${MIN} kom po stavci.</p>` : ''}
         </div>`;
 
       // ----- gallery -----
@@ -250,7 +252,7 @@
       };
 
       const setQty = (n) => {
-        qty = Math.max(1, Math.min(MAX, Math.floor(n) || 1));
+        qty = Math.max(MIN, Math.min(MAX, Math.floor(n) || MIN));
         $('#pdp-qty').value = qty;
         renderPrice();
       };
@@ -299,7 +301,7 @@
       root.addEventListener('input', (e) => {
         if (e.target.id === 'pdp-qty') {
           const n = Math.floor(Number(e.target.value));
-          if (n >= 1) { qty = Math.min(MAX, n); renderPrice(); }
+          if (n >= 1) { qty = Math.max(MIN, Math.min(MAX, n)); renderPrice(); }   // field is tidied on blur, so "5" → "50" can be typed
         } else if (e.target.matches('.opt__text')) {
           sel[e.target.id.replace('opt-', '')] = e.target.value;
           if (e.target.id === 'opt-dedication' && e.target.value.trim() && missing.includes('dedication')) {   // clear the warning without redrawing (keeps focus)

@@ -53,8 +53,8 @@
     gift(15, 'Limun',                 'lemon',      2.0, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg']),
     // TODO: price for Cvetno srce is a placeholder.
     gift(17, 'Cvetno srce',           'heart',      2.0, '#efc3cb', ['cvetno-srce-1.jpg']),
-    // TODO: price for Pahulja is a placeholder, and it has no photos yet.
-    gift(16, 'Pahulja',               'snowflake',  2.0, '#cfe3f2'),
+    // TODO: price for Pahulja is a placeholder.
+    gift(16, 'Pahulja',               'snowflake',  2.0, '#cfe3f2', ['pahulja-1.jpg']),
 
     // Mock scented candles (placeholders until the real range is added)
     { id: 1, category: 'mirisne', name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,

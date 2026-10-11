@@ -259,6 +259,14 @@
         if (!isGift) return;
         $('#pdp-opts').innerHTML = p.options.map((o) => {
           if (o.type === 'text') return '';                 // lives under Pakovanje (see below)
+          if (o.type === 'date') {                           // celebration date; past days can't be picked
+            const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+            return `
+              <div class="opt">
+                <div class="opt__label">${o.label}</div>
+                <input class="opt__date" type="date" id="opt-${o.key}" min="${today}" value="${esc(sel[o.key] || '')}" aria-label="${o.label}">
+              </div>`;
+          }
           if (o.type === 'note') {                           // free note, always shown
             return `
               <div class="opt">
@@ -353,7 +361,9 @@
         }
       });
 
+      root.addEventListener('change', (e) => { if (e.target.id === 'opt-date') sel.date = e.target.value; });
       root.addEventListener('input', (e) => {
+        if (e.target.id === 'opt-date') { sel.date = e.target.value; return; }
         if (e.target.id === 'pdp-qty') {
           const n = Math.floor(Number(e.target.value));
           if (n >= 1) { qty = Math.max(MIN, Math.min(MAX, n)); renderPrice(); }   // field is tidied on blur, so "5" → "50" can be typed

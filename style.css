@@ -1152,3 +1152,6 @@ textarea.opt__text { min-height: 0; height: auto; resize: none; overflow: hidden
 .summary .totals__grand { align-items: baseline; font-size: 1.7rem; border-top: 0; margin-top: 0; }   /* the line above comes from the last item */
 .summary .totals__grand dt { color: var(--ink); }
 .summary .totals__grand dd { font-weight: 700; font-size: 1.9rem; }
+
+.opt__date { width: 100%; padding: 12px 14px; border: 1px solid var(--line); background: #fff; font: inherit; border-radius: 0; outline: 0; min-height: 46px; }
+.opt__date:focus { border-color: var(--gold-deep); }

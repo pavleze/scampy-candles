@@ -29,6 +29,7 @@
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.
     { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 140, placeholder: 'Ime/imena, posveta npr. „Hvala što ste bili sa nama“, datum' },
     { key: 'ribbon',     label: 'Boja mašnice',  type: 'swatch', choices: RIBBONS },
+    { key: 'date',       label: 'Datum proslave', type: 'date', optional: true },
     { key: 'note',       label: 'Napomena',      type: 'note', optional: true, maxLength: 300, placeholder: 'Ako imate neku želju koja nije navedena ili pitanje, ostavite ovde' },
   ];
 
@@ -256,9 +257,12 @@
     : productSVG(p));
 
   // "Pakovanje: Kartonsko pakovanje", "Posveta: „…“" …
+  // 2026-06-15 -> 15.06.2026.
+  const fmtDate = (iso) => iso.split('-').reverse().join('.') + '.';
+
   const describeOpts = (p, opts = {}) => (p.options || [])
     .filter((o) => opts[o.key])
-    .map((o) => `${o.label}: ${o.type === 'text' ? `„${opts[o.key]}“` : opts[o.key]}`);
+    .map((o) => `${o.label}: ${o.type === 'text' ? `„${opts[o.key]}“` : o.type === 'date' ? fmtDate(opts[o.key]) : opts[o.key]}`);
 
   const cardHTML = (p) => {
     const meta = [p.family, p.size].filter(Boolean).join(' · ');

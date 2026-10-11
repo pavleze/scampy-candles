@@ -122,61 +122,42 @@
       let introPlayed = false;
       const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(s.label)}" loading="lazy">` : SC.packSVG(p, sel, s.view));
       const phone = window.matchMedia('(max-width: 820px)');
-      let slideAt = 0;          // real picture index currently in view (phone strip)
 
-      const tileHTML = (s, i, { clone = false, more = 0 } = {}) => `
-        <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}"${clone ? ' data-clone tabindex="-1" aria-hidden="true"' : ''} aria-label="Uvećaj sliku ${i + 1}">
+      const tileHTML = (s, i, more = 0) => `
+        <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
           ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
           ${slideHTML(s)}
           ${more > 0 ? `<span class="tile__more">+${more}</span>` : ''}
         </button>`;
 
+      const bentoEl = $('#pdp-bento');
       const stride = () => {
-        const t = $('#pdp-bento .tile');
-        return t ? t.offsetWidth + (parseFloat(getComputedStyle($('#pdp-bento')).columnGap) || 0) : 0;
+        const t = bentoEl.querySelector('.tile');
+        return t ? t.offsetWidth + (parseFloat(getComputedStyle(bentoEl).columnGap) || 0) : 0;
       };
-      const loops = () => phone.matches && slides().length > 1;
 
       const renderGallery = () => {
         const list = slides();
-        const bento = $('#pdp-bento');
-        const strip = phone.matches;
+        const strip = phone.matches;                      // phone: swipeable strip with every picture
         const shown = strip ? list : list.slice(0, SHOWN);
         const more = strip ? 0 : list.length - SHOWN;
-        bento.className = `bento bento--${Math.min(shown.length, 6)}${p.images?.length ? ' bento--photos' : ''}${introPlayed ? '' : ' bento--intro'}`;
+        const keep = bentoEl.scrollLeft;                  // stay on the same picture when the colors change
+        bentoEl.className = `bento bento--${Math.min(shown.length, 6)}${p.images?.length ? ' bento--photos' : ''}${introPlayed ? '' : ' bento--intro'}`;
         introPlayed = true;
-        let html = shown.map((s, i) => tileHTML(s, i, { more: more > 0 && i === SHOWN - 1 ? more : 0 })).join('');
-        if (loops()) {
-          // clones at both ends make the strip circular
-          html = tileHTML(list[list.length - 1], list.length - 1, { clone: true }) + html + tileHTML(list[0], 0, { clone: true });
-        }
-        bento.innerHTML = html;
-        $('#pdp-count').textContent = list.length > 1 ? `${slideAt + 1} / ${list.length}` : '';
-        if (loops()) bento.scrollLeft = (slideAt + 1) * stride();
+        bentoEl.innerHTML = shown.map((s, i) => tileHTML(s, i, more > 0 && i === SHOWN - 1 ? more : 0)).join('');
+        if (strip) bentoEl.scrollLeft = keep;
+        $('#pdp-count').textContent = list.length > 1 ? `${strip ? Math.round(keep / (stride() || 1)) + 1 : 1} / ${list.length}` : '';
       };
 
-      // Phone strip: keep the counter in sync and wrap around at both ends.
-      let loopTimer;
-      const bentoEl = $('#pdp-bento');
+      // Phone strip: just keep the counter in sync (1 to n, no looping).
       bentoEl.addEventListener('scroll', () => {
-        if (!loops()) return;
-        const n = slides().length;
+        if (!phone.matches) return;
         const s = stride();
         if (!s) return;
-        const i = Math.round(bentoEl.scrollLeft / s);          // 0 = clone of last, 1..n = real, n+1 = clone of first
-        slideAt = (((i - 1) % n) + n) % n;
-        $('#pdp-count').textContent = `${slideAt + 1} / ${n}`;
-        clearTimeout(loopTimer);
-        loopTimer = setTimeout(() => {
-          const j = Math.round(bentoEl.scrollLeft / s);
-          const target = j <= 0 ? n * s : j >= n + 1 ? s : null;
-          if (target === null) return;
-          bentoEl.style.scrollSnapType = 'none';
-          bentoEl.scrollLeft = target;
-          requestAnimationFrame(() => { bentoEl.style.scrollSnapType = ''; });
-        }, 120);
+        const n = slides().length;
+        $('#pdp-count').textContent = `${Math.min(Math.round(bentoEl.scrollLeft / s) + 1, n)} / ${n}`;
       }, { passive: true });
-      phone.addEventListener('change', () => { slideAt = 0; renderGallery(); });
+      phone.addEventListener('change', () => { bentoEl.scrollLeft = 0; renderGallery(); });
 
       // Lightbox
       let lightboxAt = 0;

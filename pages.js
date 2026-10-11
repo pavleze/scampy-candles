@@ -380,9 +380,13 @@
 
       const related = $('#related');
       const renderRelated = () => {
-        const others = PRODUCTS.filter((x) => x.id !== p.id);
-        const same = others.filter((x) => x.category === p.category);
-        const html = [...same, ...others.filter((x) => !same.includes(x))].slice(0, 3).map(cardHTML).join('');
+        // the next three candles after this one in the same category, wrapping around at the end
+        const pool = PRODUCTS.filter((x) => x.category === p.category);
+        const at = pool.indexOf(p);
+        const picks = [];
+        for (let k = 1; k < pool.length && picks.length < 3; k++) picks.push(pool[(at + k) % pool.length]);
+        for (const x of PRODUCTS) if (picks.length < 3 && x !== p && !picks.includes(x)) picks.push(x);   // small category: fill from the rest
+        const html = picks.map(cardHTML).join('');
         if (html !== related.dataset.html) { related.innerHTML = html; related.dataset.html = html; }
       };
 

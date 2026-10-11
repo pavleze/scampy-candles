@@ -18,7 +18,7 @@
     { name: 'Lila',   hex: '#a98bd0' }, { name: 'Plava',  hex: '#7ea3d6' },
     { name: 'Zelena', hex: '#7fb08f' }, { name: 'Crna',   hex: '#2b2b2b' },
   ];
-  const GIFT_SCENTS = ['Bez mirisa', 'Lavanda', 'Vanila', 'Ruža', 'Eukaliptus', 'Cimet & jabuka', 'Cedar & ambra', 'Med'];
+  const GIFT_SCENTS = ['Bez mirisa', 'Vanila', 'Jabuka', 'Kokos', 'Bundeva', 'Limun', 'Malina', 'Kafa', 'Cimet'];
 
   // Options a customer picks on a gift candle's page.
   const PLAIN_PACK = 'Samo sveća';             // the only packaging that has no text

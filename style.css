@@ -1365,3 +1365,7 @@ html.i18n-pending body { visibility: hidden; }
   .hero-wrap--photo { background: linear-gradient(180deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .8)), url("assets/hero/hero1-landscape.jpg") center / cover no-repeat; }
   .hero-wrap--photo .hero { grid-template-columns: 1fr; min-height: 0; }
 }
+
+/* The photo hero keeps the height the hero had with the seal (about 690px on a laptop, taller on phones) */
+.hero-wrap--photo .hero { min-height: min(691px, max(595px, 54vw)); align-content: center; }
+@media (max-width: 820px) { .hero-wrap--photo .hero { min-height: 760px; } }

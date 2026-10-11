@@ -35,13 +35,13 @@
 
     // ----- home -----
     'Nova kolekcija': 'New collection', 'Jesen 2025': 'Autumn 2025',
-    'Sveće od sojinog voska sa pamučnim fitiljem, ručno livene u malim serijama, sa mirisima koji greju dom. Deo svake prodaje ide azilima za napuštene životinje.':
-      'Soy wax candles with cotton wicks, hand-poured in small batches, with scents that warm the home. A part of every sale goes to shelters for abandoned animals.',
+    'Sveće od sojinog voska sa pamučnim fitiljem, ručno livene u malim serijama, sa mirisima koji greju dom.':
+      'Soy wax candles with cotton wicks, hand-poured in small batches, with scents that warm the home.',
     'Pogledajte prodavnicu': 'Visit the shop', 'Naša priča': 'Our story', 'Zašto Scampy': 'Why Scampy',
     '100% sojin vosak': '100% soy wax', 'Čisto sagorevanje, bez parafina': 'Clean burning, no paraffin',
     'Ručno livene': 'Hand-poured', 'Male serije, velika pažnja': 'Small batches, great care',
-    'Za šape': 'For paws', '5% svake prodaje ide azilima': '5% of every sale goes to shelters',
-    'Dostava 2–3 dana': 'Delivery in 2–3 days',
+    'Dizajn od početka do kraja': 'Design from start to finish', 'Dogovaramo dok niste zadovoljni': 'We keep refining it until you are happy',
+    'Lično preuzimanje ili Post Express': 'Personal pickup or Post Express', 'U Beogradu možete preuzeti lično': 'In Belgrade you can pick it up in person',
     'Poklončići za goste': 'Guest favours', 'Mali pokloni sa velikim srcem': 'Small gifts with a big heart',
     'Za venčanja, krštenja i rođendane. Boju, miris, pakovanje i posvetu birate sami.': 'For weddings, christenings and birthdays. You choose the color, scent, packaging and message yourself.',
     'Poklončić za goste': 'Guest favour', 'Odaberite': 'Choose', 'Sve sveće': 'All candles',
@@ -52,7 +52,6 @@
     'Utisci': 'Reviews', 'Šta kažu naši kupci': 'What our customers say',
     '„Lavanda miriše savršeno, a pakovanje je tako lepo da sam je poklonila.“': '“The lavender smells perfect, and the packaging is so beautiful that I gave it as a gift.”',
     '„Gori satima i ravnomerno. Vanila & karamel je moj omiljeni.“': '“It burns for hours and evenly. Vanilla & caramel is my favourite.”',
-    '„Divno što deo prodaje ide azilima. Naručiću opet sigurno.“': '“It is wonderful that part of the sales goes to shelters. I will definitely order again.”',
     'Zapratite nas na Instagramu': 'Follow us on Instagram',
     'Budite u toku': 'Stay in the loop', 'Prijavite se i dobijte 10% popusta na prvu porudžbinu.': 'Sign up and get 10% off your first order.',
     'Prijavite me': 'Sign me up', 'ime@email.com': 'name@email.com',
@@ -80,14 +79,14 @@
       'Scampy started in a small kitchen, with one pot of wax and one very curious dog called Scampy. While he stood guard, the first candles were made.',
     'Danas svaku sveću i dalje ručno livamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali. Zato svaka ima malo drugačiji karakter.':
       'Today we still pour every candle by hand, from soy wax with a cotton wick and scents we chose ourselves. That is why each one has a slightly different character.',
-    'prodatih sveća': 'candles sold', 'autorskih mirisa': 'signature scents', 'za azile': 'for shelters',
+    'prodatih sveća': 'candles sold', 'autorskih mirisa': 'signature scents',
     'Naše vrednosti': 'Our values', 'Od čega pravimo sveće': 'What we make our candles from',
     'Sojin vosak': 'Soy wax', 'Prirodan, obnovljiv i čist. Sagoreva sporije i ravnomernije od parafina.': 'Natural, renewable and clean. Burns slower and more evenly than paraffin.',
     'Male serije': 'Small batches', 'Livamo ih ručno, nekoliko desetina odjednom, da bi svaka dobila pažnju.': 'We pour them by hand, a few dozen at a time, so each one gets attention.',
-    'Pet posto svake prodaje odlazi azilima za napuštene životinje u Srbiji.': 'Five percent of every sale goes to shelters for abandoned animals in Serbia.',
+    'Sami radimo dizajn kartice i pakovanja i dogovaramo se sa vama dok niste zadovoljni.': 'We design the card and the packaging ourselves and keep refining it with you until you are happy.',
     'Probajte neku od njih': 'Try one of them', 'Pogledajte celu kolekciju i nađite svoj miris.': 'Browse the whole collection and find your scent.',
     'O nama · Scampy Candles': 'About us · Scampy Candles',
-    'Priča iza Scampy Candles: ručno rađene sojine sveće i 5% prodaje za azile.': 'The story behind Scampy Candles: handmade soy candles and 5% of sales for shelters.',
+    'Priča iza Scampy Candles: ručno rađene sojine sveće i dizajn od početka do kraja.': 'The story behind Scampy Candles: handmade soy candles and design from start to finish.',
 
     // ----- contact -----
     'Javite nam se': 'Get in touch', 'Pitanja o porudžbini, poklon paketi ili saradnja. Odgovaramo u roku od jednog radnog dana.': 'Questions about an order, gift packages or collaboration. We reply within one working day.',

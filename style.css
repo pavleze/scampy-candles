@@ -1505,3 +1505,10 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 @media (min-width: 1100px) and (max-width: 1500px) { .brand span { font-size: 1.28rem; } .nav { gap: 28px; } }
 @media (min-width: 1100px) and (max-width: 1280px) { .brand span { font-size: 1.16rem; letter-spacing: .02em; } .nav { gap: 22px; } .nav a { font-size: .84rem; letter-spacing: .1em; } .dd__btn { padding-inline: 5px; } }
 @media (min-width: 821px) and (max-width: 1099px) { .brand span { font-size: 1.02rem; letter-spacing: .02em; } .nav { gap: 14px; } .nav a { font-size: .74rem; letter-spacing: .06em; } }
+
+
+/* Brand name in the header: script lettering again (Italianno). Placed last so it wins over the earlier capitals rules. */
+.brand span { font-family: "Italianno", "Snell Roundhand", cursive; font-weight: 400; text-transform: none; letter-spacing: .01em; font-size: 2.6rem; line-height: 1; padding-top: 2px; }
+@media (min-width: 1100px) and (max-width: 1500px) { .brand span { font-size: 2.35rem; } }
+@media (min-width: 1100px) and (max-width: 1280px) { .brand span { font-size: 2.1rem; letter-spacing: .01em; } }
+@media (min-width: 821px) and (max-width: 1099px) { .brand span { font-size: 1.8rem; letter-spacing: .01em; } }

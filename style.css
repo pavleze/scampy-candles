@@ -1621,3 +1621,7 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 /* About page title in capitals (test) */
 body[data-page="about"] .page-head__title { text-transform: uppercase; letter-spacing: .12em; font-size: clamp(2.2rem, 5.4vw, 3.5rem); }
 @media (max-width: 560px) { body[data-page="about"] .page-head__title { font-size: clamp(1.45rem, 7.4vw, 2.2rem); letter-spacing: .08em; white-space: nowrap; } }
+
+/* About title: a bit smaller */
+body[data-page="about"] .page-head__title { font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: .14em; }
+@media (max-width: 560px) { body[data-page="about"] .page-head__title { font-size: clamp(1.15rem, 5.8vw, 1.7rem); letter-spacing: .1em; } }

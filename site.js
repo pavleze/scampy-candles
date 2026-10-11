@@ -46,11 +46,13 @@
     gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg']),
     gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg']),
     gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg']),
-    gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f'),
-    gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df'),
+    gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f', ['always-forever-srce-1.jpg']),
+    gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df', ['dijamant-srce-1.jpg']),
     // TODO: prices for Astronaut and Limun are placeholders until confirmed.
     gift(14, 'Astronaut',             'astronaut',  2.0, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
     gift(15, 'Limun',                 'lemon',      2.0, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg']),
+    // TODO: price for Cvetno srce is a placeholder.
+    gift(17, 'Cvetno srce',           'heart',      2.0, '#efc3cb', ['cvetno-srce-1.jpg']),
     // TODO: price for Pahulja is a placeholder, and it has no photos yet.
     gift(16, 'Pahulja',               'snowflake',  2.0, '#cfe3f2'),
 

@@ -1570,3 +1570,7 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 .back:hover { color: var(--ink); text-decoration: underline; }
 @media (max-width: 900px) { .collections { grid-template-columns: repeat(2, 1fr); gap: 16px; } .collection, .collection:nth-child(n+4) { grid-column: span 1; } .collection:last-child { grid-column: 1 / -1; } .collection:nth-child(n+4) .collection__media { aspect-ratio: 4 / 5; } .collection:last-child .collection__media { aspect-ratio: 16 / 10; } .collection__name { font-size: 1.1rem; letter-spacing: .1em; } }
 @media (max-width: 560px) { .collections { padding: 0 16px; } .collection__name { font-size: .95rem; letter-spacing: .07em; } }
+
+.collection__hover { gap: 12px; }
+.collection__hover-count { font-size: 1.2rem; letter-spacing: .06em; opacity: .95; margin-top: -4px; text-shadow: 0 1px 10px rgba(0, 0, 0, .4); }
+.collection__view { margin-top: 10px; }

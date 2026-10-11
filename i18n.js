@@ -40,7 +40,7 @@
     'Posebni trenuci': 'Special moments', 'zaslužuju posebne detalje.': 'deserve special details.',
     'Pogledajte prodavnicu': 'Visit the shop', 'Naša priča': 'Our story', 'Zašto Scampy': 'Why Scampy',
     '100% sojin vosak': '100% soy wax', 'Čisto sagorevanje, bez parafina': 'Clean burning, no paraffin',
-    'Ručno izlivene': 'Hand-poured', 'Male serije, velika pažnja': 'Small batches, great care',
+    'Ručno livene': 'Hand-poured', 'Male serije, velika pažnja': 'Small batches, great care',
     'Dizajn od početka do kraja': 'Design from start to finish', 'Dogovaramo dok niste zadovoljni': 'We keep refining it until you are happy',
     'Lično preuzimanje ili slanje poštom': 'Personal pickup or delivery by post', 'U Beogradu možete preuzeti lično': 'In Belgrade you can pick it up in person',
     'Poklončići za goste': 'Guest favours', 'Mali pokloni sa velikim srcem': 'Small gifts with a big heart',

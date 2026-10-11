@@ -1649,3 +1649,5 @@ body[data-head="caps"] .page-head__title { text-transform: uppercase; font-size:
 .motto::after { content: ""; display: block; width: 44px; height: 1px; background: var(--gold-deep); opacity: .5; margin: 18px auto 0; }
 
 .collections + .center { margin-top: 36px; }
+
+.page-head__cta { margin-top: 18px; }

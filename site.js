@@ -81,7 +81,11 @@
       packPrices: { [PLAIN_PACK]: 2.04, [CARD_PACK]: 2.16, 'U tilu': 2.16, 'U kartonskoj kutijici': 2.40 },
       tiers: TIERS_FULL,
     }),
-    gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),
+    gift(12, 'Always & Forever srce', 'heart',      2.13, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg'], {
+      // box (2.50) is the base from 50 pieces; tulle/card 10% below (2.25), plain 15% below (2.125, rounded up to 2.13)
+      packPrices: { [PLAIN_PACK]: 2.13, [CARD_PACK]: 2.25, 'U tilu': 2.25, 'U kartonskoj kutijici': 2.50 },
+      tiers: TIERS_FULL,
+    }),
     gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df', ['dijamant-srce-1.jpg']),
     // TODO: prices for Astronaut and Limun are placeholders until confirmed.
     gift(14, 'Astronaut',             'astronaut',  2.0, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),

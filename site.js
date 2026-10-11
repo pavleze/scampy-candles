@@ -36,17 +36,27 @@
 
   const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu biraš sam/a.';
   // `price` is the per-piece price from `bulkMin` pieces up; below that it is 10% higher.
-  const gift = (id, name, shape, price, color, images = []) => ({
+  // Quantity tiers: from `from` pieces up, the base price is multiplied by `mult` (counted over all variants of the candle).
+  const TIERS_BASIC = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }];
+  const TIERS_FULL  = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }, { from: 150, mult: 0.90 }, { from: 250, mult: 0.85 }];
+
+  const gift = (id, name, shape, price, color, images = [], extra = {}) => ({
     id, name, shape, price, color, bulkMin: 50, minQty: 10,   // at least 10 pieces per item
     category: 'pokloncici', family: 'Poklončić', size: '',
     desc: GIFT_DESC, options: GIFT_OPTIONS,
     // Real photos live in assets/products/. The first one is the main picture.
     // A candle without photos shows the drawn placeholders instead.
     images: images.map((f) => `assets/products/${f}`),
+    tiers: TIERS_BASIC,
+    ...extra,
   });
 
   const PRODUCTS = [
-    gift(7,  'Mali meda',             'bear',       1.7, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg', 'mali-meda-4.jpg']),
+    gift(7,  'Mali meda',             'bear',       1.5, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg', 'mali-meda-4.jpg'], {
+      // price per piece from 50 pieces, by packaging
+      packPrices: { [PLAIN_PACK]: 1.5, [CARD_PACK]: 1.6, 'U tilu': 1.65, 'U kartonskoj kutijici': 1.7 },
+      tiers: TIERS_FULL,
+    }),
     gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg']),
     gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
     gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
@@ -108,9 +118,14 @@
   const shippingFor = (subtotal) => (subtotal === 0 || subtotal >= FREE_OVER ? 0 : SHIPPING);
 
   // ---------- Pricing ----------
-  const round2 = (n) => Math.round(n * 100) / 100;
   // Per-piece price for a product, given how many pieces of it are ordered in total.
-  const unitPrice = (p, qty) => (p.bulkMin && qty < p.bulkMin ? round2(p.price * SMALL_ORDER_MARKUP) : p.price);
+  const round2 = (n) => Math.round(n * 100 + 1e-7) / 100;   // the 1e-7 keeps x.xx5 from rounding down
+  const basePriceOf = (p, pack) => p.packPrices?.[pack] ?? p.price;
+  const tierMult = (p, qty) => (p.tiers || []).reduce((m, t) => (qty >= t.from ? t.mult : m), p.tiers?.[0]?.mult ?? 1);
+  // Per-piece price for a product, packaging and total ordered quantity.
+  const unitPrice = (p, qty, pack) => (p.tiers ? round2(basePriceOf(p, pack) * tierMult(p, qty)) : p.price);
+  // The next cheaper tier, if any (for the "order more" hint).
+  const nextTier = (p, qty) => (p.tiers || []).find((t) => t.from > qty) || null;
 
   // ---------- Illustration ----------
   const candleSVG = (c) => `
@@ -249,7 +264,7 @@
         <p class="card__family">${meta}</p>
         <h3 class="card__name"><a href="proizvod.html?id=${p.id}">${p.name}</a></h3>
         <div class="card__row">
-          <span class="card__price">${money(unitPrice(p, 1))}${isGift ? `<small class="card__bulk">${money(p.price)} od ${p.bulkMin} kom</small>` : ''}</span>
+          <span class="card__price">${money(unitPrice(p, p.minQty || 1, PLAIN_PACK))}${isGift ? `<small class="card__bulk">${money(p.price)} od ${p.bulkMin} kom</small>` : ''}</span>
           ${isGift
             ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberi</a>`
             : `<button class="btn btn--small" type="button" data-add="${p.id}">Dodaj</button>`}
@@ -274,7 +289,7 @@
     const perProduct = {};
     lines.forEach((l) => { perProduct[l.id] = (perProduct[l.id] || 0) + l.qty; });
     const rows = lines.map((l) => {
-      const unit = unitPrice(l.p, perProduct[l.id]);
+      const unit = unitPrice(l.p, perProduct[l.id], l.opts?.pack);
       return { ...l, unit, sum: round2(unit * l.qty) };
     });
     const count = rows.reduce((n, r) => n + r.qty, 0);
@@ -555,7 +570,7 @@
 
   window.SC = {
     PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
-    money, shippingFor, unitPrice, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
+    money, shippingFor, unitPrice, nextTier, round2, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK, minQtyOf,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,

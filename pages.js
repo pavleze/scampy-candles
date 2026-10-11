@@ -172,10 +172,17 @@
         <div class="modal__body"></div></div>`;
       document.body.appendChild(priceModal);
       const priceTable = () => {
-        const rows = [[`${MIN}–${p.bulkMin - 1} kom`, SC.unitPrice(p, MIN)], [`${p.bulkMin}+ kom`, p.price]];
-        return `<table class="ptable"><thead><tr><th>Količina</th><th>Cena po komadu</th></tr></thead><tbody>
-          ${rows.map(([q, v]) => `<tr><td>${q}</td><td><strong>${money(v)}</strong></td></tr>`).join('')}</tbody></table>
-          <p class="opt__help">Cena važi za sva pakovanja.</p>`;
+        const tiers = p.tiers;
+        const rows = tiers.map((t, i) => {
+          const from = i === 0 ? MIN : t.from;
+          const to = tiers[i + 1] ? tiers[i + 1].from - 1 : null;
+          return { label: to ? `${from}–${to} kom` : `${from}+ kom`, qty: from };
+        });
+        const packs = p.packPrices ? Object.keys(p.packPrices) : [null];
+        const head = packs.map((k) => `<th>${k ? esc(k) : 'Cena po komadu'}</th>`).join('');
+        const body = rows.map((r) => `<tr><td>${r.label}</td>${packs.map((k) => `<td><strong>${money(SC.unitPrice(p, r.qty, k))}</strong></td>`).join('')}</tr>`).join('');
+        return `<div class="ptable-wrap"><table class="ptable"><thead><tr><th>Količina</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
+          ${p.packPrices ? '' : '<p class="opt__help">Cena važi za sva pakovanja.</p>'}`;
       };
       const openPrices = () => {
         const body = $('.modal__body', priceModal);
@@ -220,11 +227,12 @@
       const renderPrice = () => {
         const inCart = SC.cartSummary().perProduct[p.id] || 0;
         const eff = qty + inCart;
-        const unit = SC.unitPrice(p, eff);
+        const unit = SC.unitPrice(p, eff, sel.pack);
         const total = Math.round(unit * qty * 100) / 100;
         let html = `<p class="pdp__price">${money(unit)} <small>/ kom</small></p>`;
-        if (p.bulkMin) {
-          html += `<p class="pdp__tier${eff >= p.bulkMin ? ' is-on' : ''}">${eff >= p.bulkMin ? 'Cena na veliko ✓' : 'Sa većom količinom cena po komadu je manja'} · <button type="button" class="linkbtn" data-prices>pogledaj cene</button></p>`;
+        if (p.tiers) {
+          const more = SC.nextTier(p, eff);
+          html += `<p class="pdp__tier${more ? '' : ' is-on'}">${more ? 'Sa većom količinom cena po komadu je manja' : 'Najniža cena ✓'} · <button type="button" class="linkbtn" data-prices>pogledaj cene</button></p>`;
         }
         $('#pdp-price').innerHTML = html;
         $('#pdp-add').textContent = `Dodaj u korpu · ${money(total)}`;
@@ -299,6 +307,7 @@
           if (opt.dataset.opt === 'pack' && !cardOn()) missing = missing.filter((k) => k !== 'dedication');
           missing = missing.filter((k) => k !== opt.dataset.opt);
           renderOpts();
+          if (opt.dataset.opt === 'pack') renderPrice();
           if (opt.dataset.opt === 'pack' && textOn() && !hadText) $('#opt-dedication')?.focus();
           if (!p.images?.length) renderGallery();   // photos don't depend on the options, so leave them alone (no reload flash)
           return;

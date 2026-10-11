@@ -1344,3 +1344,9 @@ html.i18n-pending body { visibility: hidden; }
 .brand span { font-family: "Pinyon Script", "Snell Roundhand", cursive; font-weight: 400; letter-spacing: 0; font-size: 2.1rem; line-height: 1; padding-top: 4px; }
 @media (max-width: 1180px) { .brand span { font-size: 1.9rem; } }
 @media (max-width: 960px)  { .brand span { font-size: 1.7rem; } }
+
+/* Header logo: a full turn around its vertical axis every 15 seconds (the turn itself takes about a second) */
+.brand { perspective: 500px; }
+.brand img { animation: logo-spin 15s infinite; transform-style: preserve-3d; backface-visibility: visible; }
+@keyframes logo-spin { 0%, 93% { transform: rotateY(0deg); animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 100% { transform: rotateY(360deg); } }
+@media (prefers-reduced-motion: reduce) { .brand img { animation: none; } }

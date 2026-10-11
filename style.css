@@ -1617,3 +1617,6 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 
 /* "est. 2025" under the About page title */
 .page-head__est { font-style: italic; font-size: 1.25rem; letter-spacing: .12em; color: var(--muted); margin-top: -2px; }
+
+/* About page title in capitals (test) */
+body[data-page="about"] .page-head__title { text-transform: uppercase; letter-spacing: .12em; font-size: clamp(2.2rem, 5.4vw, 3.5rem); }

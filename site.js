@@ -21,10 +21,11 @@
   const GIFT_SCENTS = ['Lavanda', 'Vanila', 'Ruža', 'Eukaliptus', 'Cimet & jabuka', 'Cedar & ambra', 'Med'];
 
   // Options a customer picks on a gift candle's page.
+  const PLAIN_PACK = 'Samo sveća';             // the only packaging that has no text
   const CARD_PACK = 'Kartončić sa posvetom';   // 4th packaging choice: a card with the customer's text, tied to the wick
 
   const GIFT_OPTIONS = [
-    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: ['Samo sveća', 'U tilu', 'U kartonskoj kutijici', CARD_PACK] },
+    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: [PLAIN_PACK, 'U tilu', 'U kartonskoj kutijici', CARD_PACK] },
     { key: 'color',      label: 'Boja sveće',    type: 'swatch', choices: COLORS },
     { key: 'scent',      label: 'Miris',         type: 'choice', choices: GIFT_SCENTS },
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.
@@ -548,7 +549,7 @@
   window.SC = {
     PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
     money, shippingFor, unitPrice, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
-    SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK,
+    SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,
     openSearch: (value) => toggleSearch(true, value),

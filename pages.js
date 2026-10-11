@@ -206,13 +206,14 @@
       const swatchGroup = (o) => `<div class="opt__chips">${o.choices.map((c) => `
         <button type="button" class="swatch${sel[o.key] === c.name ? ' is-active' : ''}" style="--sw:${c.hex}" data-opt="${o.key}" data-val="${esc(c.name)}" aria-label="${esc(c.name)}" aria-pressed="${sel[o.key] === c.name}" title="${esc(c.name)}"></button>`).join('')}</div>`;
 
-      const cardOn = () => sel.pack === SC.CARD_PACK;
+      const cardOn = () => sel.pack === SC.CARD_PACK;                      // text is required
+      const textOn = () => !!sel.pack && sel.pack !== SC.PLAIN_PACK;      // every packaging except "Samo sveća" takes a text
 
       const renderOpts = () => {
         if (!isGift) return;
         $('#pdp-opts').innerHTML = p.options.map((o) => {
           if (o.type === 'text') return '';                 // lives under Pakovanje (see below)
-          const askText = o.key === 'pack' && cardOn();
+          const askText = o.key === 'pack' && textOn();
           const needsText = askText && missing.includes('dedication');
           const err = missing.includes(o.key) || needsText;
           let control;
@@ -230,7 +231,7 @@
           }
           if (askText) {
             const t = p.options.find((x) => x.type === 'text');
-            control += `<input class="opt__text" type="text" id="opt-${t.key}" maxlength="${t.maxLength}" placeholder="${esc(t.placeholder || '')}" value="${esc(sel[t.key] || '')}" aria-label="Tekst posvete">`;
+            control += `<input class="opt__text" type="text" id="opt-${t.key}" maxlength="${t.maxLength}" placeholder="${esc((t.placeholder || '') + (cardOn() ? '' : ' · nije obavezno'))}" value="${esc(sel[t.key] || '')}" aria-label="Tekst posvete">`;
           }
           return `
             <div class="opt${err ? ' has-error' : ''}">
@@ -255,11 +256,13 @@
         if (tile) return showLightbox(Number(tile.dataset.tile));
         const opt = e.target.closest('[data-opt]');
         if (opt) {
+          const hadText = textOn();
           sel[opt.dataset.opt] = opt.dataset.val;
-          if (opt.dataset.opt === 'pack' && !cardOn()) delete sel.dedication;
+          if (opt.dataset.opt === 'pack' && !textOn()) delete sel.dedication;
+          if (opt.dataset.opt === 'pack' && !cardOn()) missing = missing.filter((k) => k !== 'dedication');
           missing = missing.filter((k) => k !== opt.dataset.opt);
           renderOpts();
-          if (opt.dataset.opt === 'pack' && cardOn()) $('#opt-dedication')?.focus();
+          if (opt.dataset.opt === 'pack' && textOn() && !hadText) $('#opt-dedication')?.focus();
           if (!p.images?.length) renderGallery();   // photos don't depend on the options, so leave them alone (no reload flash)
           return;
         }
@@ -278,7 +281,7 @@
           const opts = {};
           (p.options || []).forEach((o) => {
             const v = (sel[o.key] || '').trim();
-            if (v && (o.key !== 'dedication' || cardOn())) opts[o.key] = v;
+            if (v && (o.key !== 'dedication' || textOn())) opts[o.key] = v;
           });
           SC.addToCart(p.id, qty, opts);
           SC.openCart();

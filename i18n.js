@@ -86,7 +86,7 @@
     'Sojin vosak': 'Soy wax', 'Prirodan, obnovljiv i čist. Sagoreva sporije i ravnomernije od parafina.': 'Natural, renewable and clean. Burns slower and more evenly than paraffin.',
     'Male serije': 'Small batches', 'Livamo ih ručno, nekoliko desetina odjednom, da bi svaka dobila pažnju.': 'We pour them by hand, a few dozen at a time, so each one gets attention.',
     'Sami radimo dizajn kartice i pakovanja i dogovaramo se sa vama dok niste zadovoljni.': 'We design the card and the packaging ourselves and keep refining it with you until you are happy.',
-    'Probajte neku od njih': 'Try one of them', 'Pogledajte celu kolekciju i nađite svoj miris.': 'Browse the whole collection and find your scent.',
+    'Pogledajte celu kolekciju i pronađite svoj miris.': 'Browse the whole collection and find your scent.',
     'O nama · Scampy Candles': 'About us · Scampy Candles',
     'Priča iza Scampy Candles: ručno rađene sojine sveće i dizajn od početka do kraja.': 'The story behind Scampy Candles: handmade soy candles and design from start to finish.',
 

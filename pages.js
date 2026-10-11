@@ -125,7 +125,7 @@
         const list = slides();
         const shown = list.slice(0, SHOWN);
         const more = list.length - SHOWN;
-        $('#pdp-bento').className = `bento bento--${shown.length}${introPlayed ? '' : ' bento--intro'}`;
+        $('#pdp-bento').className = `bento bento--${shown.length}${p.images?.length ? ' bento--photos' : ''}${introPlayed ? '' : ' bento--intro'}`;
         introPlayed = true;
         $('#pdp-count').textContent = `1 / ${list.length}`;
         $('#pdp-bento').innerHTML = shown.map((s, i) => `
@@ -327,7 +327,7 @@
 
         $('#sum-items').innerHTML = s.rows.map(({ p, qty, opts, sum }) => `
           <div class="sum-line">
-            <div class="line__thumb" style="--tone:${p.color}">${window.SC.productSVG(p, opts)}<span class="sum-qty">${qty}</span></div>
+            <div class="line__thumb" style="--tone:${p.color}">${window.SC.thumbHTML(p, opts)}<span class="sum-qty">${qty}</span></div>
             <div><strong>${p.name}</strong><br><span class="muted">${esc(window.SC.describeOpts(p, opts).join(' · ') || p.size)}</span></div>
             <div>${money(sum)}</div>
           </div>`).join('');

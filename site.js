@@ -31,21 +31,21 @@
 
   const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu biraš sam/a.';
   // `price` is the per-piece price from `bulkMin` pieces up; below that it is 10% higher.
-  const gift = (id, name, shape, price, color) => ({
+  const gift = (id, name, shape, price, color, images = []) => ({
     id, name, shape, price, color, bulkMin: 50,
     category: 'pokloncici', family: 'Poklončić', size: '',
     desc: GIFT_DESC, options: GIFT_OPTIONS,
-    // Real photos: put files in assets/products/ and list them here, e.g.
-    // images: ['assets/products/mali-meda-1.jpg', 'assets/products/mali-meda-2.jpg']
-    images: [],
+    // Real photos live in assets/products/. The first one is the main picture.
+    // A candle without photos shows the drawn placeholders instead.
+    images: images.map((f) => `assets/products/${f}`),
   });
 
   const PRODUCTS = [
-    gift(7,  'Mali meda',             'bear',       1.7, '#eadfc8'),
-    gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb'),
-    gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d'),
-    gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4'),
-    gift(11, 'Božur',                 'peony',      2.0, '#efc3cb'),
+    gift(7,  'Mali meda',             'bear',       1.7, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
+    gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb', ['meda-sa-srcem-1.jpg']),
+    gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg']),
+    gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg']),
+    gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg']),
     gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f'),
     gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df'),
 
@@ -201,6 +201,11 @@
          <path d="M60 100l-13-8v16ZM60 100l13-8v16Z" fill="${ribbon}" stroke="rgba(0,0,0,.14)"/><circle cx="60" cy="100" r="4" fill="${ribbon}" stroke="rgba(0,0,0,.14)"/>`;
     return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="110" rx="36" ry="4" fill="rgba(0,0,0,.08)"/>${inner}${front}</svg>`;
   }
+
+  // Small picture for the cart and checkout: the photo if there is one, else the figurine in the chosen colors.
+  const thumbHTML = (p, opts = {}) => (p.images?.length
+    ? `<img src="${esc(p.images[0])}" alt="" loading="lazy">`
+    : productSVG(p, opts));
 
   // Photo if the product has one, otherwise the illustration.
   const mediaHTML = (p) => (p.images?.length
@@ -412,7 +417,7 @@
       const parts = describeOpts(p, opts);
       return `
       <div class="line" data-key="${esc(key)}">
-        <div class="line__thumb" style="--tone:${p.color}">${productSVG(p, opts)}</div>
+        <div class="line__thumb" style="--tone:${p.color}">${thumbHTML(p, opts)}</div>
         <div class="line__info">
           <a href="proizvod.html?id=${p.id}"><strong>${p.name}</strong></a>
           ${parts.length ? `<span class="line__opts">${esc(parts.join(' · '))}</span>` : ''}
@@ -525,7 +530,7 @@
 
   window.SC = {
     PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
-    money, shippingFor, unitPrice, candleSVG, productSVG, packSVG, describeOpts, cardHTML,
+    money, shippingFor, unitPrice, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,

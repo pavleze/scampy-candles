@@ -260,7 +260,7 @@
           sel[opt.dataset.opt] = opt.dataset.val;
           missing = missing.filter((k) => k !== opt.dataset.opt);
           renderOpts();
-          renderGallery();
+          if (!p.images?.length) renderGallery();   // photos don't depend on the options, so leave them alone (no reload flash)
           return;
         }
 
@@ -306,7 +306,8 @@
       const renderRelated = () => {
         const others = PRODUCTS.filter((x) => x.id !== p.id);
         const same = others.filter((x) => x.category === p.category);
-        related.innerHTML = [...same, ...others.filter((x) => !same.includes(x))].slice(0, 3).map(cardHTML).join('');
+        const html = [...same, ...others.filter((x) => !same.includes(x))].slice(0, 3).map(cardHTML).join('');
+        if (html !== related.dataset.html) { related.innerHTML = html; related.dataset.html = html; }
       };
 
       subscribe(() => { renderPrice(); renderRelated(); });

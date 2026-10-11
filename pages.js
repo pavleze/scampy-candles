@@ -232,7 +232,7 @@
           if (askText) {
             const t = p.options.find((x) => x.type === 'text');
             control += `<textarea class="opt__text" id="opt-${t.key}" rows="3" maxlength="${t.maxLength}" placeholder="${esc(t.placeholder || '')}" aria-label="Tekst posvete">${esc(sel[t.key] || '')}</textarea>
-              <p class="opt__help">Detalje možemo dogovoriti i telefonom posle porudžbine, a šaljemo i predlog dizajna.</p>`;
+              <p class="opt__help">Detalje možemo dogovoriti i telefonom posle porudžbine, nakon čega šaljemo predloge dizajna.</p>`;
           }
           return `
             <div class="opt${err ? ' has-error' : ''}">

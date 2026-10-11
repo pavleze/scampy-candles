@@ -11,7 +11,7 @@
     { img: 'assets/instagram/objava-1.jpg', url: 'https://www.instagram.com/reel/DdLyVzqs3TT/', alt: 'Bubble – poklončići, sveće od sojinog voska' },
     { img: 'assets/instagram/objava-2.jpg', url: 'https://www.instagram.com/reel/DOp_nfvjGih/', alt: 'Always & Forever srce – ručno livene sveće' },
     { img: 'assets/instagram/objava-3.jpg', url: 'https://www.instagram.com/reel/DJ13S1zMxB4/', alt: 'Poklončići za rođendane i krštenja' },
-    { img: null, url: null, alt: '' },
+    { img: 'assets/instagram/objava-4.jpg', url: 'https://www.instagram.com/reel/DQYsi3rjK4x/', alt: 'Božur – poklončići za venčanja' },
     { img: null, url: null, alt: '' },
     { img: null, url: null, alt: '' },
   ];

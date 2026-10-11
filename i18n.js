@@ -57,6 +57,7 @@
     'Budite u toku': 'Stay in the loop', 'Prijavite se i dobijte 10% popusta na prvu porudžbinu.': 'Sign up and get 10% off your first order.',
     'Prijavite me': 'Sign me up', 'ime@email.com': 'name@email.com',
     'Hvala! Javljamo se uskoro 🐾': 'Thank you! We will be in touch soon 🐾',
+    'Božur – poklončići za venčanja': 'Peony – wedding favours',
     'Always & Forever srce – ručno livene sveće': 'Always & Forever Heart – hand-poured candles',
     'Poklončići za rođendane i krštenja': 'Guest favours for birthdays and christenings',
     'Bubble – poklončići, sveće od sojinog voska': 'Bubble – guest favours, soy wax candles',

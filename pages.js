@@ -12,7 +12,7 @@
     { img: 'assets/instagram/objava-2.jpg', url: 'https://www.instagram.com/reel/DOp_nfvjGih/', alt: 'Always & Forever srce – ručno livene sveće' },
     { img: 'assets/instagram/objava-3.jpg', url: 'https://www.instagram.com/reel/DJ13S1zMxB4/', alt: 'Poklončići za rođendane i krštenja' },
     { img: 'assets/instagram/objava-4.jpg', url: 'https://www.instagram.com/reel/DQYsi3rjK4x/', alt: 'Božur – poklončići za venčanja' },
-    { img: null, url: null, alt: '' },
+    { img: 'assets/instagram/objava-5.jpg', url: 'https://www.instagram.com/p/DKZQ87sszFq/', alt: 'Medvedići za krštenje' },
     { img: null, url: null, alt: '' },
   ];
   const PAW = '<svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><ellipse cx="14" cy="28" rx="7" ry="9" transform="rotate(-18 14 28)"/><ellipse cx="26" cy="15" rx="7" ry="10" transform="rotate(-6 26 15)"/><ellipse cx="40" cy="15" rx="7" ry="10" transform="rotate(6 40 15)"/><ellipse cx="52" cy="28" rx="7" ry="9" transform="rotate(18 52 28)"/><path d="M32 30c-9 0-17 9-17 17 0 6 4 9 9 9 3 0 5-1 8-1s5 1 8 1c5 0 9-3 9-9 0-8-8-17-17-17Z"/></svg>';

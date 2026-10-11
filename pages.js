@@ -480,7 +480,7 @@
           <div>${m((i.unit ?? i.price) * i.qty)}</div>
         </div>`).join('');
       $('#order-sub').textContent = m(order.subtotal);
-      $('#order-ship').textContent = 'Snosi kupac';
+      $('#order-ship').textContent = 'Plaća se kuriru';
       $('#order-total').textContent = m(order.total);
       $('#order-address').innerHTML = [
         `${esc(c.firstName)} ${esc(c.lastName)}`,

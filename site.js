@@ -454,7 +454,7 @@
     $('#drawer-total').textContent = money(subtotal);
     $('#checkout').classList.toggle('is-disabled', count === 0);
     $('#checkout').setAttribute('aria-disabled', String(count === 0));
-    $('#drawer-note').textContent = count === 0 ? '' : 'Dostavu snosi kupac.';
+    $('#drawer-note').textContent = count === 0 ? '' : 'Poštarinu plaćaš kuriru.';
 
     // Don't rebuild the list while the user is typing a quantity.
     if (itemsEl.contains(document.activeElement) && document.activeElement.matches('[data-qty]')) return;

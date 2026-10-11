@@ -950,7 +950,6 @@ a.btn.is-disabled { opacity: .4; pointer-events: none; }
 
 /* ---------- Gallery mosaic (4–6 pictures) ---------- */
 
-.pdp__gallery { position: sticky; }
 .bento--4, .bento--5, .bento--6 {
   grid-template-columns: 1fr 1fr .8fr;
   grid-template-rows: 1.2fr .95fr .85fr;
@@ -1035,3 +1034,6 @@ a.btn.is-disabled { opacity: .4; pointer-events: none; }
   .pdp { padding-top: 12px; }
 }
 .bento__count:empty { display: none !important; }
+
+/* The gallery only sticks on desktop */
+@media (max-width: 820px) { .pdp__gallery { position: static; } }

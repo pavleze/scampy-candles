@@ -121,7 +121,7 @@
       const phone = window.matchMedia('(max-width: 820px)');
 
       const tileHTML = (s, i, more = 0) => `
-        <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
+        <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}" aria-label="Uvećajte sliku ${i + 1}">
           ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
           ${slideHTML(s)}
           ${more > 0 ? `<span class="tile__more">+${more}</span>` : ''}
@@ -234,10 +234,10 @@
         let html = `<p class="pdp__price">${money(unit)} <small>/ kom</small></p>`;
         if (p.tiers) {
           const more = SC.nextTier(p, eff);
-          html += `<p class="pdp__tier${more ? '' : ' is-on'}">${more ? 'Sa većom količinom cena po komadu je manja' : 'Najniža cena ✓'} · <button type="button" class="linkbtn" data-prices>pogledaj cene</button></p>`;
+          html += `<p class="pdp__tier${more ? '' : ' is-on'}">${more ? 'Sa većom količinom cena po komadu je manja' : 'Najniža cena ✓'} · <button type="button" class="linkbtn" data-prices>pogledajte cene</button></p>`;
         }
         $('#pdp-price').innerHTML = html;
-        $('#pdp-add').textContent = `Dodaj u korpu · ${money(total)}`;
+        $('#pdp-add').textContent = `Dodajte u korpu · ${money(total)}`;
       };
 
       // ----- options -----
@@ -276,7 +276,7 @@
               `<button type="button" class="${sel[o.key] === c ? 'is-active' : ''}" data-opt="${o.key}" data-val="${esc(c)}" aria-pressed="${sel[o.key] === c}">${esc(c)}</button>`).join('')}</div>`;
           } else if (o.type === 'choice') {
             control = `<select class="opt__select" data-select="${o.key}" aria-label="${o.label}">
-              <option value="">Izaberi…</option>
+              <option value="">Izaberite…</option>
               ${o.choices.map((c) => `<option value="${esc(c)}"${sel[o.key] === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>`;
           } else {
             control = swatchGroup(o);
@@ -289,7 +289,7 @@
           }
           return `
             <div class="opt${err ? ' has-error' : ''}">
-              <div class="opt__label">${o.label}${shown ? ` <span class="opt__val">· ${esc(shown)}</span>` : ''}${err ? ` <span class="opt__err">· ${needsText && !missing.includes(o.key) ? 'upiši tekst posvete' : 'izaberi'}</span>` : ''}</div>
+              <div class="opt__label">${o.label}${shown ? ` <span class="opt__val">· ${esc(shown)}</span>` : ''}${err ? ` <span class="opt__err">· ${needsText && !missing.includes(o.key) ? 'upišite tekst posvete' : 'izaberite'}</span>` : ''}</div>
               ${control}
             </div>${o.key === 'pack' ? qtyRow() : ''}`;
         }).join('');
@@ -339,7 +339,7 @@
             if (missing.length) {
               renderOpts();
               $('.opt.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              SC.toast('Izaberi označene opcije');
+              SC.toast('Izaberite označene opcije');
               return;
             }
           }

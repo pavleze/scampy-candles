@@ -29,10 +29,10 @@
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.
     { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 140, placeholder: 'Ime/imena, posveta npr. „Hvala što ste bili sa nama“, datum' },
     { key: 'ribbon',     label: 'Boja mašnice',  type: 'swatch', choices: RIBBONS },
-    { key: 'note',       label: 'Napomena',      type: 'note', optional: true, maxLength: 300, placeholder: 'Ako imaš neku želju koja nije navedena ili pitanje, ostavi ovde' },
+    { key: 'note',       label: 'Napomena',      type: 'note', optional: true, maxLength: 300, placeholder: 'Ako imate neku želju koja nije navedena ili pitanje, ostavite ovde' },
   ];
 
-  const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu biraš sam/a.';
+  const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu birate sami.';
   // `price` is the per-piece price from `bulkMin` pieces up; below that it is 10% higher.
   // Quantity tiers: from `from` pieces up, the base price is multiplied by `mult` (counted over all variants of the candle).
   const TIERS_BASIC = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }];
@@ -275,8 +275,8 @@
         <div class="card__row">
           <span class="card__price">${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price)}${isGift ? `<small class="card__bulk">po komadu · ${p.defaultQty || p.minQty} kom, ${p.options[0].choices[0].toLowerCase()}</small>` : ''}</span>
           ${isGift
-            ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberi</a>`
-            : `<button class="btn btn--small" type="button" data-add="${p.id}">Dodaj</button>`}
+            ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberite</a>`
+            : `<button class="btn btn--small" type="button" data-add="${p.id}">Dodajte</button>`}
         </div>
       </div>
     </article>`;
@@ -379,7 +379,7 @@
       </div>
     </div>
     <form class="search" id="search" role="search" hidden>
-      <input type="search" id="search-input" placeholder="Pretraži sveće (npr. lavanda, vanila…)" aria-label="Pretraga" autocomplete="off">
+      <input type="search" id="search-input" placeholder="Pretražite sveće (npr. vanila, limun…)" aria-label="Pretraga" autocomplete="off">
     </form>`;
 
   const footerHTML = `
@@ -411,7 +411,7 @@
     <div class="overlay" id="overlay" hidden></div>
     <aside class="drawer" id="drawer" aria-label="Korpa" aria-hidden="true">
       <div class="drawer__head">
-        <h2>Tvoja korpa</h2>
+        <h2>Vaša korpa</h2>
         <button class="icon-btn" id="drawer-close" aria-label="Zatvori">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
@@ -419,7 +419,7 @@
       <div class="drawer__items" id="drawer-items"></div>
       <div class="drawer__foot">
         <div class="drawer__total"><span>Ukupno</span><strong id="drawer-total">0</strong></div>
-        <a class="btn btn--solid btn--block" id="checkout" href="checkout.html">Nastavi na plaćanje</a>
+        <a class="btn btn--solid btn--block" id="checkout" href="checkout.html">Nastavite na plaćanje</a>
         <p class="muted drawer__note" id="drawer-note"></p>
       </div>
     </aside>
@@ -454,7 +454,7 @@
     $('#drawer-total').textContent = money(subtotal);
     $('#checkout').classList.toggle('is-disabled', count === 0);
     $('#checkout').setAttribute('aria-disabled', String(count === 0));
-    $('#drawer-note').textContent = count === 0 ? '' : 'Poštarinu plaćaš kuriru.';
+    $('#drawer-note').textContent = count === 0 ? '' : 'Poštarinu plaćate kuriru.';
 
     // Don't rebuild the list while the user is typing a quantity.
     if (itemsEl.contains(document.activeElement) && document.activeElement.matches('[data-qty]')) return;
@@ -478,7 +478,7 @@
         <div class="line__sum">${money(sum)}</div>
       </div>`;
     }).join('')
-      : '<p class="drawer__empty">Korpa je prazna.<br>Dodaj neku sveću 🕯️</p>';
+      : '<p class="drawer__empty">Korpa je prazna.<br>Dodajte neku sveću 🕯️</p>';
   }
 
   itemsEl.addEventListener('click', (e) => {

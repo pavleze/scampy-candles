@@ -1221,3 +1221,11 @@ textarea.opt__text { min-height: 0; height: auto; resize: none; overflow: hidden
 @media (max-width: 820px) {
   .header.is-scrolled .nav { background: var(--hdr-bg); border-bottom-color: var(--hdr-line); }
 }
+
+/* ---------- Header: links centred between the logo (left) and the icons (right) ---------- */
+@media (min-width: 1100px) {
+  .header__bar { grid-template-columns: 1fr auto 1fr; }
+  .brand { justify-self: start; }
+  .nav { margin-left: 0; justify-self: center; }
+  .header__actions { justify-self: end; }
+}

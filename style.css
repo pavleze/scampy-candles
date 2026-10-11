@@ -1583,3 +1583,24 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 
 .card__amount { white-space: nowrap; }
 .card__unit { font-size: .85rem; font-weight: 400; color: var(--muted); letter-spacing: .02em; }
+
+/* Touch screens have no hover, so the name, the count and the button are always shown */
+@media (hover: none) {
+  .collection__hover { background: rgba(28, 19, 12, .62); }
+  .collection__more { max-height: 140px; opacity: 1; margin-top: 10px; gap: 8px; }
+  .collection__hover-name { font-size: clamp(1.05rem, 4.6vw, 1.7rem); }
+  .collection__hover-count { font-size: .9rem; }
+  .collection__view { padding: 9px 20px; font-size: .92rem; border-radius: 5px; }
+}
+
+@media (hover: none) {
+  .collection__media svg { display: none; }                       /* the paw would sit behind the name */
+}
+@media (hover: none) and (max-width: 420px) {
+  .collections .collection:not(:last-child) .collection__media { aspect-ratio: 4 / 5; }
+  .collection__hover { padding: 8px; }
+  .collection__hover-name { font-size: clamp(.9rem, 4.4vw, 1.2rem); letter-spacing: .03em; }
+  .collection__more { margin-top: 8px; gap: 6px; }
+  .collection__hover-count { font-size: .8rem; }
+  .collection__view { padding: 8px 12px; font-size: .84rem; }
+}

@@ -66,7 +66,11 @@
       tiers: TIERS_FULL_40,
       bulkMin: 40,
     }),
-    gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
+    gift(9,  'Lavić',                 'lion',       1.45, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg'], {
+      // same model as Mali meda: box (1.70) is the base from 50 pieces, tulle/card 10% below, plain 15% below
+      packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
+      tiers: TIERS_FULL,
+    }),
     gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
     gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg']),
     gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),

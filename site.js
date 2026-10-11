@@ -48,6 +48,9 @@
     gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg']),
     gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f'),
     gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df'),
+    // TODO: prices for Astronaut and Limun are placeholders until confirmed.
+    gift(14, 'Astronaut',             'astronaut',  2.0, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
+    gift(15, 'Limun',                 'lemon',      2.0, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg']),
 
     // Mock scented candles (placeholders until the real range is added)
     { id: 1, category: 'mirisne', name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,

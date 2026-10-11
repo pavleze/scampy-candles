@@ -1605,3 +1605,7 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
   .collection__view { padding: 8px 12px; font-size: .84rem; }
 }
 .card__from { font-size: .85rem; font-weight: 400; color: var(--muted); letter-spacing: .02em; }
+
+/* the Instagram handle under the collections heading is not underlined */
+.page-head .muted a.link { border-bottom: 0; text-decoration: none; }
+.page-head .muted a.link:hover { color: var(--ink); text-decoration: none; }

@@ -51,6 +51,8 @@
     // TODO: prices for Astronaut and Limun are placeholders until confirmed.
     gift(14, 'Astronaut',             'astronaut',  2.0, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
     gift(15, 'Limun',                 'lemon',      2.0, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg']),
+    // TODO: price for Pahulja is a placeholder, and it has no photos yet.
+    gift(16, 'Pahulja',               'snowflake',  2.0, '#cfe3f2'),
 
     // Mock scented candles (placeholders until the real range is added)
     { id: 1, category: 'mirisne', name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,
@@ -165,6 +167,13 @@
           <g clip-path="url(#sc-heart-clip)" stroke="rgba(255,255,255,.55)" stroke-width="1.2" fill="none">
             <path d="M14 56H106M44 36L60 104M76 36L60 104M26 44L60 104M94 44L60 104M60 50V104M30 70H90"/></g>${bow(60, 40, r)}`;
         break;
+      case 'snowflake': {
+        const arm = 'M60 60V22M60 34l-9-8M60 34l9-8M60 46l-7-6M60 46l7-6';
+        const arms = (stroke, w) => Array.from({ length: 6 }, (_, i) =>
+          `<path d="${arm}" transform="rotate(${i * 60} 60 60)" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`).join('');
+        body = `${arms('rgba(0,0,0,.16)', 9)}${arms(c, 6)}<circle cx="60" cy="60" r="8" fill="${c}"/>${bow(60, 60, r)}`;
+        break;
+      }
       default:
         return candleSVG(c);
     }

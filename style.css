@@ -1518,7 +1518,7 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 .hero-dot { position: relative; }
 .hero-dot svg { position: absolute; inset: 4px; width: 24px; height: 24px; transform: rotate(-90deg); pointer-events: none; }
 .hero-dot svg circle { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 63; stroke-dashoffset: 63; opacity: 0; }
-.hero-dot.is-on svg circle { opacity: 1; animation: dot-ring 10s linear forwards; }
+.hero-dot.is-on svg circle { opacity: 1; animation: dot-ring 6s linear forwards; }
 @keyframes dot-ring { from { stroke-dashoffset: 63; } to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) { .hero-dot.is-on svg circle { animation: none; stroke-dashoffset: 0; } }
 
@@ -1529,3 +1529,15 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 .hero-wrap--photo.is-mono::before { opacity: 0; }
 .hero-wrap--photo.is-mono::after { opacity: 1; }
 @media (max-width: 820px) { .hero-wrap--photo::after { background: linear-gradient(180deg, rgba(10, 10, 10, .78), rgba(10, 10, 10, .7)); } }
+
+
+/* Dots: all filled white; the one that is up now turns into a ring that fills clockwise until the time is up (6 s) */
+.hero-dot::before { width: 12px; height: 12px; border: 0; background: rgba(255, 255, 255, .95); transition: opacity .25s, transform .25s; }
+.hero-dot:hover::before { background: #fff; transform: scale(1.15); }
+.hero-dot.is-on::before { opacity: 0; transform: scale(.4); }
+.hero-dot svg circle { fill: none; stroke-width: 2.2; }
+.hero-dot svg .track { stroke: rgba(255, 255, 255, .38); stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0; transition: opacity .25s; }
+.hero-dot.is-on svg .track { opacity: 1; animation: none; }
+.hero-dot svg .bar { stroke: #fff; stroke-dasharray: 63; stroke-dashoffset: 63; opacity: 0; }
+.hero-dot.is-on svg .bar { opacity: 1; animation: dot-ring 6s linear forwards; }
+@media (prefers-reduced-motion: reduce) { .hero-dot.is-on svg .bar { animation: none; stroke-dashoffset: 0; } }

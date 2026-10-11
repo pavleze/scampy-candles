@@ -25,14 +25,15 @@
           ${post.img ? `<img src="${esc(post.img)}" alt="${esc(post.alt)}" loading="lazy">` : PAW}
         </a>`).join('');
 
-      // Hero pictures: change by themselves every 10 seconds, or with the dots at the bottom
+      // Hero pictures: change by themselves every HERO_SECONDS seconds (the ring in style.css uses the same number), or with the dots
       (() => {
+        const HERO_SECONDS = 6;
         const slides = $$('.hero-bg span');
         const dotsBox = $('#hero-dots');
         if (slides.length < 2 || !dotsBox) return;
         let current = 0;
         let timer;
-        dotsBox.innerHTML = slides.map((_, i) => `<button type="button" class="hero-dot" data-i="${i}" aria-label="Slika ${i + 1}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg></button>`).join('');
+        dotsBox.innerHTML = slides.map((_, i) => `<button type="button" class="hero-dot" data-i="${i}" aria-label="Slika ${i + 1}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="track" cx="12" cy="12" r="10"/><circle class="bar" cx="12" cy="12" r="10"/></svg></button>`).join('');
         const dots = $$('.hero-dot', dotsBox);
         const show = (i) => {
           current = (i + slides.length) % slides.length;
@@ -45,7 +46,7 @@
         const start = () => {
           clearInterval(timer);
           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          timer = setInterval(() => show(current + 1), 10000);
+          timer = setInterval(() => show(current + 1), HERO_SECONDS * 1000);
         };
         dotsBox.addEventListener('click', (e) => {
           const d = e.target.closest('.hero-dot');

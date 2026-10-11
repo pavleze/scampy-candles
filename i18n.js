@@ -68,7 +68,7 @@
 
     // ----- shop -----
     'Ručno livene, od sojinog voska sa pamučnim fitiljem.': 'Hand-poured, made of soy wax with a cotton wick.',
-    'Sve': 'All', 'Naše kolekcije': 'Our collections', 'Pogledajte': 'View', 'Izaberite kolekciju.': 'Choose a collection.', 'Uskoro': 'Coming soon', '← Sve kolekcije': '← All collections',
+    'Sve': 'All', 'Naše kolekcije': 'Our collections', 'Pogledajte': 'View', 'Pažljivo odabrani komadi -': 'Carefully selected pieces -', 'Uskoro': 'Coming soon', '← Sve kolekcije': '← All collections',
     'Kolekcije · Scampy Candles': 'Collections · Scampy Candles',
     'Naše kolekcije: poklončići za goste, Classic, Sezonska kolekcija i buketi.': 'Our collections: guest favours, Classic, Seasonal collection and bouquets.', 'Kolekcija': 'Collection', 'Classic kolekcija': 'Classic collection', 'Sezonska kolekcija': 'Seasonal collection', 'Buketi': 'Bouquets',
     'Ova kolekcija uskoro stiže. Javite nam se ako želite da je naručite.': 'This collection is coming soon. Get in touch if you would like to order it.',

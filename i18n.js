@@ -34,19 +34,19 @@
     'Manje': 'Less', 'Više': 'More',
 
     // ----- home -----
-    'Sveće od sojinog voska sa pamučnim fitiljem, ručno livene u malim serijama, sa mirisima koji greju dom.':
+    'Sveće od sojinog voska sa pamučnim fitiljem, ručno izlivene u malim serijama, sa mirisima koji greju dom.':
       'Soy wax candles with cotton wicks, hand-poured in small batches, with scents that warm the home.',
-    'Ručni rad': 'Handmade', 'Ručno livene sveće sa mašnom': 'Hand-poured candles with a ribbon',
+    'Ručni rad': 'Handmade', 'Ručno izlivene sveće sa mašnom': 'Hand-poured candles with a ribbon',
     'Posebni trenuci': 'Special moments', 'zaslužuju posebne detalje.': 'deserve special details.',
     'Pogledajte prodavnicu': 'Visit the shop', 'Naša priča': 'Our story', 'Zašto Scampy': 'Why Scampy',
     '100% sojin vosak': '100% soy wax', 'Čisto sagorevanje, bez parafina': 'Clean burning, no paraffin',
-    'Ručno livene': 'Hand-poured', 'Male serije, velika pažnja': 'Small batches, great care',
+    'Ručno izlivene': 'Hand-poured', 'Male serije, velika pažnja': 'Small batches, great care',
     'Dizajn od početka do kraja': 'Design from start to finish', 'Dogovaramo dok niste zadovoljni': 'We keep refining it until you are happy',
     'Lično preuzimanje ili slanje poštom': 'Personal pickup or delivery by post', 'U Beogradu možete preuzeti lično': 'In Belgrade you can pick it up in person',
     'Poklončići za goste': 'Guest favours', 'Mali pokloni sa velikim srcem': 'Small gifts with a big heart',
     'Za venčanja, krštenja i rođendane. Boju, miris, pakovanje i posvetu birate Vi.': 'For weddings, christenings and birthdays. You choose the color, scent, packaging and message.',
     'Poklončić za goste': 'Guest favour', 'Odaberite': 'Choose', 'Sve sveće': 'All candles',
-    'Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom. Danas svaku sveću i dalje ručno livamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali.':
+    'Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom. Danas svaku sveću i dalje ručno izlivamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali.':
       'Scampy started in a small kitchen, with one pot of wax and one very curious dog. Today we still pour every candle by hand, from soy wax with a cotton wick and scents we chose ourselves.',
     'Pročitajte celu priču →': 'Read the full story →',
     'Utisci': 'Reviews', 'Šta kažu naši kupci': 'What our customers say',
@@ -59,15 +59,15 @@
     'Capri Lemon – sveća u obliku limuna': 'Capri Lemon – lemon-shaped candle',
     'Medvedići za krštenje': 'Teddy bears for a christening',
     'Božur – poklončići za venčanja': 'Peony – wedding favours',
-    'Always & Forever srce – ručno livene sveće': 'Always & Forever Heart – hand-poured candles',
+    'Always & Forever srce – ručno izlivene sveće': 'Always & Forever Heart – hand-poured candles',
     'Poklončići za rođendane i krštenja': 'Guest favours for birthdays and christenings',
     'Bubble – poklončići, sveće od sojinog voska': 'Bubble – guest favours, soy wax candles',
     'Scampy Candles · Ručno rađene sojine sveće': 'Scampy Candles · Handmade soy candles',
     'Ručno rađene sojine sveće. Pawsitively handcrafted, with love.': 'Handmade soy candles. Pawsitively handcrafted, with love.',
 
     // ----- shop -----
-    'Ručno livene, od sojinog voska sa pamučnim fitiljem.': 'Hand-poured, made of soy wax with a cotton wick.',
-    'Sve': 'All', 'Naše kolekcije': 'Our collections', 'Pogledajte': 'View', 'Pažljivo odabrani komadi -': 'Carefully selected pieces -', 'Uskoro': 'Coming soon', '← Sve kolekcije': '← All collections',
+    'Ručno izlivene, od sojinog voska sa pamučnim fitiljem.': 'Hand-poured, made of soy wax with a cotton wick.',
+    'Sve': 'All', 'Naše kolekcije': 'Our collections', 'Sve kolekcije': 'All collections', 'Pogledajte': 'View', 'Pažljivo odabrani komadi -': 'Carefully selected pieces -', 'Uskoro': 'Coming soon', '← Sve kolekcije': '← All collections',
     'Kolekcije · Scampy Candles': 'Collections · Scampy Candles',
     'Naše kolekcije: poklončići za goste, Classic, Sezonska kolekcija i buketi.': 'Our collections: guest favours, Classic, Seasonal collection and bouquets.', 'Kolekcija': 'Collection', 'Classic kolekcija': 'Classic collection', 'Sezonska kolekcija': 'Seasonal collection', 'Buketi': 'Bouquets',
     'Ova kolekcija uskoro stiže. Javite nam se ako želite da je naručite.': 'This collection is coming soon. Get in touch if you would like to order it.',
@@ -79,12 +79,12 @@
     // ----- about -----
     'Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom po imenu Scampy. Dok je on čuvao stražu, nastale su prve sveće.':
       'Scampy started in a small kitchen, with one pot of wax and one very curious dog called Scampy. While he stood guard, the first candles were made.',
-    'Danas svaku sveću i dalje ručno livamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali. Zato svaka ima malo drugačiji karakter.':
+    'Danas svaku sveću i dalje ručno izlivamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali. Zato svaka ima malo drugačiji karakter.':
       'Today we still pour every candle by hand, from soy wax with a cotton wick and scents we chose ourselves. That is why each one has a slightly different character.',
     'prodatih sveća': 'candles sold', 'autorskih mirisa': 'signature scents',
     'Naše vrednosti': 'Our values', 'Od čega pravimo sveće': 'What we make our candles from',
     'Sojin vosak': 'Soy wax', 'Prirodan, obnovljiv i čist. Sagoreva sporije i ravnomernije od parafina.': 'Natural, renewable and clean. Burns slower and more evenly than paraffin.',
-    'Male serije': 'Small batches', 'Livamo ih ručno, nekoliko desetina odjednom, da bi svaka dobila pažnju.': 'We pour them by hand, a few dozen at a time, so each one gets attention.',
+    'Male serije': 'Small batches', 'Izlivamo ih ručno, nekoliko desetina odjednom, da bi svaka dobila pažnju.': 'We pour them by hand, a few dozen at a time, so each one gets attention.',
     'Sami radimo dizajn kartice i pakovanja i dogovaramo se sa vama dok niste zadovoljni.': 'We design the card and the packaging ourselves and keep refining it with you until you are happy.',
     'Pogledajte celu kolekciju i pronađite svoj miris.': 'Browse the whole collection and find your scent.',
     'O nama · Scampy Candles': 'About us · Scampy Candles',

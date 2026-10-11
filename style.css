@@ -1647,3 +1647,5 @@ body[data-head="caps"] .page-head__title { text-transform: uppercase; font-size:
 /* Our small quote above the story */
 .motto { max-width: 760px; margin: 0 auto; padding: 4px 24px 8px; text-align: center; font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.7rem); letter-spacing: .03em; color: var(--gold-deep); line-height: 1.4; }
 .motto::after { content: ""; display: block; width: 44px; height: 1px; background: var(--gold-deep); opacity: .5; margin: 18px auto 0; }
+
+.collections + .center { margin-top: 36px; }

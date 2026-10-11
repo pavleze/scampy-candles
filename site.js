@@ -66,6 +66,14 @@
     ...extra,
   });
 
+  // Shop collections, in the order they appear as filters. Add products with the matching `category`.
+  const CATEGORIES = [
+    { key: 'pokloncici', label: 'Poklončići' },
+    { key: 'classic',    label: 'Classic kolekcija' },
+    { key: 'sezonska',   label: 'Sezonska kolekcija' },
+    { key: 'buketi',     label: 'Buketi' },
+  ];
+
   const PRODUCTS = [
     //            id  name                      shape         box   color      photos
     giftBox(7,  'Mali meda',             'bear',       1.70, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
@@ -79,26 +87,6 @@
     giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg', 'limun-3.jpg']),
     giftBox(16, 'Pahulja',               'snowflake',  2.00, '#cfe3f2', ['pahulja-1.jpg', 'pahulja-2.jpg']),
     giftBox(17, 'Cvetno srce',           'heart',      2.30, '#efc3cb', ['cvetno-srce-1.jpg']),
-
-    // Mock scented candles (placeholders until the real range is added)
-    { id: 1, category: 'mirisne', name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,
-      desc: 'Smirujući miris lavande sa toplom notom domaćeg meda. Savršena za večernje opuštanje.',
-      notes: { 'Gornje note': 'lavanda, bergamot', 'Srednje note': 'med, kamilica', 'Donje note': 'bela mošusna nota' } },
-    { id: 2, category: 'mirisne', name: 'Vanila & Karamel',   family: 'Slatko',    size: '200 g', price: 15.9, color: '#ecd3a3', tag: 'Novo', burn: 45,
-      desc: 'Kremasta vanila i slani karamel. Miris kao iz kuhinje u kojoj se peku kolači.',
-      notes: { 'Gornje note': 'mleko, šećer', 'Srednje note': 'vanila, karamel', 'Donje note': 'tonka pasulj' } },
-    { id: 3, category: 'mirisne', name: 'Cedar & Amber',      family: 'Drvenasto', size: '300 g', price: 19.9, color: '#c9a77c', burn: 65,
-      desc: 'Duboka, topla drvenasta kompozicija. Dobro dođe u većim prostorijama i hladnim danima.',
-      notes: { 'Gornje note': 'bors, citrus', 'Srednje note': 'cedar, ćilibar', 'Donje note': 'sandalovina' } },
-    { id: 4, category: 'mirisne', name: 'Bela čaj ruža',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#efc9cf', burn: 45,
-      desc: 'Nežna ruža sa belim čajem. Lagana, elegantna i nikad previše nametljiva.',
-      notes: { 'Gornje note': 'beli čaj, pelargonija', 'Srednje note': 'ruža, božur', 'Donje note': 'mošus' } },
-    { id: 5, category: 'mirisne', name: 'Eukaliptus & Mesec', family: 'Svež',      size: '200 g', price: 14.9, color: '#bcd5c7', burn: 45,
-      desc: 'Hladan eukaliptus i mirisni vazduh planinskog jutra. Čisti, sveži i bistri.',
-      notes: { 'Gornje note': 'eukaliptus, nana', 'Srednje note': 'zeleni čaj', 'Donje note': 'bela šuma' } },
-    { id: 6, category: 'mirisne', name: 'Cimet & Jabuka',     family: 'Slatko',    size: '300 g', price: 19.9, color: '#e0a98b', tag: 'Sezonski', burn: 65,
-      desc: 'Pečena jabuka, cimet i karanfilić. Jesen u tegli, dostupna samo ove sezone.',
-      notes: { 'Gornje note': 'jabuka, narandža', 'Srednje note': 'cimet, karanfilić', 'Donje note': 'vanila' } },
   ];
 
   const $ = (s, r = document) => r.querySelector(s);
@@ -289,6 +277,7 @@
   // ---------- Cart ----------
   const saveCart = () => store.set('sc.cart2', state.cart);
   const minQtyOf = (id) => PRODUCTS.find((x) => x.id == id)?.minQty || 1;
+  state.cart = state.cart.filter((l) => PRODUCTS.some((x) => x.id == l.id));   // products that were removed
   // carts saved before the minimum existed: lift them to it
   state.cart.forEach((l) => { l.qty = Math.max(l.qty, minQtyOf(l.id)); });
   const MAX_QTY = 999;
@@ -580,7 +569,7 @@
   renderDrawer();
 
   window.SC = {
-    PRODUCTS, state, $, $$, esc, store,
+    PRODUCTS, CATEGORIES, state, $, $$, esc, store,
     money, shippingFor, unitPrice, nextTier, round2, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK, minQtyOf,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,

@@ -37,7 +37,13 @@
     shop() {
       const grid = $('#grid');
       const empty = $('#empty');
-      const view = { filter: 'all', query: '' };
+      const CATS = window.SC.CATEGORIES;
+      const wanted = params.get('c');
+      const view = { filter: CATS.some((c) => c.key === wanted) ? wanted : 'all', query: '' };
+
+      // one chip per collection
+      $('#filters').innerHTML = [{ key: 'all', label: 'Sve' }, ...CATS].map((c) =>
+        `<button type="button" class="chip${c.key === view.filter ? ' is-active' : ''}" data-filter="${c.key}">${esc(c.label)}</button>`).join('');
 
       const render = () => {
         const q = view.query.trim().toLowerCase();
@@ -46,7 +52,10 @@
           (!q || `${p.name} ${p.family} ${p.desc}`.toLowerCase().includes(q)));
         grid.innerHTML = list.map(cardHTML).join('');
         empty.hidden = list.length > 0;
-        $('#result-count').textContent = `${list.length} ${list.length === 1 ? 'proizvod' : 'proizvoda'}`;
+        if (!list.length) {
+          empty.textContent = q ? 'Nema rezultata. Probajte drugu reč.' : 'Ova kolekcija uskoro stiže. Javite nam se ako želite da je naručite.';
+        }
+        $('#result-count').textContent = list.length ? `${list.length} ${list.length === 1 ? 'proizvod' : 'proizvoda'}` : '';
       };
 
       $('#filters').addEventListener('click', (e) => {

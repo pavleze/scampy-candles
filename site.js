@@ -108,9 +108,13 @@
   const emit = () => listeners.forEach((fn) => fn());
 
   // ---------- Money ----------
-  const money = (eur, cur = state.currency) => cur === 'EUR'
-    ? `${eur.toFixed(2).replace('.', ',')} €`
-    : `${Math.ceil(eur * RATE - 1e-7).toLocaleString('sr-RS')} RSD`;   // dinars also round up
+  // Serbian writes 1,87 € and 1.746 RSD; English writes €1.87 and 1,746 RSD.
+  const EN = window.SC_LANG === 'en';
+  const money = (eur, cur = state.currency) => {
+    if (cur === 'EUR') return EN ? `€${eur.toFixed(2)}` : `${eur.toFixed(2).replace('.', ',')} €`;
+    const din = Math.max(0, Math.ceil(eur * RATE - 1e-7));        // dinars round up (and never show -0)
+    return `${din.toLocaleString(EN ? 'en-US' : 'sr-RS')} RSD`;
+  };
 
   // Delivery is paid by the customer (to the courier), so it is not part of the shop's totals.
   const shippingFor = () => 0;
@@ -356,12 +360,20 @@
       </a>
       <nav class="nav" id="nav" aria-label="Glavni meni">
         ${NAV.map(([key, href, label]) => `<a href="${href}"${key === PAGE ? ' class="is-active" aria-current="page"' : ''}>${label}</a>`).join('')}
+        <div class="nav__prefs"><label class="select"><select class="lang-select" aria-label="Jezik">
+          <option value="sr">Srpski</option>
+          <option value="en">English</option>
+        </select></label></div>
       </nav>
       <div class="header__actions">
-        <div class="currency" role="group" aria-label="Valuta">
-          <button type="button" data-currency="EUR">EUR</button>
-          <button type="button" data-currency="RSD">RSD</button>
-        </div>
+        <label class="select"><select id="currency-select" aria-label="Valuta">
+          <option value="EUR">EUR (€)</option>
+          <option value="RSD">RSD (din)</option>
+        </select></label>
+        <label class="select select--lang"><select class="lang-select" aria-label="Jezik">
+          <option value="sr">Srpski</option>
+          <option value="en">English</option>
+        </select></label>
         <button class="icon-btn" id="search-btn" aria-label="Pretraga" aria-expanded="false" aria-controls="search">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
         </button>
@@ -422,16 +434,20 @@
   $('#site-footer').innerHTML = footerHTML;
   document.body.insertAdjacentHTML('beforeend', drawerHTML);
 
-  // ---------- Currency ----------
-  function renderCurrency() {
-    $$('.currency button').forEach((b) => b.classList.toggle('is-active', b.dataset.currency === state.currency));
-  }
-  $('.currency').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-currency]');
-    if (!b || b.dataset.currency === state.currency) return;
-    state.currency = b.dataset.currency;
+  // ---------- Currency and language dropdowns ----------
+  const currencySelect = $('#currency-select');
+  function renderCurrency() { currencySelect.value = state.currency; }
+  currencySelect.addEventListener('change', () => {
+    state.currency = currencySelect.value;
     store.set('sc.currency', state.currency);
     emit();
+  });
+
+  // The language is saved and the page reloads, so every text is drawn again in that language.
+  const currentLang = store.get('sc.lang', 'sr');
+  $$('.lang-select').forEach((sel) => {
+    sel.value = currentLang;
+    sel.addEventListener('change', () => { store.set('sc.lang', sel.value); location.reload(); });
   });
 
   // ---------- Drawer ----------

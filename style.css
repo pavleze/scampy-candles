@@ -1229,3 +1229,34 @@ textarea.opt__text { min-height: 0; height: auto; resize: none; overflow: hidden
   .nav { margin-left: 0; justify-self: center; }
   .header__actions { justify-self: end; }
 }
+
+/* ---------- Dropdowns for currency and language (plain text with a chevron) ---------- */
+.select { position: relative; display: inline-flex; align-items: center; }
+.select select {
+  appearance: none; -webkit-appearance: none;
+  background: transparent; color: inherit;
+  border: 0; border-radius: 0;
+  font: inherit; font-size: 1rem; letter-spacing: .02em;
+  padding: 8px 22px 8px 6px;
+  cursor: pointer;
+  outline-offset: 2px;
+}
+.select select option { color: #111; background: #fff; }
+.select::after {
+  content: ""; position: absolute; right: 6px; top: 50%;
+  width: 6px; height: 6px; margin-top: -5px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg); pointer-events: none;
+}
+.header__actions { gap: 2px; }
+.header__actions .select + .select { margin-right: 10px; }
+.nav__prefs { display: none; }
+@media (max-width: 820px) {
+  .header__actions .select--lang { display: none; }           /* the phone keeps the language inside the menu */
+  .nav__prefs { display: block; padding: 10px 0 0; border-top: 1px solid var(--line); margin-top: 6px; }
+  .header__actions .select select { font-size: .92rem; padding-left: 2px; }
+}
+@media (max-width: 400px) { .header__actions .select select { font-size: .85rem; } }
+
+/* English is being applied: keep the page hidden for a moment so Serbian never flashes */
+html.i18n-pending body { visibility: hidden; }

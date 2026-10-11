@@ -1087,3 +1087,11 @@ html { overflow-x: hidden; overscroll-behavior-x: none; }
 .bento { overflow-y: hidden; }
 .bento, .bento .tile, .bento .tile img, .bento .tile svg { touch-action: pan-x pan-y; }
 .lightbox, .lightbox * { touch-action: none; }
+.opt__hint { color: var(--muted); text-transform: none; letter-spacing: .02em; font-size: .95rem; }
+.opt .seg + .opt__text { margin-top: 8px; }
+
+/* 4 packaging choices: 2 × 2 so the labels stay readable */
+.seg.seg--4 { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
+.seg.seg--4 button { border-left: 0; border-top: 1px solid var(--line); }
+.seg.seg--4 button:nth-child(-n+2) { border-top: 0; }
+.seg.seg--4 button:nth-child(even) { border-left: 1px solid var(--line); }

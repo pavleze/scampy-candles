@@ -82,7 +82,6 @@
       const sel = isGift ? { pack: p.options[0].choices[0] } : {};   // packaging pre-selected
       let qty = 1;
       let missing = [];     // required options still to pick
-      let showDedication = false;
 
       root.innerHTML = `
         <div class="pdp__gallery">
@@ -207,30 +206,35 @@
       const swatchGroup = (o) => `<div class="opt__chips">${o.choices.map((c) => `
         <button type="button" class="swatch${sel[o.key] === c.name ? ' is-active' : ''}" style="--sw:${c.hex}" data-opt="${o.key}" data-val="${esc(c.name)}" aria-label="${esc(c.name)}" aria-pressed="${sel[o.key] === c.name}" title="${esc(c.name)}"></button>`).join('')}</div>`;
 
+      const cardOn = () => sel.pack === SC.CARD_PACK;
+
       const renderOpts = () => {
         if (!isGift) return;
         $('#pdp-opts').innerHTML = p.options.map((o) => {
-          const err = missing.includes(o.key);
+          if (o.type === 'text') return '';                 // lives under Pakovanje (see below)
+          const askText = o.key === 'pack' && cardOn();
+          const needsText = askText && missing.includes('dedication');
+          const err = missing.includes(o.key) || needsText;
           let control;
           let shown = '';
-          if (o.type === 'choice' && o.choices.length <= 3) {
-            control = `<div class="seg">${o.choices.map((c) =>
+          if (o.type === 'choice' && o.choices.length <= 4) {
+            control = `<div class="seg${o.choices.length === 4 ? ' seg--4' : ''}">${o.choices.map((c) =>
               `<button type="button" class="${sel[o.key] === c ? 'is-active' : ''}" data-opt="${o.key}" data-val="${esc(c)}" aria-pressed="${sel[o.key] === c}">${esc(c)}</button>`).join('')}</div>`;
           } else if (o.type === 'choice') {
             control = `<select class="opt__select" data-select="${o.key}" aria-label="${o.label}">
               <option value="">Izaberi…</option>
               ${o.choices.map((c) => `<option value="${esc(c)}"${sel[o.key] === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>`;
-          } else if (o.type === 'swatch') {
+          } else {
             control = swatchGroup(o);
             shown = sel[o.key] || '';
-          } else if (showDedication || sel[o.key]) {
-            control = `<input class="opt__text" type="text" id="opt-${o.key}" maxlength="${o.maxLength}" placeholder="${esc(o.placeholder || '')}" value="${esc(sel[o.key] || '')}">`;
-          } else {
-            return `<div class="opt opt--inline"><button type="button" class="linkbtn" data-ded>＋ Dodaj posvetu</button></div>`;
+          }
+          if (askText) {
+            const t = p.options.find((x) => x.type === 'text');
+            control += `<input class="opt__text" type="text" id="opt-${t.key}" maxlength="${t.maxLength}" placeholder="${esc(t.placeholder || '')}" value="${esc(sel[t.key] || '')}" aria-label="Tekst posvete">`;
           }
           return `
             <div class="opt${err ? ' has-error' : ''}">
-              <div class="opt__label">${o.label}${shown ? ` <span class="opt__val">· ${esc(shown)}</span>` : ''}${err ? ' <span class="opt__err">· izaberi</span>' : ''}</div>
+              <div class="opt__label">${o.label}${shown ? ` <span class="opt__val">· ${esc(shown)}</span>` : ''}${err ? ` <span class="opt__err">· ${needsText && !missing.includes(o.key) ? 'upiši tekst posvete' : 'izaberi'}</span>` : ''}</div>
               ${control}
             </div>`;
         }).join('');
@@ -249,17 +253,13 @@
         if (qs) return setQty(Number(qs.dataset.qset));
         const tile = e.target.closest('[data-tile]');
         if (tile) return showLightbox(Number(tile.dataset.tile));
-        if (e.target.closest('[data-ded]')) {
-          showDedication = true;
-          renderOpts();
-          return $('#opt-dedication')?.focus();
-        }
-
         const opt = e.target.closest('[data-opt]');
         if (opt) {
           sel[opt.dataset.opt] = opt.dataset.val;
+          if (opt.dataset.opt === 'pack' && !cardOn()) delete sel.dedication;
           missing = missing.filter((k) => k !== opt.dataset.opt);
           renderOpts();
+          if (opt.dataset.opt === 'pack' && cardOn()) $('#opt-dedication')?.focus();
           if (!p.images?.length) renderGallery();   // photos don't depend on the options, so leave them alone (no reload flash)
           return;
         }
@@ -267,6 +267,7 @@
         if (e.target.closest('#pdp-add')) {
           if (isGift) {
             missing = p.options.filter((o) => !o.optional && !sel[o.key]).map((o) => o.key);
+            if (cardOn() && !(sel.dedication || '').trim()) missing.push('dedication');   // card chosen but no text yet
             if (missing.length) {
               renderOpts();
               $('.opt.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -277,7 +278,7 @@
           const opts = {};
           (p.options || []).forEach((o) => {
             const v = (sel[o.key] || '').trim();
-            if (v) opts[o.key] = v;
+            if (v && (o.key !== 'dedication' || cardOn())) opts[o.key] = v;
           });
           SC.addToCart(p.id, qty, opts);
           SC.openCart();
@@ -290,6 +291,12 @@
           if (n >= 1) { qty = Math.min(MAX, n); renderPrice(); }
         } else if (e.target.matches('.opt__text')) {
           sel[e.target.id.replace('opt-', '')] = e.target.value;
+          if (e.target.value.trim() && missing.includes('dedication')) {   // clear the warning without redrawing (keeps focus)
+            missing = missing.filter((k) => k !== 'dedication');
+            const row = e.target.closest('.opt');
+            row.classList.remove('has-error');
+            row.querySelector('.opt__err')?.remove();
+          }
         }
       });
       root.addEventListener('change', (e) => {

@@ -390,7 +390,7 @@
       </div>
       <div>
         <h3>Kontakt</h3>
-        <p><a href="mailto:hello@scampycandles.com">hello@scampycandles.com</a></p>
+        <p><a href="mailto:scampycandles@gmail.com">scampycandles@gmail.com</a></p>
         <p>+381 60 000 0000</p>
         <p class="muted">Pon–Pet, 10–18h</p>
       </div>

@@ -8,7 +8,7 @@
   // Entries with img: null render as a branded placeholder.
   const INSTAGRAM_PROFILE = 'https://www.instagram.com/scampy_candles/';
   const INSTAGRAM_POSTS = [
-    { img: null, url: null, alt: '' },
+    { img: 'assets/instagram/objava-1.jpg', url: 'https://www.instagram.com/reel/DdLyVzqs3TT/', alt: 'Bubble – poklončići, sveće od sojinog voska' },
     { img: null, url: null, alt: '' },
     { img: null, url: null, alt: '' },
     { img: null, url: null, alt: '' },

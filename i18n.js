@@ -57,6 +57,7 @@
     'Budite u toku': 'Stay in the loop', 'Prijavite se i dobijte 10% popusta na prvu porudžbinu.': 'Sign up and get 10% off your first order.',
     'Prijavite me': 'Sign me up', 'ime@email.com': 'name@email.com',
     'Hvala! Javljamo se uskoro 🐾': 'Thank you! We will be in touch soon 🐾',
+    'Bubble – poklončići, sveće od sojinog voska': 'Bubble – guest favours, soy wax candles',
     'Scampy Candles · Ručno rađene sojine sveće': 'Scampy Candles · Handmade soy candles',
     'Ručno rađene sojine sveće. Pawsitively handcrafted, with love.': 'Handmade soy candles. Pawsitively handcrafted, with love.',
 

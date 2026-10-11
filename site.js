@@ -52,9 +52,10 @@
   });
 
   const PRODUCTS = [
-    gift(7,  'Mali meda',             'bear',       1.5, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg', 'mali-meda-4.jpg'], {
-      // price per piece from 50 pieces, by packaging
-      packPrices: { [PLAIN_PACK]: 1.5, [CARD_PACK]: 1.6, 'U tilu': 1.65, 'U kartonskoj kutijici': 1.7 },
+    gift(7,  'Mali meda',             'bear',       1.45, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg', 'mali-meda-4.jpg'], {
+      // price per piece from 50 pieces, by packaging. Base is the box (1.70):
+      // tulle and card are 10% below it, the plain candle is 15% below it (1.445, rounded to the cent).
+      packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
       tiers: TIERS_FULL,
     }),
     gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg']),

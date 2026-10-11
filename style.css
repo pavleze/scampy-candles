@@ -1477,3 +1477,17 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
   .header.is-scrolled .nav { background: #fff; border-bottom-color: var(--line); }
   .header.is-scrolled .nav__prefs { border-top-color: var(--line); }
 }
+
+/* ---------- Hero slideshow: the pictures fade into each other, the brown layer and the text stay ---------- */
+.hero-wrap--photo { position: relative; isolation: isolate; background: none; }
+.hero-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.hero-bg span { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; animation: hero-fade 12s infinite; }
+.hero-bg span:nth-child(1) { opacity: 1; }
+.hero-bg span:nth-child(2) { animation-delay: -6s; }
+@keyframes hero-fade { 0%, 42% { opacity: 1; } 50%, 92% { opacity: 0; } 100% { opacity: 1; } }
+.hero-wrap--photo::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(36, 24, 16, .86) 0%, rgba(36, 24, 16, .72) 48%, rgba(36, 24, 16, .4) 100%);
+}
+@media (max-width: 820px) { .hero-wrap--photo::before { background: linear-gradient(180deg, rgba(36, 24, 16, .8), rgba(36, 24, 16, .72)); } }
+@media (prefers-reduced-motion: reduce) { .hero-bg span { animation: none; } .hero-bg span:nth-child(2) { display: none; } }

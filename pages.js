@@ -133,7 +133,7 @@
 
       const stride = () => {
         const t = $('#pdp-bento .tile');
-        return t ? t.offsetWidth + 8 : 0;
+        return t ? t.offsetWidth + (parseFloat(getComputedStyle($('#pdp-bento')).columnGap) || 0) : 0;
       };
       const loops = () => phone.matches && slides().length > 1;
 

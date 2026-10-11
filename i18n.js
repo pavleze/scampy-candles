@@ -99,7 +99,7 @@
     'Pišite nam: pitanja o porudžbinama, poklon paketima i saradnji.': 'Write to us: questions about orders, gift packages and collaboration.',
 
     // ----- product page -----
-    '/ kom': '/ pc', '/ po komadu': '/ per piece', 'Sa većom količinom cena po komadu je manja ·': 'The price per piece is lower with a larger quantity ·', 'Najniža cena ✓ ·': 'Lowest price ✓ ·',
+    '/ kom': '/ pc', '/ po komadu': '/ per piece', 'od': 'from', 'Sa većom količinom cena po komadu je manja ·': 'The price per piece is lower with a larger quantity ·', 'Najniža cena ✓ ·': 'Lowest price ✓ ·',
     'pogledajte cene': 'see prices',
     'Pakovanje': 'Packaging', 'U kartonskoj kutijici': 'In a cardboard box', 'U tilu': 'In tulle', 'Kartončić sa posvetom': 'Card with a message', 'Samo sveća': 'Candle only',
     'Detalje možemo dogovoriti i telefonom posle poručivanja, nakon čega šaljemo predloge dizajna.': 'We can also agree on the details by phone after you order, after which we send design proposals.',

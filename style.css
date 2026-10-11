@@ -1604,3 +1604,4 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
   .collection__hover-count { font-size: .8rem; }
   .collection__view { padding: 8px 12px; font-size: .84rem; }
 }
+.card__from { font-size: .85rem; font-weight: 400; color: var(--muted); letter-spacing: .02em; }

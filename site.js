@@ -41,6 +41,21 @@
   const TIERS_FULL  = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }, { from: 150, mult: 0.90 }, { from: 250, mult: 0.85 }];
   const TIERS_FULL_40 = [{ from: 1, mult: 1.10 }, { from: 40, mult: 1 }, { from: 150, mult: 0.90 }, { from: 250, mult: 0.85 }];   // base tier starts at 40
 
+  // One rule for every gift candle. The BOX price is the base (per piece, from the base tier):
+  // tulle and card are 10% below it, a plain candle is 15% below it, always rounded up to the cent.
+  const ceil2 = (n) => Math.ceil(n * 100 - 1e-7) / 100;
+  const packPricesFor = (box) => ({
+    [PLAIN_PACK]: ceil2(box * 0.85),
+    [CARD_PACK]: ceil2(box * 0.90),
+    'U tilu': ceil2(box * 0.90),
+    'U kartonskoj kutijici': box,
+  });
+  // `box` = price per piece in the box from the base tier; `opts.tiers` = quantity tiers.
+  const giftBox = (id, name, shape, box, color, images, opts = {}) => {
+    const packPrices = packPricesFor(box);
+    return gift(id, name, shape, packPrices[PLAIN_PACK], color, images, { packPrices, tiers: TIERS_FULL, ...opts });
+  };
+
   const gift = (id, name, shape, price, color, images = [], extra = {}) => ({
     id, name, shape, price, color, bulkMin: 50, minQty: 10, defaultQty: 50,   // at least 10 pieces per item
     category: 'pokloncici', family: 'Poklončić', size: '',
@@ -53,47 +68,18 @@
   });
 
   const PRODUCTS = [
-    gift(7,  'Mali meda',             'bear',       1.45, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg'], {
-      // price per piece from 50 pieces, by packaging. Base is the box (1.70):
-      // tulle and card are 10% below it, the plain candle is 15% below it (1.445, rounded to the cent).
-      packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
-      tiers: TIERS_FULL,
-    }),
-    gift(8,  'Meda sa srcem',         'bear-heart', 2.13, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg', 'meda-sa-srcem-3.jpg'], {
-      // base tier is 40–149 pieces. Box (2.50) is the base: tulle and card are 10% below it (2.25),
-      // the plain candle is 15% below it (2.125, rounded up to 2.13). Same −10% / −15% steps from 150 / 250.
-      packPrices: { [PLAIN_PACK]: 2.13, [CARD_PACK]: 2.25, 'U tilu': 2.25, 'U kartonskoj kutijici': 2.50 },
-      tiers: TIERS_FULL_40,
-      bulkMin: 40,
-    }),
-    gift(9,  'Lavić',                 'lion',       1.45, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg'], {
-      // same model as Mali meda: box (1.70) is the base from 50 pieces, tulle/card 10% below, plain 15% below
-      packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
-      tiers: TIERS_FULL,
-    }),
-    gift(10, 'Bubble',                'bubble',     1.7, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg'], {
-      // box (2.00) is the base from 50 pieces; tulle/card 10% below (1.80), plain 15% below (1.70)
-      packPrices: { [PLAIN_PACK]: 1.7, [CARD_PACK]: 1.8, 'U tilu': 1.8, 'U kartonskoj kutijici': 2.0 },
-      tiers: TIERS_FULL,
-    }),
-    gift(11, 'Božur',                 'peony',      2.04, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg'], {
-      // box (2.40) is the base from 50 pieces; tulle/card 10% below (2.16), plain 15% below (2.04)
-      packPrices: { [PLAIN_PACK]: 2.04, [CARD_PACK]: 2.16, 'U tilu': 2.16, 'U kartonskoj kutijici': 2.40 },
-      tiers: TIERS_FULL,
-    }),
-    gift(12, 'Always & Forever srce', 'heart',      2.13, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg'], {
-      // box (2.50) is the base from 50 pieces; tulle/card 10% below (2.25), plain 15% below (2.125, rounded up to 2.13)
-      packPrices: { [PLAIN_PACK]: 2.13, [CARD_PACK]: 2.25, 'U tilu': 2.25, 'U kartonskoj kutijici': 2.50 },
-      tiers: TIERS_FULL,
-    }),
-    gift(13, 'Dijamant srce',         'diamond',    2.0, '#c6b4df', ['dijamant-srce-1.jpg']),
-    // TODO: prices for Astronaut and Limun are placeholders until confirmed.
-    gift(14, 'Astronaut',             'astronaut',  2.0, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
-    gift(15, 'Limun',                 'lemon',      2.0, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg', 'limun-3.jpg']),
-    // TODO: price for Cvetno srce is a placeholder.
-    gift(17, 'Cvetno srce',           'heart',      2.0, '#efc3cb', ['cvetno-srce-1.jpg']),
-    // TODO: price for Pahulja is a placeholder.
-    gift(16, 'Pahulja',               'snowflake',  2.0, '#cfe3f2', ['pahulja-1.jpg', 'pahulja-2.jpg']),
+    //            id  name                      shape         box   color      photos
+    giftBox(7,  'Mali meda',             'bear',       1.70, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
+    giftBox(8,  'Meda sa srcem',         'bear-heart', 2.50, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg', 'meda-sa-srcem-3.jpg'], { tiers: TIERS_FULL_40, bulkMin: 40 }),   // base tier from 40 pieces
+    giftBox(9,  'Lavić',                 'lion',       1.70, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
+    giftBox(10, 'Bubble',                'bubble',     2.00, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
+    giftBox(11, 'Božur',                 'peony',      2.40, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg']),
+    giftBox(12, 'Always & Forever srce', 'heart',      2.50, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),
+    giftBox(13, 'Dijamant srce',         'diamond',    2.40, '#c6b4df', ['dijamant-srce-1.jpg']),
+    giftBox(14, 'Astronaut',             'astronaut',  2.40, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
+    giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg', 'limun-3.jpg']),
+    giftBox(16, 'Pahulja',               'snowflake',  2.00, '#cfe3f2', ['pahulja-1.jpg', 'pahulja-2.jpg']),
+    giftBox(17, 'Cvetno srce',           'heart',      2.30, '#efc3cb', ['cvetno-srce-1.jpg']),
 
     // Mock scented candles (placeholders until the real range is added)
     { id: 1, category: 'mirisne', name: 'Lavanda & Med',      family: 'Cvetno',    size: '200 g', price: 14.9, color: '#cdbfe0', tag: 'Bestseler', burn: 45,

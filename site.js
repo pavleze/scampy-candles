@@ -25,7 +25,7 @@
   const CARD_PACK = 'Kartončić sa posvetom';   // 4th packaging choice: a card with the customer's text, tied to the wick
 
   const GIFT_OPTIONS = [
-    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: [PLAIN_PACK, CARD_PACK, 'U tilu sa kartončićem', 'U kartonskoj kutijici'] },
+    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: [PLAIN_PACK, CARD_PACK, 'U tilu', 'U kartonskoj kutijici'] },
     { key: 'color',      label: 'Boja sveće',    type: 'swatch', choices: COLORS },
     { key: 'scent',      label: 'Miris',         type: 'choice', choices: GIFT_SCENTS },
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.

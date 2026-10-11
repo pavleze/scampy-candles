@@ -9,7 +9,7 @@
   const INSTAGRAM_PROFILE = 'https://www.instagram.com/scampy_candles/';
   const INSTAGRAM_POSTS = [
     { img: 'assets/instagram/objava-1.jpg', url: 'https://www.instagram.com/reel/DdLyVzqs3TT/', alt: 'Bubble – poklončići, sveće od sojinog voska' },
-    { img: null, url: null, alt: '' },
+    { img: 'assets/instagram/objava-2.jpg', url: 'https://www.instagram.com/reel/DJ13S1zMxB4/', alt: 'Poklončići za rođendane i krštenja' },
     { img: null, url: null, alt: '' },
     { img: null, url: null, alt: '' },
     { img: null, url: null, alt: '' },

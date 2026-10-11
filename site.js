@@ -29,7 +29,7 @@
     { key: 'color',      label: 'Boja sveće',    type: 'swatch', choices: COLORS },
     { key: 'scent',      label: 'Miris',         type: 'choice', choices: GIFT_SCENTS },
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.
-    { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 60, placeholder: 'npr. Hvala što ste bili deo našeg dana' },
+    { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 140, placeholder: 'Ime/imena, posveta npr. „Hvala što ste bili sa nama“, datum' },
     { key: 'ribbon',     label: 'Boja mašnice',  type: 'swatch', choices: RIBBONS },
   ];
 

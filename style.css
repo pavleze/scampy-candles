@@ -1095,3 +1095,5 @@ html { overflow-x: hidden; overscroll-behavior-x: none; }
 .seg.seg--4 button { border-left: 0; border-top: 1px solid var(--line); }
 .seg.seg--4 button:nth-child(-n+2) { border-top: 0; }
 .seg.seg--4 button:nth-child(even) { border-left: 1px solid var(--line); }
+textarea.opt__text { resize: vertical; min-height: 84px; line-height: 1.4; }
+.opt__help { font-size: .88rem; color: var(--muted); margin-top: 4px; }

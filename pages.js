@@ -231,7 +231,8 @@
           }
           if (askText) {
             const t = p.options.find((x) => x.type === 'text');
-            control += `<input class="opt__text" type="text" id="opt-${t.key}" maxlength="${t.maxLength}" placeholder="${esc((t.placeholder || '') + (cardOn() ? '' : ' · nije obavezno'))}" value="${esc(sel[t.key] || '')}" aria-label="Tekst posvete">`;
+            control += `<textarea class="opt__text" id="opt-${t.key}" rows="3" maxlength="${t.maxLength}" placeholder="${esc((t.placeholder || '') + (cardOn() ? '' : ' (nije obavezno)'))}" aria-label="Tekst posvete">${esc(sel[t.key] || '')}</textarea>
+              <p class="opt__help">Ime/imena, posveta, datum</p>`;
           }
           return `
             <div class="opt${err ? ' has-error' : ''}">

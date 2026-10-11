@@ -114,13 +114,13 @@
   // ---------- Money ----------
   const money = (eur, cur = state.currency) => cur === 'EUR'
     ? `${eur.toFixed(2).replace('.', ',')} €`
-    : `${Math.round(eur * RATE).toLocaleString('sr-RS')} RSD`;
+    : `${Math.ceil(eur * RATE - 1e-7).toLocaleString('sr-RS')} RSD`;   // dinars also round up
 
   const shippingFor = (subtotal) => (subtotal === 0 || subtotal >= FREE_OVER ? 0 : SHIPPING);
 
   // ---------- Pricing ----------
   // Per-piece price for a product, given how many pieces of it are ordered in total.
-  const round2 = (n) => Math.round(n * 100 + 1e-7) / 100;   // the 1e-7 keeps x.xx5 from rounding down
+  const round2 = (n) => Math.ceil(n * 100 - 1e-7) / 100;    // always round UP to the next cent (the 1e-7 ignores float noise like 1.8700000000000001)
   const basePriceOf = (p, pack) => p.packPrices?.[pack] ?? p.price;
   const tierMult = (p, qty) => (p.tiers || []).reduce((m, t) => (qty >= t.from ? t.mult : m), p.tiers?.[0]?.mult ?? 1);
   // Per-piece price for a product, packaging and total ordered quantity.

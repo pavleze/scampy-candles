@@ -39,6 +39,7 @@
   // Quantity tiers: from `from` pieces up, the base price is multiplied by `mult` (counted over all variants of the candle).
   const TIERS_BASIC = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }];
   const TIERS_FULL  = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }, { from: 150, mult: 0.90 }, { from: 250, mult: 0.85 }];
+  const TIERS_FULL_40 = [{ from: 1, mult: 1.10 }, { from: 40, mult: 1 }, { from: 150, mult: 0.90 }, { from: 250, mult: 0.85 }];   // base tier starts at 40
 
   const gift = (id, name, shape, price, color, images = [], extra = {}) => ({
     id, name, shape, price, color, bulkMin: 50, minQty: 10,   // at least 10 pieces per item
@@ -58,7 +59,13 @@
       packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
       tiers: TIERS_FULL,
     }),
-    gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg']),
+    gift(8,  'Meda sa srcem',         'bear-heart', 2.13, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg'], {
+      // base tier is 40–149 pieces. Box (2.50) is the base: tulle and card are 10% below it (2.25),
+      // the plain candle is 15% below it (2.125, rounded up to 2.13). Same −10% / −15% steps from 150 / 250.
+      packPrices: { [PLAIN_PACK]: 2.13, [CARD_PACK]: 2.25, 'U tilu': 2.25, 'U kartonskoj kutijici': 2.50 },
+      tiers: TIERS_FULL_40,
+      bulkMin: 40,
+    }),
     gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
     gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
     gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg']),

@@ -1273,3 +1273,15 @@ html.i18n-pending body { visibility: hidden; }
   .select::after { right: 3px; }
   .menu-btn { margin-right: -4px; }
 }
+
+/* Pictures keep their proportions whatever width the layout gives them */
+.hero__seal, .loader__seal, .thanks__seal { height: auto; aspect-ratio: 1; object-fit: contain; }
+.hero__art { align-content: center; }
+.hero__est { position: static; margin-top: -4px; }
+.hero__art { grid-template-rows: auto auto; place-content: center; gap: 0; aspect-ratio: auto; min-height: 280px; }
+.hero__glow { z-index: 0; }
+.hero__seal { z-index: 1; }
+.hero__est { z-index: 1; }
+@media (min-width: 821px) { .hero__art { aspect-ratio: 1; } }
+.hero__seal { width: min(250px, 58vw); }
+@media (min-width: 821px) { .hero__seal { width: min(300px, 26vw); } }

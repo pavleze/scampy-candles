@@ -121,28 +121,62 @@
       const SHOWN = 6;
       let introPlayed = false;
       const slideHTML = (s) => (s.img ? `<img src="${esc(s.img)}" alt="${esc(s.label)}" loading="lazy">` : SC.packSVG(p, sel, s.view));
+      const phone = window.matchMedia('(max-width: 820px)');
+      let slideAt = 0;          // real picture index currently in view (phone strip)
+
+      const tileHTML = (s, i, { clone = false, more = 0 } = {}) => `
+        <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}"${clone ? ' data-clone tabindex="-1" aria-hidden="true"' : ''} aria-label="Uvećaj sliku ${i + 1}">
+          ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
+          ${slideHTML(s)}
+          ${more > 0 ? `<span class="tile__more">+${more}</span>` : ''}
+        </button>`;
+
+      const stride = () => {
+        const t = $('#pdp-bento .tile');
+        return t ? t.offsetWidth + 8 : 0;
+      };
+      const loops = () => phone.matches && slides().length > 1;
+
       const renderGallery = () => {
         const list = slides();
-        const shown = list.slice(0, SHOWN);
-        const more = list.length - SHOWN;
-        $('#pdp-bento').className = `bento bento--${shown.length}${p.images?.length ? ' bento--photos' : ''}${introPlayed ? '' : ' bento--intro'}`;
+        const bento = $('#pdp-bento');
+        const strip = phone.matches;
+        const shown = strip ? list : list.slice(0, SHOWN);
+        const more = strip ? 0 : list.length - SHOWN;
+        bento.className = `bento bento--${Math.min(shown.length, 6)}${p.images?.length ? ' bento--photos' : ''}${introPlayed ? '' : ' bento--intro'}`;
         introPlayed = true;
-        $('#pdp-count').textContent = list.length > 1 ? `1 / ${list.length}` : '';
-        $('#pdp-bento').innerHTML = shown.map((s, i) => `
-          <button type="button" class="tile" style="--tone:${p.color};--i:${i}" data-tile="${i}" aria-label="Uvećaj sliku ${i + 1}">
-            ${i === 0 && p.tag ? `<span class="card__tag">${p.tag}</span>` : ''}
-            ${slideHTML(s)}
-            ${more > 0 && i === SHOWN - 1 ? `<span class="tile__more">+${more}</span>` : ''}
-          </button>`).join('');
+        let html = shown.map((s, i) => tileHTML(s, i, { more: more > 0 && i === SHOWN - 1 ? more : 0 })).join('');
+        if (loops()) {
+          // clones at both ends make the strip circular
+          html = tileHTML(list[list.length - 1], list.length - 1, { clone: true }) + html + tileHTML(list[0], 0, { clone: true });
+        }
+        bento.innerHTML = html;
+        $('#pdp-count').textContent = list.length > 1 ? `${slideAt + 1} / ${list.length}` : '';
+        if (loops()) bento.scrollLeft = (slideAt + 1) * stride();
       };
 
-      $('#pdp-bento').addEventListener('scroll', () => {
-        const el = $('#pdp-bento');
-        const tile = el.firstElementChild;
-        if (!tile) return;
-        const i = Math.round(el.scrollLeft / (tile.offsetWidth + 8));
-        $('#pdp-count').textContent = `${Math.min(i + 1, el.children.length)} / ${slides().length}`;
+      // Phone strip: keep the counter in sync and wrap around at both ends.
+      let loopTimer;
+      const bentoEl = $('#pdp-bento');
+      bentoEl.addEventListener('scroll', () => {
+        if (!loops()) return;
+        const n = slides().length;
+        const s = stride();
+        if (!s) return;
+        const i = Math.round(bentoEl.scrollLeft / s);          // 0 = clone of last, 1..n = real, n+1 = clone of first
+        slideAt = (((i - 1) % n) + n) % n;
+        $('#pdp-count').textContent = `${slideAt + 1} / ${n}`;
+        clearTimeout(loopTimer);
+        loopTimer = setTimeout(() => {
+          const j = Math.round(bentoEl.scrollLeft / s);
+          const target = j <= 0 ? n * s : j >= n + 1 ? s : null;
+          if (target === null) return;
+          bentoEl.style.scrollSnapType = 'none';
+          bentoEl.scrollLeft = target;
+          requestAnimationFrame(() => { bentoEl.style.scrollSnapType = ''; });
+        }, 120);
       }, { passive: true });
+      phone.addEventListener('change', () => { slideAt = 0; renderGallery(); });
 
       // Lightbox
       let lightboxAt = 0;

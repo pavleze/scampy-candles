@@ -8,10 +8,10 @@
   // Entries with img: null render as a branded placeholder.
   const INSTAGRAM_PROFILE = 'https://www.instagram.com/scampy_candles/';
   const INSTAGRAM_POSTS = [
-    { img: 'assets/instagram/objava-1.jpg', url: 'https://www.instagram.com/reel/DdLyVzqs3TT/', alt: 'Bubble – poklončići, sveće od sojinog voska' },
+    { img: 'assets/instagram/objava-1.jpg', url: 'https://www.instagram.com/reel/DdLyVzqs3TT/', alt: 'Bubble – pokloni, sveće od sojinog voska' },
     { img: 'assets/instagram/objava-2.jpg', url: 'https://www.instagram.com/reel/DOp_nfvjGih/', alt: 'Always & Forever srce – ručno izlivene sveće' },
-    { img: 'assets/instagram/objava-3.jpg', url: 'https://www.instagram.com/reel/DJ13S1zMxB4/', alt: 'Poklončići za rođendane i krštenja' },
-    { img: 'assets/instagram/objava-4.jpg', url: 'https://www.instagram.com/reel/DQYsi3rjK4x/', alt: 'Božur – poklončići za venčanja' },
+    { img: 'assets/instagram/objava-3.jpg', url: 'https://www.instagram.com/reel/DJ13S1zMxB4/', alt: 'Pokloni za rođendane i krštenja' },
+    { img: 'assets/instagram/objava-4.jpg', url: 'https://www.instagram.com/reel/DQYsi3rjK4x/', alt: 'Božur – pokloni za venčanja' },
     { img: 'assets/instagram/objava-5.jpg', url: 'https://www.instagram.com/p/DKZQ87sszFq/', alt: 'Medvedići za krštenje' },
     { img: 'assets/instagram/objava-6.jpg', url: 'https://www.instagram.com/reel/DbTedtmMZ6i/', alt: 'Capri Lemon – sveća u obliku limuna' },
   ];

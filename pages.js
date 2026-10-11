@@ -25,6 +25,36 @@
           ${post.img ? `<img src="${esc(post.img)}" alt="${esc(post.alt)}" loading="lazy">` : PAW}
         </a>`).join('');
 
+      // Hero pictures: change by themselves every 10 seconds, or with the dots at the bottom
+      (() => {
+        const slides = $$('.hero-bg span');
+        const dotsBox = $('#hero-dots');
+        if (slides.length < 2 || !dotsBox) return;
+        let current = 0;
+        let timer;
+        dotsBox.innerHTML = slides.map((_, i) => `<button type="button" class="hero-dot" data-i="${i}" aria-label="Slika ${i + 1}"></button>`).join('');
+        const dots = $$('.hero-dot', dotsBox);
+        const show = (i) => {
+          current = (i + slides.length) % slides.length;
+          slides.forEach((s, k) => s.classList.toggle('is-on', k === current));
+          dots.forEach((d, k) => { d.classList.toggle('is-on', k === current); d.setAttribute('aria-current', String(k === current)); });
+        };
+        const start = () => {
+          clearInterval(timer);
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          timer = setInterval(() => show(current + 1), 10000);
+        };
+        dotsBox.addEventListener('click', (e) => {
+          const d = e.target.closest('.hero-dot');
+          if (!d) return;
+          show(Number(d.dataset.i));
+          start();                                   // after a manual change the 10 seconds begin again
+        });
+        $('.hero-bg').classList.add('is-ready');
+        show(0);
+        start();
+      })();
+
       const grid = $('#featured');
       const featured = PRODUCTS.filter((p) => p.category === 'pokloncici').slice(0, 3);
       const render = () => { grid.innerHTML = featured.map(cardHTML).join(''); };

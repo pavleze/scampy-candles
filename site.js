@@ -33,7 +33,7 @@
     { key: 'note',       label: 'Napomena',      type: 'note', optional: true, maxLength: 300, placeholder: 'Ako imate neku želju koja nije navedena ili pitanje, ostavite ovde' },
   ];
 
-  const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu birate sami.';
+  const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu birate Vi.';
   // `price` is the per-piece price from `bulkMin` pieces up; below that it is 10% higher.
   // Quantity tiers: from `from` pieces up, the base price is multiplied by `mult` (counted over all variants of the candle).
   const TIERS_BASIC = [{ from: 1, mult: 1.10 }, { from: 50, mult: 1 }];

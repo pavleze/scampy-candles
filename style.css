@@ -1340,10 +1340,10 @@ html.i18n-pending body { visibility: hidden; }
 /* the old native-select styles are not used any more */
 .select { display: none !important; }
 
-/* Brand name in the header: script lettering (only here; the rest of the site stays in the printed face) */
-.brand span { font-family: "Italianno", "Snell Roundhand", cursive; font-weight: 400; letter-spacing: .01em; font-size: 2.7rem; line-height: 1; padding-top: 2px; }
-@media (max-width: 1180px) { .brand span { font-size: 2.45rem; } }
-@media (max-width: 960px)  { .brand span { font-size: 2.2rem; } }
+/* Brand name in the header: capitals in Playfair Display (the face from the reference picture) */
+.brand span { font-family: "Playfair Display", "Didot", Georgia, serif; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; font-size: 1.5rem; line-height: 1; padding-top: 0; }
+@media (max-width: 1180px) { .brand span { font-size: 1.32rem; } }
+@media (max-width: 960px)  { .brand span { font-size: 1.18rem; } }
 
 /* Header logo: a full turn around its vertical axis every 15 seconds (the turn itself takes about a second) */
 .brand { perspective: 500px; }

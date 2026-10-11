@@ -59,7 +59,7 @@
       packPrices: { [PLAIN_PACK]: 1.45, [CARD_PACK]: 1.53, 'U tilu': 1.53, 'U kartonskoj kutijici': 1.70 },
       tiers: TIERS_FULL,
     }),
-    gift(8,  'Meda sa srcem',         'bear-heart', 2.13, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg'], {
+    gift(8,  'Meda sa srcem',         'bear-heart', 2.13, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg', 'meda-sa-srcem-3.jpg'], {
       // base tier is 40–149 pieces. Box (2.50) is the base: tulle and card are 10% below it (2.25),
       // the plain candle is 15% below it (2.125, rounded up to 2.13). Same −10% / −15% steps from 150 / 250.
       packPrices: { [PLAIN_PACK]: 2.13, [CARD_PACK]: 2.25, 'U tilu': 2.25, 'U kartonskoj kutijici': 2.50 },

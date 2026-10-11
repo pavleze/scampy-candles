@@ -25,7 +25,7 @@
   const CARD_PACK = 'Kartončić sa posvetom';   // 4th packaging choice: a card with the customer's text, tied to the wick
 
   const GIFT_OPTIONS = [
-    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: [PLAIN_PACK, CARD_PACK, 'U tilu', 'U kartonskoj kutijici'] },
+    { key: 'pack',       label: 'Pakovanje',     type: 'choice', choices: ['U kartonskoj kutijici', 'U tilu', CARD_PACK, PLAIN_PACK] },
     { key: 'color',      label: 'Boja sveće',    type: 'swatch', choices: COLORS },
     { key: 'scent',      label: 'Miris',         type: 'choice', choices: GIFT_SCENTS },
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.
@@ -42,7 +42,7 @@
   const TIERS_FULL_40 = [{ from: 1, mult: 1.10 }, { from: 40, mult: 1 }, { from: 150, mult: 0.90 }, { from: 250, mult: 0.85 }];   // base tier starts at 40
 
   const gift = (id, name, shape, price, color, images = [], extra = {}) => ({
-    id, name, shape, price, color, bulkMin: 50, minQty: 10,   // at least 10 pieces per item
+    id, name, shape, price, color, bulkMin: 50, minQty: 10, defaultQty: 50,   // at least 10 pieces per item
     category: 'pokloncici', family: 'Poklončić', size: '',
     desc: GIFT_DESC, options: GIFT_OPTIONS,
     // Real photos live in assets/products/. The first one is the main picture.
@@ -272,7 +272,7 @@
         <p class="card__family">${meta}</p>
         <h3 class="card__name"><a href="proizvod.html?id=${p.id}">${p.name}</a></h3>
         <div class="card__row">
-          <span class="card__price">${money(unitPrice(p, p.minQty || 1, PLAIN_PACK))}${isGift ? `<small class="card__bulk">${money(p.price)} od ${p.bulkMin} kom</small>` : ''}</span>
+          <span class="card__price">${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price)}${isGift ? `<small class="card__bulk">po komadu · ${p.defaultQty || p.minQty} kom, ${p.options[0].choices[0].toLowerCase()}</small>` : ''}</span>
           ${isGift
             ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberi</a>`
             : `<button class="btn btn--small" type="button" data-add="${p.id}">Dodaj</button>`}

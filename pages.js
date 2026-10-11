@@ -81,7 +81,7 @@
       const isGift = !!p.options;
       const sel = isGift ? { pack: p.options[0].choices[0] } : {};   // packaging pre-selected
       const MIN = p.minQty || 1;
-      let qty = MIN;
+      let qty = Math.max(MIN, p.defaultQty || MIN);   // gift candles open with 50 pieces
       let missing = [];     // required options still to pick
 
       root.innerHTML = `

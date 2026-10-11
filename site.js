@@ -271,7 +271,10 @@
         <p class="card__family">${meta}</p>
         <h3 class="card__name"><a href="proizvod.html?id=${p.id}">${p.name}</a></h3>
         <div class="card__row">
-          <span class="card__price">${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price)}${isGift ? `<small class="card__bulk">po komadu · ${p.defaultQty || p.minQty} kom, ${p.options[0].choices[0].toLowerCase()}</small>` : ''}</span>
+          <span class="card__price">
+            <span class="card__amount">${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price)}${isGift ? ' <small class="card__unit">/ po komadu</small>' : ''}</span>
+            ${isGift ? `<small class="card__bulk">${p.defaultQty || p.minQty} kom, ${p.options[0].choices[0].toLowerCase()}</small>` : ''}
+          </span>
           ${isGift
             ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberite</a>`
             : `<button class="btn btn--small" type="button" data-add="${p.id}">Dodajte</button>`}

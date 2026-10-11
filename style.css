@@ -1580,3 +1580,6 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 .collection__media { aspect-ratio: 1; }
 .collection:nth-child(n+4) .collection__media { aspect-ratio: 16 / 10; }
 @media (max-width: 900px) { .collection:nth-child(n+4) .collection__media { aspect-ratio: 1; } .collection:last-child .collection__media { aspect-ratio: 16 / 10; } }
+
+.card__amount { white-space: nowrap; }
+.card__unit { font-size: .85rem; font-weight: 400; color: var(--muted); letter-spacing: .02em; }

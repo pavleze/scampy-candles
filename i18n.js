@@ -99,7 +99,7 @@
     'Pišite nam: pitanja o porudžbinama, poklon paketima i saradnji.': 'Write to us: questions about orders, gift packages and collaboration.',
 
     // ----- product page -----
-    '/ kom': '/ pc', 'Sa većom količinom cena po komadu je manja ·': 'The price per piece is lower with a larger quantity ·', 'Najniža cena ✓ ·': 'Lowest price ✓ ·',
+    '/ kom': '/ pc', '/ po komadu': '/ per piece', 'Sa većom količinom cena po komadu je manja ·': 'The price per piece is lower with a larger quantity ·', 'Najniža cena ✓ ·': 'Lowest price ✓ ·',
     'pogledajte cene': 'see prices',
     'Pakovanje': 'Packaging', 'U kartonskoj kutijici': 'In a cardboard box', 'U tilu': 'In tulle', 'Kartončić sa posvetom': 'Card with a message', 'Samo sveća': 'Candle only',
     'Detalje možemo dogovoriti i telefonom posle poručivanja, nakon čega šaljemo predloge dizajna.': 'We can also agree on the details by phone after you order, after which we send design proposals.',
@@ -144,7 +144,7 @@
     [/^Slika (\d+)$/, 'Picture $1'],
     [/^Uvećajte sliku (\d+)$/, 'Enlarge picture $1'],
     [/^(.+) je u korpi$/, (m, name) => `${tr(name)} is in the cart`],
-    [/^po komadu · (\d+) kom, (.+)$/, (m, n, pack) => `per piece · ${n} pcs, ${tr(pack)}`],
+    [/^(\d+) kom, (.+)$/, (m, n, pack) => `${n} pcs, ${tr(pack)}`],
     [/^· (.+)$/, (m, v) => `· ${tr(v)}`],
   ];
 

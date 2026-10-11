@@ -42,7 +42,7 @@
     '100% sojin vosak': '100% soy wax', 'Čisto sagorevanje, bez parafina': 'Clean burning, no paraffin',
     'Ručno livene': 'Hand-poured', 'Male serije, velika pažnja': 'Small batches, great care',
     'Dizajn od početka do kraja': 'Design from start to finish', 'Dogovaramo dok niste zadovoljni': 'We keep refining it until you are happy',
-    'Lično preuzimanje ili Post Express': 'Personal pickup or Post Express', 'U Beogradu možete preuzeti lično': 'In Belgrade you can pick it up in person',
+    'Lično preuzimanje ili slanje poštom': 'Personal pickup or delivery by post', 'U Beogradu možete preuzeti lično': 'In Belgrade you can pick it up in person',
     'Poklončići za goste': 'Guest favours', 'Mali pokloni sa velikim srcem': 'Small gifts with a big heart',
     'Za venčanja, krštenja i rođendane. Boju, miris, pakovanje i posvetu birate Vi.': 'For weddings, christenings and birthdays. You choose the color, scent, packaging and message.',
     'Poklončić za goste': 'Guest favour', 'Odaberite': 'Choose', 'Sve sveće': 'All candles',

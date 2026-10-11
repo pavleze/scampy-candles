@@ -34,7 +34,6 @@
     'Manje': 'Less', 'Više': 'More',
 
     // ----- home -----
-    'Nova kolekcija': 'New collection', 'Jesen 2025': 'Autumn 2025',
     'Sveće od sojinog voska sa pamučnim fitiljem, ručno livene u malim serijama, sa mirisima koji greju dom.':
       'Soy wax candles with cotton wicks, hand-poured in small batches, with scents that warm the home.',
     'Posebni trenuci': 'Special moments', 'zaslužuju posebne detalje.': 'deserve special details.',

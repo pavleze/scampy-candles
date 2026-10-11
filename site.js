@@ -43,7 +43,7 @@
   const PRODUCTS = [
     gift(7,  'Mali meda',             'bear',       1.7, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
     gift(8,  'Meda sa srcem',         'bear-heart', 2.5, '#efc3cb', ['meda-sa-srcem-1.jpg']),
-    gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg']),
+    gift(9,  'Lavić',                 'lion',       1.7, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
     gift(10, 'Bubble',                'bubble',     2.0, '#a9c4e4', ['bubble-1.jpg']),
     gift(11, 'Božur',                 'peony',      2.0, '#efc3cb', ['bozur-1.jpg']),
     gift(12, 'Always & Forever srce', 'heart',      2.0, '#c8444f', ['always-forever-srce-1.jpg']),

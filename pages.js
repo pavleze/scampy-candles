@@ -429,8 +429,6 @@
             <div>${money(sum)}</div>
           </div>`).join('');
         $('#sum-sub').textContent = money(s.subtotal);
-        $('#sum-ship').textContent = 'Snosi kupac';
-        $('#sum-total').textContent = money(s.total);
       };
       subscribe(renderSummary);
       renderSummary();

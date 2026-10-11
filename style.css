@@ -1512,3 +1512,20 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 @media (min-width: 1100px) and (max-width: 1500px) { .brand span { font-size: 2.35rem; } }
 @media (min-width: 1100px) and (max-width: 1280px) { .brand span { font-size: 2.1rem; letter-spacing: .01em; } }
 @media (min-width: 821px) and (max-width: 1099px) { .brand span { font-size: 1.8rem; letter-spacing: .01em; } }
+
+
+/* Timer ring: it fills around the active dot in 10 seconds, when it is full the next picture comes */
+.hero-dot { position: relative; }
+.hero-dot svg { position: absolute; inset: 4px; width: 24px; height: 24px; transform: rotate(-90deg); pointer-events: none; }
+.hero-dot svg circle { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 63; stroke-dashoffset: 63; opacity: 0; }
+.hero-dot.is-on svg circle { opacity: 1; animation: dot-ring 10s linear forwards; }
+@keyframes dot-ring { from { stroke-dashoffset: 63; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .hero-dot.is-on svg circle { animation: none; stroke-dashoffset: 0; } }
+
+/* Black-and-white picture: a neutral dark layer replaces the brown one (they fade into each other) */
+.hero-wrap--photo::before { transition: opacity 1s ease-in-out; }
+.hero-wrap--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out;
+  background: linear-gradient(90deg, rgba(10, 10, 10, .84) 0%, rgba(10, 10, 10, .7) 48%, rgba(10, 10, 10, .38) 100%); }
+.hero-wrap--photo.is-mono::before { opacity: 0; }
+.hero-wrap--photo.is-mono::after { opacity: 1; }
+@media (max-width: 820px) { .hero-wrap--photo::after { background: linear-gradient(180deg, rgba(10, 10, 10, .78), rgba(10, 10, 10, .7)); } }

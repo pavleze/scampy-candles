@@ -1634,3 +1634,9 @@ body[data-head="caps"] .page-head__title { text-transform: uppercase; font-size:
   body[data-page="about"] .page-head__title,
   body[data-head="caps"] .page-head__title { font-size: clamp(1.15rem, 5.8vw, 1.7rem); letter-spacing: .1em; white-space: nowrap; }
 }
+
+
+/* ONE style for every big page title (.page-head__title): capitals, same size and spacing everywhere.
+   Pages: About, Collections, Shop list, Contact, Checkout, Thank you. */
+.page-head__title { text-transform: uppercase; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: .14em; line-height: 1.15; }
+@media (max-width: 560px) { .page-head__title { font-size: clamp(1.15rem, 5.8vw, 1.7rem); letter-spacing: .1em; } }

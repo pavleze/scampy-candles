@@ -57,7 +57,7 @@
 
   const gift = (id, name, shape, price, color, images = [], extra = {}) => ({
     id, name, shape, price, color, bulkMin: 50, minQty: 10, defaultQty: 50,   // at least 10 pieces per item
-    category: 'pokloncici', family: 'Poklončić', size: '',
+    category: 'pokloncici', family: 'Poklončić za goste', size: '',
     desc: GIFT_DESC, options: GIFT_OPTIONS,
     // Real photos live in assets/products/. The first one is the main picture.
     // A candle without photos shows the drawn placeholders instead.
@@ -68,7 +68,7 @@
 
   // Shop collections, in the order they appear as filters. Add products with the matching `category`.
   const CATEGORIES = [
-    { key: 'pokloncici', label: 'Poklončići' },
+    { key: 'pokloncici', label: 'Poklončići za goste' },
     { key: 'classic',    label: 'Classic kolekcija' },
     { key: 'sezonska',   label: 'Sezonska kolekcija' },
     { key: 'buketi',     label: 'Buketi' },

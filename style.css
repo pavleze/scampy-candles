@@ -1141,3 +1141,9 @@ textarea.opt__text { resize: vertical; min-height: 84px; line-height: 1.4; }
 .opt--qty { margin-top: 2px; }
 .pdp__buy .qty { margin: 0; }
 @media (max-width: 820px) { .pdp__buy .btn { width: 100%; } }
+
+/* Text boxes: start small, grow with the text */
+textarea.opt__text { min-height: 0; height: auto; resize: none; overflow: hidden; padding: 11px 14px; line-height: 1.35; }
+#opt-dedication { min-height: 46px; }
+#opt-note { min-height: 46px; }
+@media (max-width: 560px) { #opt-dedication { min-height: 68px; } }   /* the example text wraps to two lines on a phone */

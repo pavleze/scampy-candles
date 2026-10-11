@@ -263,7 +263,7 @@
             return `
               <div class="opt">
                 <div class="opt__label">${o.label}</div>
-                <textarea class="opt__text" id="opt-${o.key}" rows="3" maxlength="${o.maxLength}" placeholder="${esc(o.placeholder || '')}" aria-label="${o.label}">${esc(sel[o.key] || '')}</textarea>
+                <textarea class="opt__text" id="opt-${o.key}" rows="1" maxlength="${o.maxLength}" placeholder="${esc(o.placeholder || '')}" aria-label="${o.label}">${esc(sel[o.key] || '')}</textarea>
               </div>`;
           }
           const askText = o.key === 'pack' && textOn();
@@ -284,7 +284,7 @@
           }
           if (askText) {
             const t = p.options.find((x) => x.type === 'text');
-            control += `<textarea class="opt__text" id="opt-${t.key}" rows="3" maxlength="${t.maxLength}" placeholder="${esc(t.placeholder || '')}" aria-label="Tekst posvete">${esc(sel[t.key] || '')}</textarea>
+            control += `<textarea class="opt__text" id="opt-${t.key}" rows="1" maxlength="${t.maxLength}" placeholder="${esc(t.placeholder || '')}" aria-label="Tekst posvete">${esc(sel[t.key] || '')}</textarea>
               <p class="opt__help">Detalje možemo dogovoriti i telefonom posle poručivanja, nakon čega šaljemo predloge dizajna.</p>`;
           }
           return `
@@ -293,7 +293,16 @@
               ${control}
             </div>${o.key === 'pack' ? qtyRow() : ''}`;
         }).join('');
+        growAll();
       };
+
+      // text boxes start small and grow while the customer types
+      const grow = (el) => {
+        if (!el.value) { el.style.height = ''; return; }          // empty: the CSS height (one line) applies
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight}px`;
+      };
+      const growAll = () => $$('textarea.opt__text', root).forEach(grow);
 
       const setQty = (n) => {
         qty = Math.max(MIN, Math.min(MAX, Math.floor(n) || MIN));
@@ -350,6 +359,7 @@
           if (n >= 1) { qty = Math.max(MIN, Math.min(MAX, n)); renderPrice(); }   // field is tidied on blur, so "5" → "50" can be typed
         } else if (e.target.matches('.opt__text')) {
           sel[e.target.id.replace('opt-', '')] = e.target.value;
+          grow(e.target);
           if (e.target.id === 'opt-dedication' && e.target.value.trim() && missing.includes('dedication')) {   // clear the warning without redrawing (keeps focus)
             missing = missing.filter((k) => k !== 'dedication');
             const row = e.target.closest('.opt');

@@ -31,6 +31,7 @@
     // Not shown as its own row: its text field appears under Pakovanje when the card is chosen.
     { key: 'dedication', label: 'Posveta',       type: 'text', optional: true, maxLength: 140, placeholder: 'Ime/imena, posveta npr. „Hvala što ste bili sa nama“, datum' },
     { key: 'ribbon',     label: 'Boja mašnice',  type: 'swatch', choices: RIBBONS },
+    { key: 'note',       label: 'Napomena',      type: 'note', optional: true, maxLength: 300, placeholder: 'Ako imaš još neku želju ili pitanje, ostavi ovde' },
   ];
 
   const GIFT_DESC = 'Mali poklon za goste na venčanjima, krštenjima i rođendanima. Boju sveće, miris, pakovanje, mašnicu i posvetu biraš sam/a.';

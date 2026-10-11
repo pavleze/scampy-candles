@@ -213,6 +213,13 @@
         if (!isGift) return;
         $('#pdp-opts').innerHTML = p.options.map((o) => {
           if (o.type === 'text') return '';                 // lives under Pakovanje (see below)
+          if (o.type === 'note') {                           // free note, always shown
+            return `
+              <div class="opt">
+                <div class="opt__label">${o.label}</div>
+                <textarea class="opt__text" id="opt-${o.key}" rows="3" maxlength="${o.maxLength}" placeholder="${esc(o.placeholder || '')}" aria-label="${o.label}">${esc(sel[o.key] || '')}</textarea>
+              </div>`;
+          }
           const askText = o.key === 'pack' && textOn();
           const needsText = askText && missing.includes('dedication');
           const err = missing.includes(o.key) || needsText;
@@ -295,7 +302,7 @@
           if (n >= 1) { qty = Math.min(MAX, n); renderPrice(); }
         } else if (e.target.matches('.opt__text')) {
           sel[e.target.id.replace('opt-', '')] = e.target.value;
-          if (e.target.value.trim() && missing.includes('dedication')) {   // clear the warning without redrawing (keeps focus)
+          if (e.target.id === 'opt-dedication' && e.target.value.trim() && missing.includes('dedication')) {   // clear the warning without redrawing (keeps focus)
             missing = missing.filter((k) => k !== 'dedication');
             const row = e.target.closest('.opt');
             row.classList.remove('has-error');

@@ -68,11 +68,13 @@
 
   // Shop collections, in the order they appear as filters. Add products with the matching `category`.
   const CATEGORIES = [
-    { key: 'pokloncici', label: 'Poklončići za goste' },
-    { key: 'classic',    label: 'Classic kolekcija' },
-    { key: 'sezonska',   label: 'Sezonska kolekcija' },
-    { key: 'buketi',     label: 'Buketi' },
+    { key: 'pokloncici', label: 'Poklončići za goste', img: 'assets/products/meda-sa-srcem-1.jpg' },
+    { key: 'classic',    label: 'Classic kolekcija',   img: null },
+    { key: 'sezonska',   label: 'Sezonska kolekcija',  img: null },
+    { key: 'buketi',     label: 'Buketi',              img: null },
   ];
+  // The "Sve" card on the collections page. Pictures are placeholders until the real ones are added (img: null shows a paw tile).
+  const ALL_COLLECTION = { key: 'all', label: 'Sve', img: 'assets/hero/hero1-landscape.jpg' };
 
   const PRODUCTS = [
     //            id  name                      shape         box   color      photos
@@ -344,7 +346,7 @@
   const PAGE = document.body.dataset.page || '';
   const NAV = [
     ['home', 'index.html', 'Početna'],
-    ['shop', 'prodavnica.html', 'Prodavnica'],
+    ['shop', 'kolekcije.html', 'Prodavnica'],
     ['about', 'o-nama.html', 'O nama'],
     ['contact', 'kontakt.html', 'Kontakt'],
   ];
@@ -643,7 +645,7 @@
   renderDrawer();
 
   window.SC = {
-    PRODUCTS, CATEGORIES, state, $, $$, esc, store,
+    PRODUCTS, CATEGORIES, ALL_COLLECTION, state, $, $$, esc, store,
     money, shippingFor, unitPrice, nextTier, round2, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK, minQtyOf,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,

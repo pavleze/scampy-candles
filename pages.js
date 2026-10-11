@@ -67,6 +67,24 @@
       bindNewsletter();
     },
 
+    // ---------- Collections ----------
+    collections() {
+      const { CATEGORIES, ALL_COLLECTION } = window.SC;
+      const count = (key) => (key === 'all' ? PRODUCTS.length : PRODUCTS.filter((x) => x.category === key).length);
+      const href = (key) => (key === 'all' ? 'prodavnica.html' : `prodavnica.html?c=${key}`);
+      $('#collections').innerHTML = [ALL_COLLECTION, ...CATEGORIES].map((c) => {
+        const n = count(c.key);
+        return `
+          <a class="collection${c.img ? '' : ' is-empty'}" href="${href(c.key)}">
+            <span class="collection__media">${c.img ? `<img src="${esc(c.img)}" alt="" loading="lazy">` : '<svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><ellipse cx="14" cy="28" rx="7" ry="9" transform="rotate(-18 14 28)"/><ellipse cx="26" cy="15" rx="7" ry="10" transform="rotate(-6 26 15)"/><ellipse cx="40" cy="15" rx="7" ry="10" transform="rotate(6 40 15)"/><ellipse cx="52" cy="28" rx="7" ry="9" transform="rotate(18 52 28)"/><path d="M32 30c-9 0-17 9-17 17 0 6 4 9 9 9 3 0 5-1 8-1s5 1 8 1c5 0 9-3 9-9 0-8-8-17-17-17Z"/></svg>'}</span>
+            <span class="collection__body">
+              <span class="collection__name">${esc(c.label)}</span>
+              <span class="collection__count">${n ? `${n} ${n === 1 ? 'proizvod' : 'proizvoda'}` : 'Uskoro'}</span>
+            </span>
+          </a>`;
+      }).join('');
+    },
+
     // ---------- Shop ----------
     shop() {
       const grid = $('#grid');
@@ -75,6 +93,8 @@
       const wanted = params.get('c');
       const view = { filter: CATS.some((c) => c.key === wanted) ? wanted : 'all', query: '' };
 
+      const titleEl = $('#shop-title');
+      const setTitle = () => { titleEl.textContent = view.filter === 'all' ? 'Sve sveće' : CATS.find((c) => c.key === view.filter).label; };
       // one chip per collection
       $('#filters').innerHTML = [{ key: 'all', label: 'Sve' }, ...CATS].map((c) =>
         `<button type="button" class="chip${c.key === view.filter ? ' is-active' : ''}" data-filter="${c.key}">${esc(c.label)}</button>`).join('');
@@ -97,6 +117,7 @@
         if (!b) return;
         view.filter = b.dataset.filter;
         $$('#filters .chip').forEach((c) => c.classList.toggle('is-active', c === b));
+        setTitle();
         render();
       });
 
@@ -105,6 +126,7 @@
       if (q) { view.query = q; window.SC.openSearch(q); }
 
       subscribe(render);
+      setTitle();
       render();
     },
 
@@ -554,5 +576,5 @@
     });
   }
 
-  (pages[document.body.dataset.page] || (() => {}))();
+  (pages[document.body.dataset.init || document.body.dataset.page] || (() => {}))();
 })();

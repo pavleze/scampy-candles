@@ -273,7 +273,6 @@
         <div class="card__row">
           <span class="card__price">
             <span class="card__amount">${isGift ? '<small class="card__from">od</small> ' : ''}${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price)}${isGift ? ' <small class="card__unit">/ po komadu</small>' : ''}</span>
-            ${isGift ? `<small class="card__bulk">${p.defaultQty || p.minQty} kom, ${p.options[0].choices[0].toLowerCase()}</small>` : ''}
           </span>
           ${isGift
             ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberite</a>`

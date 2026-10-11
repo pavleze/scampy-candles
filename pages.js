@@ -49,7 +49,7 @@
         const q = view.query.trim().toLowerCase();
         const list = PRODUCTS.filter((p) =>
           (view.filter === 'all' || p.category === view.filter) &&
-          (!q || `${p.name} ${p.family} ${p.desc}`.toLowerCase().includes(q)));
+          (!q || `${p.name} ${window.SC_T(p.name)} ${p.family} ${p.desc}`.toLowerCase().includes(q)));   // finds both Serbian and English names
         grid.innerHTML = list.map(cardHTML).join('');
         empty.hidden = list.length > 0;
         if (!list.length) {

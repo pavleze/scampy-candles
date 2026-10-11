@@ -11,12 +11,17 @@
   let lang = 'sr';
   try { lang = JSON.parse(localStorage.getItem('sc.lang')) || 'sr'; } catch { /* default */ }
   window.SC_LANG = lang;
+  window.SC_T = (s) => s;                  // replaced below when English is on
   if (lang !== 'en') return;               // Serbian is the source text: nothing to do
 
   document.documentElement.lang = 'en';
   document.documentElement.classList.add('i18n-pending');   // hidden until the first pass is done (no flash of Serbian)
 
   const DICT = {
+    // ----- names of the candles -----
+    'Mali meda': 'Little Bear', 'Meda sa srcem': 'Bear with a Heart', 'Lavić': 'Little Lion', 'Bubble': 'Bubble', 'Božur': 'Peony',
+    'Always & Forever srce': 'Always & Forever Heart', 'Dijamant srce': 'Diamond Heart', 'Astronaut': 'Astronaut', 'Pahulja': 'Snowflake', 'Cvetno srce': 'Flower Heart',
+
     // ----- navigation, header, footer, cart -----
     'Početna': 'Home', 'Prodavnica': 'Shop', 'O nama': 'About us', 'Kontakt': 'Contact',
     'Scampy Candles – početna': 'Scampy Candles – home', 'Glavni meni': 'Main menu', 'Meni': 'Menu',
@@ -129,7 +134,7 @@
     [/^(\d+) proizvod(?:a)?$/, (m, n) => `${n} ${unit(Number(n))}`],
     [/^Instagram objava (\d+)$/, 'Instagram post $1'],
     [/^Uvećajte sliku (\d+)$/, 'Enlarge picture $1'],
-    [/^(.+) je u korpi$/, '$1 is in the cart'],
+    [/^(.+) je u korpi$/, (m, name) => `${tr(name)} is in the cart`],
     [/^po komadu · (\d+) kom, (.+)$/, (m, n, pack) => `per piece · ${n} pcs, ${tr(pack)}`],
     [/^· (.+)$/, (m, v) => `· ${tr(v)}`],
   ];
@@ -148,6 +153,8 @@
     if (m && Object.prototype.hasOwnProperty.call(DICT, m[1])) return `${DICT[m[1]]}: ${tr(m[2])}`;
     return s;
   }
+
+  window.SC_T = tr;
 
   const SKIP = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'NOSCRIPT', 'CODE']);
   const ATTRS = ['placeholder', 'aria-label', 'title', 'alt'];

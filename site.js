@@ -1,8 +1,6 @@
 /* Shared across all pages: data, cart, currency, header, footer, cart drawer. */
 (() => {
   const RATE = 117.2;      // 1 EUR → RSD (mock)
-  const SHIPPING = 3.5;    // EUR
-  const FREE_OVER = 40;    // EUR
 
   const SMALL_ORDER_MARKUP = 1.10;   // gift candles cost 10% more below their bulk quantity
 
@@ -125,7 +123,8 @@
     ? `${eur.toFixed(2).replace('.', ',')} €`
     : `${Math.ceil(eur * RATE - 1e-7).toLocaleString('sr-RS')} RSD`;   // dinars also round up
 
-  const shippingFor = (subtotal) => (subtotal === 0 || subtotal >= FREE_OVER ? 0 : SHIPPING);
+  // Delivery is paid by the customer (to the courier), so it is not part of the shop's totals.
+  const shippingFor = () => 0;
 
   // ---------- Pricing ----------
   // Per-piece price for a product, given how many pieces of it are ordered in total.
@@ -455,9 +454,7 @@
     $('#drawer-total').textContent = money(subtotal);
     $('#checkout').classList.toggle('is-disabled', count === 0);
     $('#checkout').setAttribute('aria-disabled', String(count === 0));
-    const left = FREE_OVER - subtotal;
-    $('#drawer-note').textContent = count === 0 ? ''
-      : left > 0 ? `Još ${money(left)} do besplatne dostave.` : 'Imaš besplatnu dostavu 🐾';
+    $('#drawer-note').textContent = count === 0 ? '' : 'Dostavu snosi kupac.';
 
     // Don't rebuild the list while the user is typing a quantity.
     if (itemsEl.contains(document.activeElement) && document.activeElement.matches('[data-qty]')) return;
@@ -579,7 +576,7 @@
   renderDrawer();
 
   window.SC = {
-    PRODUCTS, FREE_OVER, SHIPPING, state, $, $$, esc, store,
+    PRODUCTS, state, $, $$, esc, store,
     money, shippingFor, unitPrice, nextTier, round2, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK, minQtyOf,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,

@@ -79,13 +79,14 @@
         <a class="collection${c.img ? '' : ' is-empty'}" href="${href(c.key)}" aria-label="${esc(c.label)}">
           <span class="collection__media">
             ${c.img ? `<img src="${esc(c.img)}" alt="" loading="lazy">` : PAW}
-            <span class="collection__hover" aria-hidden="true">
+            <span class="collection__hover">
               <span class="collection__hover-name">${esc(c.label)}</span>
-              <span class="collection__hover-count">${countText(count(c.key))}</span>
-              <span class="collection__view">Pogledajte</span>
+              <span class="collection__more" aria-hidden="true">
+                <span class="collection__hover-count">${countText(count(c.key))}</span>
+                <span class="collection__view">Pogledajte</span>
+              </span>
             </span>
           </span>
-          <span class="collection__name">${esc(c.label)}</span>
         </a>`).join('');
     },
 

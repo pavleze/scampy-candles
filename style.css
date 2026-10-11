@@ -1341,9 +1341,9 @@ html.i18n-pending body { visibility: hidden; }
 .select { display: none !important; }
 
 /* Brand name in the header: script lettering (only here; the rest of the site stays in the printed face) */
-.brand span { font-family: "Pinyon Script", "Snell Roundhand", cursive; font-weight: 400; letter-spacing: 0; font-size: 2.1rem; line-height: 1; padding-top: 4px; }
-@media (max-width: 1180px) { .brand span { font-size: 1.9rem; } }
-@media (max-width: 960px)  { .brand span { font-size: 1.7rem; } }
+.brand span { font-family: "Italianno", "Snell Roundhand", cursive; font-weight: 400; letter-spacing: .01em; font-size: 2.7rem; line-height: 1; padding-top: 2px; }
+@media (max-width: 1180px) { .brand span { font-size: 2.45rem; } }
+@media (max-width: 960px)  { .brand span { font-size: 2.2rem; } }
 
 /* Header logo: a full turn around its vertical axis every 15 seconds (the turn itself takes about a second) */
 .brand { perspective: 500px; }

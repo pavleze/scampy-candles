@@ -1625,3 +1625,12 @@ body[data-page="about"] .page-head__title { text-transform: uppercase; letter-sp
 /* About title: a bit smaller */
 body[data-page="about"] .page-head__title { font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: .14em; }
 @media (max-width: 560px) { body[data-page="about"] .page-head__title { font-size: clamp(1.15rem, 5.8vw, 1.7rem); letter-spacing: .1em; } }
+
+
+/* Titles in capitals share one style: About page and the collections page */
+body[data-page="about"] .page-head__title,
+body[data-head="caps"] .page-head__title { text-transform: uppercase; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: .14em; }
+@media (max-width: 560px) {
+  body[data-page="about"] .page-head__title,
+  body[data-head="caps"] .page-head__title { font-size: clamp(1.15rem, 5.8vw, 1.7rem); letter-spacing: .1em; white-space: nowrap; }
+}

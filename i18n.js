@@ -40,7 +40,7 @@
     'Sto u radionici prepun ručno rađenih sveća u obliku cveća': 'A workshop table full of handmade flower-shaped candles',
     'Scampy u dvorištu iza dve kutije sa buketima od sveća': 'Scampy in the garden behind two boxes of candle bouquets',
     'Posebni trenuci': 'Special moments', 'zaslužuju posebne detalje.': 'deserve special details.',
-    'Pogledajte prodavnicu': 'Visit the shop', 'Naša priča': 'Our story', 'Zašto Scampy': 'Why Scampy',
+    'Pogledajte prodavnicu': 'Visit the shop', 'Naša priča': 'Our story', 'Zašto Scampy': 'Why Scampy', 'Zašto Scampy Candles': 'Why Scampy Candles',
     '100% sojin vosak': '100% soy wax', 'Čisto sagorevanje, bez parafina.': 'Clean burning, no paraffin.',
     'Ručno livene': 'Hand-poured', 'Male serije, velika pažnja.': 'Small batches, great care.',
     'Personalizovano do detalja': 'Personalised to the last detail', 'Zajedno oblikujemo dizajn koji prati vašu priču.': 'Together we shape a design that follows your story.',
@@ -92,7 +92,7 @@
     'I dalje svaku sveću pravimo nas dvoje, ručno, sa istom pažnjom i uzbuđenjem kao na početku.':
       'The two of us still make every candle by hand, with the same care and excitement as at the very beginning.',
     '12.000+': '12,000+', 'prodatih sveća': 'candles sold', 'proslava čiji smo deo': 'celebrations we were part of',
-    'Naše vrednosti': 'Our values', 'Od čega pravimo sveće': 'What we make our candles from',
+    'Od čega pravimo sveće': 'What we make our candles from',
     'Sojin vosak': 'Soy wax', 'Prirodan, obnovljiv i čist. Sagoreva sporije i ravnomernije od parafina.': 'Natural, renewable and clean. Burns slower and more evenly than paraffin.',
     'Male serije': 'Small batches', 'Izlivamo ih ručno, nekoliko desetina odjednom, da bi svaka dobila pažnju.': 'We pour them by hand, a few dozen at a time, so each one gets attention.',
     'Pogledajte celu kolekciju i pronađite svoj miris.': 'Browse the whole collection and find your scent.',

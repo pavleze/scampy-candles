@@ -1545,9 +1545,9 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
   to   { opacity: 1; transform: none; }
 }
 
-/* About page: the photo is landscape, so the arch frame lies on its side (rounded side outward, on the left) */
-body[data-page="about"] .story__art {
+/* The story photo is landscape, so the arch frame lies on its side (rounded side outward, on the left) */
+.story__art {
   aspect-ratio: 4 / 3;
   border-radius: 38% 8px 8px 38% / 50% 8px 8px 50%;
 }
-@media (max-width: 820px) { body[data-page="about"] .story__art { max-width: 440px; } }
+@media (max-width: 820px) { .story__art { max-width: 440px; } }

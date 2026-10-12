@@ -401,7 +401,7 @@
       <div>
         <h3>Pratite nas</h3>
         <p><a href="https://www.instagram.com/scampy_candles/" target="_blank" rel="noopener">Instagram</a></p>
-        <p><a href="#">TikTok</a></p>
+        <p><a href="https://www.tiktok.com/@scampy_candles" target="_blank" rel="noopener">TikTok</a></p>
         <p><a href="#">Facebook</a></p>
       </div>
     </div>

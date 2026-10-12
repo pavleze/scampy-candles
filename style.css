@@ -1578,6 +1578,6 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
 .values__icon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Top of the footer: the brand name, then the brand line, then the three columns */
-.footer .footer__brand { max-width: var(--maxw); margin: 0 auto 6px; text-align: center; font-size: clamp(2rem, 4vw, 2.8rem); }
+.footer .footer__brand { max-width: var(--maxw); margin: 0 auto 6px; font-family: inherit; font-size: 1rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: #fff; }
 @media (min-width: 961px) { .footer__grid { grid-template-columns: repeat(3, 1fr); } }   /* narrower screens keep two columns */
-.footer .footer__motto { max-width: var(--maxw); margin: 0 auto 48px; padding-bottom: 36px; border-bottom: 1px solid #332e27; text-align: center; font-family: var(--display); font-style: italic; font-size: clamp(1.3rem, 2.4vw, 1.8rem); letter-spacing: .03em; color: var(--gold); line-height: 1.4; }
+.footer .footer__motto { max-width: var(--maxw); margin: 0 auto 40px; padding-bottom: 32px; border-bottom: 1px solid #332e27; font-style: italic; font-size: 1rem; letter-spacing: .03em; color: #fff; }

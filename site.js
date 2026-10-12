@@ -402,7 +402,7 @@
         <h3>Pratite nas</h3>
         <p><a href="https://www.instagram.com/scampy_candles/" target="_blank" rel="noopener">Instagram</a></p>
         <p><a href="https://www.tiktok.com/@scampy_candles" target="_blank" rel="noopener">TikTok</a></p>
-        <p><a href="#">Facebook</a></p>
+        <p><a href="mailto:scampycandles@gmail.com">Email</a></p>
       </div>
     </div>
     <p class="footer__copy">© 2025 Scampy Candles · est 2025</p>`;

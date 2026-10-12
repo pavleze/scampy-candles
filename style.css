@@ -1529,13 +1529,14 @@ html.type-intro .hero__text > .hero__title { animation: none; }                 
 html.type-intro--typing .hero__text > .hero__title { opacity: 1; }
 .tw-ch { visibility: hidden; }
 .tw-ch.is-on { visibility: visible; }
+html.type-intro--typing .hero__title { position: relative; white-space: nowrap; }   /* lines stay exactly as measured */
 .tw-caret {
-  display: inline-block;
-  width: 0;
-  height: .82em;
-  margin-right: -2px;
-  border-right: 2px solid var(--gold);
-  vertical-align: -.06em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  background: var(--gold);
+  pointer-events: none;
   animation: tw-blink 1s steps(1) infinite;
 }
 @keyframes tw-blink { 50% { opacity: 0; } }

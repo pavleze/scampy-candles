@@ -88,14 +88,33 @@
           const title = $('.hero__title');
           const original = title.innerHTML;
           title.setAttribute('aria-label', title.textContent.replace(/\s+/g, ' ').trim());
-          // Wrap every letter in a hidden span; the layout is final from the start, so nothing jumps while typing.
+          // Where the browser breaks the lines of the finished title: remembered before anything changes,
+          // because separate letters can measure a hair wider than whole words and wrap differently.
+          const breaks = new Set();
+          let lastTop = null;
+          const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+          const range = document.createRange();
+          for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+            for (let k = 0; k < n.length; k++) {
+              range.setStart(n, k);
+              range.setEnd(n, k + 1);
+              const r = range.getClientRects()[0];
+              if (!r || !n.data[k].trim()) continue;              // spaces at a break have no box of their own
+              if (lastTop !== null && r.top > lastTop + 4 && k > 0) breaks.add(`${n.data.slice(0, k)}|${n.data.slice(k)}`);
+              lastTop = r.top;
+            }
+          }
+          // Wrap every letter in a hidden span. The lines are fixed as measured (forced breaks, no wrapping while typing)
+          // and the caret floats above the text, so nothing can move while the letters appear.
           const chars = [];
           const split = (node) => {
             [...node.childNodes].forEach((c) => {
               if (c.nodeType === 1) return split(c);
               if (c.nodeType !== 3) return;
               const frag = document.createDocumentFragment();
-              [...c.textContent].forEach((letter) => {
+              const text = c.textContent;
+              [...text].forEach((letter, k) => {
+                if (breaks.has(`${text.slice(0, k)}|${text.slice(k)}`)) frag.appendChild(document.createElement('br'));
                 const span = document.createElement('span');
                 span.className = 'tw-ch';
                 span.textContent = letter;
@@ -111,6 +130,13 @@
           caret.setAttribute('aria-hidden', 'true');
           title.prepend(caret);
           root.classList.add('type-intro--typing');
+          const placeCaret = (ch, before = false) => {           // just after the letter (or just before the first one)
+            const box = title.getBoundingClientRect();
+            const r = ch.getBoundingClientRect();
+            caret.style.transform = `translate(${(before ? r.left : r.right) - box.left}px, ${r.top - box.top + r.height * 0.18}px)`;
+            caret.style.height = `${r.height * 0.68}px`;
+          };
+          placeCaret(chars[0], true);
 
           let i = 0;
           const step = () => {
@@ -124,7 +150,7 @@
             }
             const ch = chars[i++];
             ch.classList.add('is-on');
-            ch.after(caret);
+            placeCaret(ch);
             const next = chars[i];
             // A human rhythm: a little uneven, a breath after a comma or at the end of the first line.
             let delay = 55 + Math.random() * 45;
@@ -134,10 +160,11 @@
           };
           setTimeout(step, 500);                                // once the text around it has started to fade in
         };
-        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
-        else run();
+        // Measure with the real font, not the fallback one shown while it loads.
+        const ready = () => (document.fonts ? document.fonts.ready : Promise.resolve()).then(run);
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once: true });
+        else ready();
       })();
-
 
       // the first three collections are featured on the home page (change the number to show more or fewer)
       $('#home-collections').innerHTML = window.SC.CATEGORIES.slice(0, 3).map(collectionCard).join('');

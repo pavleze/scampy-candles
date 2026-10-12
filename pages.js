@@ -78,6 +78,68 @@
         start();
       })();
 
+      // First visit in this session: the hero title types itself in, letter by letter, then the rest fades up.
+      // Runs after i18n.js has translated the page (its DOMContentLoaded listener comes first), so English types too.
+      (() => {
+        const root = document.documentElement;
+        if (!root.classList.contains('type-intro')) return;
+        try { sessionStorage.setItem('sc.typed', '1'); } catch { /* ignore */ }
+        const run = () => {
+          const title = $('.hero__title');
+          const original = title.innerHTML;
+          title.setAttribute('aria-label', title.textContent.replace(/\s+/g, ' ').trim());
+          // Wrap every letter in a hidden span; the layout is final from the start, so nothing jumps while typing.
+          const chars = [];
+          const split = (node) => {
+            [...node.childNodes].forEach((c) => {
+              if (c.nodeType === 1) return split(c);
+              if (c.nodeType !== 3) return;
+              const frag = document.createDocumentFragment();
+              [...c.textContent].forEach((letter) => {
+                const span = document.createElement('span');
+                span.className = 'tw-ch';
+                span.textContent = letter;
+                frag.appendChild(span);
+                chars.push(span);
+              });
+              c.replaceWith(frag);
+            });
+          };
+          split(title);
+          const caret = document.createElement('span');
+          caret.className = 'tw-caret';
+          caret.setAttribute('aria-hidden', 'true');
+          title.prepend(caret);
+          root.classList.add('type-intro--typing');
+
+          let i = 0;
+          const step = () => {
+            if (i >= chars.length) {
+              root.classList.add('type-intro--done');           // lead, buttons and dots fade up
+              setTimeout(() => {                                // caret blinks a moment, then the title goes back to plain text
+                title.innerHTML = original;
+                title.removeAttribute('aria-label');
+                root.classList.remove('type-intro', 'type-intro--typing', 'type-intro--done');
+              }, 1600);
+              return;
+            }
+            const ch = chars[i++];
+            ch.classList.add('is-on');
+            ch.after(caret);
+            const next = chars[i];
+            // A human rhythm: a little uneven, a breath after a comma or at the end of the first line.
+            let delay = 55 + Math.random() * 45;
+            if (next && next.parentNode !== ch.parentNode) delay += 380;
+            if (/[,.]/.test(ch.textContent)) delay += 220;
+            setTimeout(step, delay);
+          };
+          setTimeout(step, 650);                                // after the eyebrow has faded in
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
+        else run();
+      })();
+
+
       // the first three collections are featured on the home page (change the number to show more or fewer)
       $('#home-collections').innerHTML = window.SC.CATEGORIES.slice(0, 3).map(collectionCard).join('');
       bindNewsletter();

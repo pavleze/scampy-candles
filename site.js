@@ -383,10 +383,10 @@
     </form>`;
 
   const footerHTML = `
+    <p class="footer__motto">“Pawsitively handcrafted, with love.”</p>
     <div class="footer__grid">
       <div>
         <p class="footer__brand">Scampy Candles</p>
-        <p class="muted">Pawsitively handcrafted, with love.</p>
       </div>
       <div>
         <h3>Kontakt</h3>

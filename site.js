@@ -70,7 +70,7 @@
   const CATEGORIES = [
     { key: 'pokloni', label: 'Pokloni za goste', img: 'assets/products/meda-sa-srcem-1.jpg' },
     { key: 'classic',    label: 'Classic kolekcija',   img: 'assets/collections/classic.jpg' },
-    { key: 'sezonska',   label: 'Sezonska kolekcija',  img: null },
+    { key: 'sezonska',   label: 'Sezonska kolekcija',  img: 'assets/collections/sezonska.jpg' },
     { key: 'buketi',     label: 'Buketi',              img: null },
   ];
   // The "Sve" card on the collections page. Pictures are placeholders until the real ones are added (img: null shows a paw tile).

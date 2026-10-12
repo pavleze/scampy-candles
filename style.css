@@ -1544,3 +1544,10 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: none; }
 }
+
+/* About page: the photo is landscape, so the arch frame lies on its side (rounded side outward, on the left) */
+body[data-page="about"] .story__art {
+  aspect-ratio: 4 / 3;
+  border-radius: 38% 8px 8px 38% / 50% 8px 8px 50%;
+}
+@media (max-width: 820px) { body[data-page="about"] .story__art { max-width: 440px; } }

@@ -1524,12 +1524,9 @@ body[data-head="caps"] .page-head__title { text-transform: uppercase; font-size:
 body[data-page="contact"] .page-head .muted a.link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: currentColor; border-bottom: 0; }
 body[data-page="contact"] .page-head .muted a.link:hover { color: var(--ink); text-decoration: underline; }
 /* ---------- Hero title typing in (first visit in a session, see pages.js) ---------- */
-html.type-intro .hero__text > * { opacity: 0; }
-html.type-intro .hero__text > .eyebrow { animation: tw-fade-up .7s var(--ease) .1s forwards; }
+html.type-intro .hero__text > * { opacity: 0; animation: tw-fade-up .8s var(--ease) .1s forwards; }   /* everything comes in at once… */
+html.type-intro .hero__text > .hero__title { animation: none; }                                         /* …except the title, which types */
 html.type-intro--typing .hero__text > .hero__title { opacity: 1; }
-html.type-intro--done .hero__text > :not(.eyebrow, .hero__title) { animation: tw-fade-up .8s var(--ease) forwards; }
-html.type-intro--done .hero__text > .hero__cta { animation-delay: .15s; }
-html.type-intro--done .hero__text > .hero-dots { animation-delay: .3s; }
 .tw-ch { visibility: hidden; }
 .tw-ch.is-on { visibility: visible; }
 .tw-caret {

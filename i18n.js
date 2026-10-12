@@ -78,10 +78,18 @@
     'u kartonskoj kutijici': 'in a cardboard box', 'u tilu': 'in tulle', 'kartončić sa posvetom': 'card with a message', 'samo sveća': 'candle only',
 
     // ----- about -----
-    'Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom po imenu Scampy. Dok je on čuvao stražu, nastale su prve sveće.':
-      'Scampy started in a small kitchen, with one pot of wax and one very curious dog called Scampy. While he stood guard, the first candles were made.',
-    'Danas svaku sveću i dalje ručno izlivamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali. Zato svaka ima malo drugačiji karakter.':
-      'Today we still pour every candle by hand, from soy wax with a cotton wick and scents we chose ourselves. That is why each one has a slightly different character.',
+    'Scampy Candles je nastao sasvim spontano, u jednoj maloj trpezariji, iz želje da stvaramo nešto svojim rukama.':
+      'Scampy Candles began quite spontaneously, in a small dining room, out of a wish to make something with our own hands.',
+    'Nas dvoje smo po struci softverski inženjeri, ali smo oduvek imali i kreativnu stranu koja je tražila svoj prostor. Iako je svet tehnologije naš svakodnevni posao, Scampy je postao mnogo više od hobija – naš mali svet u kome ideje pretvaramo u nešto opipljivo.':
+      'We are both software engineers by profession, but we have always had a creative side looking for its own space. Technology is our everyday job, yet Scampy has become much more than a hobby – our little world where ideas turn into something you can hold.',
+    'Sve je počelo jednim loncem voska, prvim cvetnim svećama i idejom da napravimo bukete koji nikada ne venu. A sve to uz budno oko našeg psa Scampyja (Neštaška), po kome je naš mali brend i dobio ime.':
+      'It all started with one pot of wax, our first flower candles and the idea of making bouquets that never wilt. All under the watchful eye of our dog Scampy (our little rascal), who gave our small brand its name.',
+    'Od prvih buketa za naše najbliže stigli smo do desetina rođendana, krštenja i drugih posebnih trenutaka čiji smo danas mali deo.':
+      'From the first bouquets for our loved ones, we have come to dozens of birthdays, christenings and other special moments we are now a small part of.',
+    'Iako je Scampy porastao, trpezariju zamenila naša radionica, a prve eksperimente pažljivo osmišljen proces izrade, neke stvari se nisu promenile.':
+      'Scampy has grown, the dining room has become our workshop and the first experiments a carefully thought-out making process, yet some things have not changed.',
+    'I dalje svaku sveću pravimo nas dvoje, ručno, sa istom pažnjom i uzbuđenjem kao na početku.':
+      'The two of us still make every candle by hand, with the same care and excitement as at the very beginning.',
     'prodatih sveća': 'candles sold', 'autorskih mirisa': 'signature scents',
     'Naše vrednosti': 'Our values', 'Od čega pravimo sveće': 'What we make our candles from',
     'Sojin vosak': 'Soy wax', 'Prirodan, obnovljiv i čist. Sagoreva sporije i ravnomernije od parafina.': 'Natural, renewable and clean. Burns slower and more evenly than paraffin.',

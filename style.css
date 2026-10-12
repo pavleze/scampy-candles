@@ -1481,7 +1481,7 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 
 
 /* "About" picture: a photo inside the arch-shaped frame (it was a paw placeholder) */
-.story__art { position: relative; overflow: hidden; }
+.story__art { position: relative; overflow: hidden; width: 100%; }   /* the photo is absolute, so the frame needs its own width (it collapsed on phones) */
 .story__art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
 
 /* "est. 2025" under the About page title */

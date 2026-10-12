@@ -1551,3 +1551,16 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
   border-radius: 38% 8px 8px 38% / 50% 8px 8px 50%;
 }
 @media (max-width: 820px) { .story__art { max-width: 440px; } }
+
+/* About page: a second, upright photo under the first one, in the upright arch frame */
+.story__pics { display: grid; gap: clamp(16px, 2.4vw, 28px); }
+.story__art--tall {
+  aspect-ratio: 3 / 4;
+  width: 62%;
+  justify-self: end;
+  border-radius: 50% 50% 8px 8px / 38% 38% 8px 8px;
+}
+@media (max-width: 820px) {
+  .story__pics { width: 100%; max-width: 440px; margin: 0 auto; }
+  .story__art--tall { max-width: none; margin: 0; }
+}

@@ -38,6 +38,7 @@
       'Soy wax candles with cotton wicks, hand-poured in small batches, with scents that warm the home.',
     'Ručni rad': 'Handmade', 'Ručno izlivene sveće sa mašnom': 'Hand-poured candles with a ribbon',
     'Sto u radionici prepun ručno rađenih sveća u obliku cveća': 'A workshop table full of handmade flower-shaped candles',
+    'Scampy u dvorištu iza dve kutije sa buketima od sveća': 'Scampy in the garden behind two boxes of candle bouquets',
     'Posebni trenuci': 'Special moments', 'zaslužuju posebne detalje.': 'deserve special details.',
     'Pogledajte prodavnicu': 'Visit the shop', 'Naša priča': 'Our story', 'Zašto Scampy': 'Why Scampy',
     '100% sojin vosak': '100% soy wax', 'Čisto sagorevanje, bez parafina.': 'Clean burning, no paraffin.',

@@ -1481,7 +1481,7 @@ body[data-page="home"] .header:not(.is-scrolled) .cart-count { background: #e3c9
 
 
 /* "About" picture: a photo inside the arch-shaped frame (it was a paw placeholder) */
-.story__art { position: relative; overflow: hidden; }
+.story__art { position: relative; overflow: hidden; width: 100%; }   /* the photo is absolute, so the frame needs its own width (it collapsed on phones) */
 .story__art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
 
 /* "est. 2025" under the About page title */
@@ -1544,3 +1544,10 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: none; }
 }
+
+/* The story photo is landscape, so the arch frame lies on its side (rounded side outward, on the left) */
+.story__art {
+  aspect-ratio: 4 / 3;
+  border-radius: 38% 8px 8px 38% / 50% 8px 8px 50%;
+}
+@media (max-width: 820px) { .story__art { max-width: 440px; } }

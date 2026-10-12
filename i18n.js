@@ -91,7 +91,7 @@
       'Scampy has grown, the dining room has become our workshop and the first experiments a carefully thought-out making process, yet some things have not changed.',
     'I dalje svaku sveću pravimo nas dvoje, ručno, sa istom pažnjom i uzbuđenjem kao na početku.':
       'The two of us still make every candle by hand, with the same care and excitement as at the very beginning.',
-    '12.000+': '12,000+', 'prodatih sveća': 'candles sold', 'proslava': 'celebrations', 'oblika sveća': 'candle shapes',
+    '12.000+': '12,000+', 'prodatih sveća': 'candles sold', 'proslava čiji smo deo': 'celebrations we were part of',
     'Naše vrednosti': 'Our values', 'Od čega pravimo sveće': 'What we make our candles from',
     'Sojin vosak': 'Soy wax', 'Prirodan, obnovljiv i čist. Sagoreva sporije i ravnomernije od parafina.': 'Natural, renewable and clean. Burns slower and more evenly than paraffin.',
     'Male serije': 'Small batches', 'Izlivamo ih ručno, nekoliko desetina odjednom, da bi svaka dobila pažnju.': 'We pour them by hand, a few dozen at a time, so each one gets attention.',

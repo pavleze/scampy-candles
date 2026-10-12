@@ -1569,3 +1569,10 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
 .section--eco { --sage: #e7eee1; --sage-deep: #56704b; background: var(--sage); }
 .section--eco .eyebrow { color: var(--sage-deep); }
 .section--eco .values p { color: #4a5446; }
+.values__icon {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; margin-bottom: 14px;
+  border: 1px solid currentColor; border-radius: 50%;
+  color: var(--sage-deep, var(--gold-deep));
+}
+.values__icon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }

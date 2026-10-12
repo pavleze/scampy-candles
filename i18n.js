@@ -34,7 +34,7 @@
     'Manje': 'Less', 'Više': 'More',
 
     // ----- home -----
-    'Sveće od sojinog voska sa pamučnim fitiljem, ručno izlivene u malim serijama, sa mirisima koji greju dom.':
+    'Sveće od sojinog voska sa pamučnim fitiljem, ručno livene u malim serijama, sa mirisima koji greju dom.':
       'Soy wax candles with cotton wicks, hand-poured in small batches, with scents that warm the home.',
     'Ručni rad': 'Handmade', 'Ručno izlivene sveće sa mašnom': 'Hand-poured candles with a ribbon',
     'Posebni trenuci': 'Special moments', 'zaslužuju posebne detalje.': 'deserve special details.',

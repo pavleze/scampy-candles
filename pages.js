@@ -78,7 +78,7 @@
         start();
       })();
 
-      // First visit in this session: the hero title types itself in, letter by letter, then the rest fades up.
+      // First visit in this session: the hero title types itself in, letter by letter, while the rest fades in at once.
       // Runs after i18n.js has translated the page (its DOMContentLoaded listener comes first), so English types too.
       (() => {
         const root = document.documentElement;
@@ -115,11 +115,10 @@
           let i = 0;
           const step = () => {
             if (i >= chars.length) {
-              root.classList.add('type-intro--done');           // lead, buttons and dots fade up
               setTimeout(() => {                                // caret blinks a moment, then the title goes back to plain text
                 title.innerHTML = original;
                 title.removeAttribute('aria-label');
-                root.classList.remove('type-intro', 'type-intro--typing', 'type-intro--done');
+                root.classList.remove('type-intro', 'type-intro--typing');
               }, 1600);
               return;
             }
@@ -133,7 +132,7 @@
             if (/[,.]/.test(ch.textContent)) delay += 220;
             setTimeout(step, delay);
           };
-          setTimeout(step, 650);                                // after the eyebrow has faded in
+          setTimeout(step, 500);                                // once the text around it has started to fade in
         };
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
         else run();

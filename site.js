@@ -69,7 +69,7 @@
   // Shop collections, in the order they appear as filters. Add products with the matching `category`.
   const CATEGORIES = [
     { key: 'pokloni', label: 'Pokloni za goste', img: 'assets/products/meda-sa-srcem-1.jpg' },
-    { key: 'classic',    label: 'Classic kolekcija',   img: null },
+    { key: 'classic',    label: 'Classic kolekcija',   img: 'assets/collections/classic.jpg' },
     { key: 'sezonska',   label: 'Sezonska kolekcija',  img: null },
     { key: 'buketi',     label: 'Buketi',              img: null },
   ];

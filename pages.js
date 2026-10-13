@@ -249,7 +249,7 @@
         <div class="pdp__info">
           <h1 class="pdp__name">${p.name}</h1>
           <div id="pdp-price"></div>
-          ${isGift ? '<div id="pdp-opts"></div>' : `
+          ${isGift ? `${p.showDesc ? `<p class="pdp__desc">${p.desc}</p>` : ''}<div id="pdp-opts"></div>` : `
             <p class="pdp__desc">${p.desc}</p>
             <dl class="notes">
               ${Object.entries(p.notes || {}).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
@@ -388,13 +388,14 @@
         const eff = qty + inCart;
         const unit = SC.unitPrice(p, eff, sel.pack);
         const total = Math.round(unit * qty * 100) / 100;
-        let html = `<p class="pdp__price">${money(unit)} <small>/ kom</small></p>`;
+        const uDin = SC.unitDin(p, sel.pack);
+        let html = `<p class="pdp__price">${money(unit, undefined, uDin)} <small>/ kom</small></p>`;
         if (p.tiers) {
           const more = SC.nextTier(p, eff);
           html += `<p class="pdp__tier${more ? '' : ' is-on'}">${more ? 'Sa većom količinom cena po komadu je manja' : 'Najniža cena ✓'} · <button type="button" class="linkbtn" data-prices>pogledajte cene</button></p>`;
         }
         $('#pdp-price').innerHTML = html;
-        $('#pdp-add').textContent = `Dodajte u korpu · ${money(total)}`;
+        $('#pdp-add').textContent = `Dodajte u korpu · ${money(total, undefined, uDin == null ? null : uDin * qty)}`;
       };
 
       // ----- options -----
@@ -410,7 +411,7 @@
         <button type="button" class="swatch${sel[o.key] === c.name ? ' is-active' : ''}" style="--sw:${c.hex}" data-opt="${o.key}" data-val="${esc(c.name)}" aria-label="${esc(c.name)}" aria-pressed="${sel[o.key] === c.name}" title="${esc(c.name)}"></button>`).join('')}</div>`;
 
       const cardOn = () => sel.pack === SC.CARD_PACK;                      // text is required
-      const textOn = () => !!sel.pack && sel.pack !== SC.PLAIN_PACK;      // every packaging except "Samo sveća" takes a text
+      const textOn = () => !!sel.pack && sel.pack !== SC.PLAIN_PACK && p.options.some((o) => o.type === 'text');   // every packaging except "Samo sveća" takes a text (candles with a dedication option only)
 
       const renderOpts = () => {
         if (!isGift) return;
@@ -589,13 +590,13 @@
         wrap.hidden = s.count === 0;
         if (!s.count) return;
 
-        $('#sum-items').innerHTML = s.rows.map(({ p, qty, opts, sum }) => `
+        $('#sum-items').innerHTML = s.rows.map(({ p, qty, opts, sum, sumDin }) => `
           <div class="sum-line">
             <div class="line__thumb" style="--tone:${p.color}">${window.SC.thumbHTML(p, opts)}<span class="sum-qty">${qty}</span></div>
             <div><strong>${p.name}</strong><br><span class="muted">${esc(window.SC.describeOpts(p, opts).join(' · ') || p.size)}</span></div>
-            <div>${money(sum)}</div>
+            <div>${money(sum, undefined, sumDin)}</div>
           </div>`).join('');
-        $('#sum-sub').textContent = money(s.subtotal);
+        $('#sum-sub').textContent = money(s.subtotal, undefined, s.subtotalDin);
       };
       subscribe(renderSummary);
       renderSummary();
@@ -617,13 +618,15 @@
           currency: state.currency,
           payment: 'Pouzećem',
           customer: data,
-          items: s.rows.map(({ p, qty, opts, unit }) => ({
-            id: p.id, name: p.name, size: p.size, qty, unit,
+          items: s.rows.map(({ p, qty, opts, unit, sumDin }) => ({
+            id: p.id, name: p.name, size: p.size, qty, unit, sumDin,
             details: window.SC.describeOpts(p, opts),
           })),
           subtotal: s.subtotal,
           shipping: s.shipping,
           total: s.total,
+          subtotalDin: s.subtotalDin,
+          totalDin: s.totalDin,
         };
         store.set('sc.lastOrder', order);
         store.set('sc.customer', data);
@@ -636,7 +639,7 @@
     thanks() {
       const order = store.get('sc.lastOrder', null);
       if (!order) { location.replace('index.html'); return; }
-      const m = (n) => money(n, order.currency);
+      const m = (n, din = null) => money(n, order.currency, din);
       const c = order.customer;
       $('#order-id').textContent = order.id;
       $('#order-email').textContent = c.email;
@@ -644,11 +647,11 @@
         <div class="sum-line sum-line--plain">
           <div><strong>${esc(i.name)}</strong> <span class="muted">× ${i.qty}${i.size ? ` · ${esc(i.size)}` : ''}</span>
             ${i.details?.length ? `<br><span class="muted line__opts">${esc(i.details.join(' · '))}</span>` : ''}</div>
-          <div>${m((i.unit ?? i.price) * i.qty)}</div>
+          <div>${m((i.unit ?? i.price) * i.qty, i.sumDin)}</div>
         </div>`).join('');
-      $('#order-sub').textContent = m(order.subtotal);
+      $('#order-sub').textContent = m(order.subtotal, order.subtotalDin);
       $('#order-ship').textContent = 'Plaća se kuriru';
-      $('#order-total').textContent = m(order.total);
+      $('#order-total').textContent = m(order.total, order.totalDin);
       $('#order-address').innerHTML = [
         `${esc(c.firstName)} ${esc(c.lastName)}`,
         esc(c.address),

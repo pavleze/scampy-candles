@@ -20,7 +20,7 @@
   const DICT = {
     // ----- names of the candles -----
     'Mali meda': 'Little Bear', 'Meda sa srcem': 'Bear with a Heart', 'Lavić': 'Little Lion', 'Bubble': 'Bubble', 'Božur': 'Peony',
-    'Always & Forever srce': 'Always & Forever Heart', 'Dijamant srce': 'Diamond Heart', 'Astronaut': 'Astronaut', 'Pahulja': 'Snowflake', 'Cvetno srce': 'Flower Heart',
+    'Always & Forever srce': 'Always & Forever Heart', 'Dijamant srce': 'Diamond Heart', 'Astronaut': 'Astronaut', 'Pahulja': 'Snowflake', 'Cvetno srce': 'Flower Heart', 'Flame sveća': 'Flame candle',
 
     // ----- navigation, header, footer, cart -----
     'Početna': 'Home', 'Prodavnica': 'Shop', 'O nama': 'About us', 'Kontakt': 'Contact',
@@ -47,6 +47,9 @@
     'Lično preuzimanje ili slanje poštom': 'Personal pickup or delivery by post', 'U Beogradu možete preuzeti lično.': 'In Belgrade you can pick it up in person.',
     'Pokloni za goste': 'Gifts for guests', 'Mali pokloni sa velikim srcem': 'Small gifts with a big heart',
     'Za venčanja, krštenja i rođendane. Boju, miris, pakovanje i posvetu birate Vi.': 'For weddings, christenings and birthdays. You choose the color, scent, packaging and message.',
+    'Veličina': 'Size', 'Mala': 'Small', 'Velika': 'Large', 'Set (mala + velika)': 'Set (small + large)',
+    'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.':
+      'An elegant ivory soy wax candle on a ribbed base. It comes in two sizes, and together they make a lovely set.',
     'Poklon za goste': 'Gift for guests', 'Odaberite': 'Choose', 'Sve sveće': 'All candles',
     'Scampy je počeo u maloj kuhinji, sa jednim loncem voska i jednim vrlo radoznalim psom. Danas svaku sveću i dalje ručno izlivamo, od sojinog voska sa pamučnim fitiljem i mirisima koje smo sami birali.':
       'Scampy started in a small kitchen, with one pot of wax and one very curious dog. Today we still pour every candle by hand, from soy wax with a cotton wick and scents we chose ourselves.',

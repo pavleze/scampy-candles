@@ -104,7 +104,7 @@
     giftBox(12, 'Always & Forever srce', 'heart',      2.50, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),
     giftBox(13, 'Dijamant srce',         'diamond',    2.40, '#c6b4df', ['dijamant-srce-1.jpg']),
     giftBox(14, 'Astronaut',             'astronaut',  2.40, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
-    giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg', 'limun-3.jpg']),
+    giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-4.jpg', 'limun-2.jpg', 'limun-3.jpg']),
     giftBox(16, 'Pahulja',               'snowflake',  2.00, '#cfe3f2', ['pahulja-1.jpg', 'pahulja-2.jpg']),
     giftBox(17, 'Cvetno srce',           'heart',      2.30, '#efc3cb', ['cvetno-srce-1.jpg']),
     // Classic collection. Prices are set in dinars; the customer picks the size, and that sets the price.

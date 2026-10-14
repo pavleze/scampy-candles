@@ -20,7 +20,7 @@
   const DICT = {
     // ----- names of the candles -----
     'Mali meda': 'Little Bear', 'Meda sa srcem': 'Bear with a Heart', 'Lavić': 'Little Lion', 'Bubble': 'Bubble', 'Božur': 'Peony',
-    'Always & Forever srce': 'Always & Forever Heart', 'Dijamant srce': 'Diamond Heart', 'Astronaut': 'Astronaut', 'Pahulja': 'Snowflake', 'Cvetno srce': 'Flower Heart', 'Flame sveća': 'Flame candle', 'Zevs sveća': 'Zeus candle',
+    'Always & Forever srce': 'Always & Forever Heart', 'Dijamant srce': 'Diamond Heart', 'Astronaut': 'Astronaut', 'Pahulja': 'Snowflake', 'Cvetno srce': 'Flower Heart', 'Flame sveća': 'Flame candle', 'Zevs sveća': 'Zeus candle', 'Twist sveća': 'Twist candle',
 
     // ----- navigation, header, footer, cart -----
     'Početna': 'Home', 'Prodavnica': 'Shop', 'O nama': 'About us', 'Kontakt': 'Contact',
@@ -49,6 +49,8 @@
     'Za venčanja, krštenja i rođendane. Boju, miris, pakovanje i posvetu birate Vi.': 'For weddings, christenings and birthdays. You choose the color, scent, packaging and message.',
     'Skulpturalna sveća od sojinog voska u obliku lika Zevsa, sa bogato izvajanom bradom i kovrdžama. Elegantan detalj za policu ili sto.':
       'A sculptural soy wax candle in the shape of Zeus, with a richly carved beard and curls. An elegant touch for a shelf or table.',
+    'Rebrasta sveća od sojinog voska u boji slonovače, sa elegantnim uvrnutim detaljem na sredini. Dolazi u dve veličine, a zajedno čine skladan par.':
+      'A ribbed ivory soy wax candle with an elegant twist in the middle. It comes in two sizes, and together they make a lovely pair.',
     'Veličina': 'Size', 'Mala': 'Small', 'Velika': 'Large', 'Set (mala + velika)': 'Set (small + large)',
     'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.':
       'An elegant ivory soy wax candle on a ribbed base. It comes in two sizes, and together they make a lovely set.',

@@ -76,21 +76,22 @@
   // The "Sve" card on the collections page. Pictures are placeholders until the real ones are added (img: null shows a paw tile).
   const ALL_COLLECTION = { key: 'all', label: 'Sve', img: 'assets/hero/hero1-landscape.jpg' };
 
-  // A Classic collection candle, sold by the piece and priced in dinars: either one price (a number),
-  // or one price per size ({ size: dinars }). The size is stored under the `pack` key, so the same price code as the gift candles applies.
-  const classic = (id, name, color, images, desc, dinars) => {
-    // The shop counts in euros (whole cents); `din` keeps the exact dinar prices, and dinar amounts are added up from them.
-    const toEur = (din) => Math.round(din / RATE * 100) / 100;
+  // A Classic collection candle, sold by the piece: either one price (a number), or one price per size ({ size: price }).
+  // Prices are in dinars, or in euros with `currency` 'EUR'. The size is stored under the `pack` key, so the same price code as the gift candles applies.
+  const classic = (id, name, color, images, desc, prices, currency = 'RSD') => {
+    // The shop counts in euros (whole cents); for dinar prices `din` keeps them exact, and dinar amounts are added up from them.
+    const inDin = currency === 'RSD';
+    const toEur = (v) => (inDin ? Math.round(v / RATE * 100) / 100 : v);
     const base = {
-      id, name, color, desc, din: dinars,
+      id, name, color, desc, ...(inDin ? { din: prices } : {}),
       category: 'classic', family: 'Classic kolekcija', size: '', minQty: 1, defaultQty: 1,
       images: images.map((f) => (f.includes('/') ? f : `assets/products/${f}`)),   // a picture from another folder is given with its path
     };
-    if (typeof dinars === 'number') return { ...base, price: toEur(dinars) };
-    const packPrices = Object.fromEntries(Object.entries(dinars).map(([k, din]) => [k, toEur(din)]));
+    if (typeof prices === 'number') return { ...base, price: toEur(prices) };
+    const packPrices = Object.fromEntries(Object.entries(prices).map(([k, v]) => [k, toEur(v)]));
     return {
       ...base, packPrices, price: Math.min(...Object.values(packPrices)), showDesc: true,
-      options: [{ key: 'pack', label: 'Veličina', type: 'choice', choices: Object.keys(dinars) }],
+      options: [{ key: 'pack', label: 'Veličina', type: 'choice', choices: Object.keys(prices) }],
     };
   };
   const PRODUCTS = [
@@ -113,6 +114,9 @@
     classic(19, 'Zevs sveća', '#efe6d6', ['zevs-1.jpg', 'zevs-2.jpg', 'zevs-3.jpg', 'assets/collections/classic.jpg'],
       'Skulpturalna sveća od sojinog voska u obliku lika Zevsa, sa bogato izvajanom bradom i kovrdžama. Elegantan detalj za policu ili sto.',
       1290),
+    classic(20, 'Twist sveća', '#f3ead8', ['twist-1.jpg', 'twist-2.jpg'],
+      'Rebrasta sveća od sojinog voska u boji slonovače, sa elegantnim uvrnutim detaljem na sredini. Dolazi u dve veličine, a zajedno čine skladan par.',
+      { 'Mala': 5, 'Velika': 8 }, 'EUR'),
   ];
 
   const $ = (s, r = document) => r.querySelector(s);

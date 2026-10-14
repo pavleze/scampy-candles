@@ -84,7 +84,7 @@
     const base = {
       id, name, color, desc, din: dinars,
       category: 'classic', family: 'Classic kolekcija', size: '', minQty: 1, defaultQty: 1,
-      images: images.map((f) => `assets/products/${f}`),
+      images: images.map((f) => (f.includes('/') ? f : `assets/products/${f}`)),   // a picture from another folder is given with its path
     };
     if (typeof dinars === 'number') return { ...base, price: toEur(dinars) };
     const packPrices = Object.fromEntries(Object.entries(dinars).map(([k, din]) => [k, toEur(din)]));
@@ -110,7 +110,7 @@
     classic(18, 'Flame sveća', '#f3ead8', ['flame-1.jpg', 'flame-2.jpg'],
       'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.',
       { 'Mala': 980, 'Velika': 1290, 'Set (mala + velika)': 2200 }),
-    classic(19, 'Zevs sveća', '#efe6d6', ['zevs-1.jpg', 'zevs-2.jpg', 'zevs-3.jpg'],
+    classic(19, 'Zevs sveća', '#efe6d6', ['zevs-1.jpg', 'zevs-2.jpg', 'zevs-3.jpg', 'assets/collections/classic.jpg'],
       'Skulpturalna sveća od sojinog voska u obliku lika Zevsa, sa bogato izvajanom bradom i kovrdžama. Elegantan detalj za policu ili sto.',
       1290),
   ];

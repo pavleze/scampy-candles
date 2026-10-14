@@ -70,12 +70,24 @@
   const CATEGORIES = [
     { key: 'pokloni', label: 'Pokloni za goste', img: 'assets/products/meda-sa-srcem-1.jpg' },
     { key: 'classic',    label: 'Classic kolekcija',   img: 'assets/collections/classic.jpg' },
-    { key: 'sezonska',   label: 'Sezonska kolekcija',  img: null },
+    { key: 'sezonska',   label: 'Sezonska kolekcija',  img: 'assets/collections/sezonska.jpg' },
     { key: 'buketi',     label: 'Buketi',              img: null },
   ];
   // The "Sve" card on the collections page. Pictures are placeholders until the real ones are added (img: null shows a paw tile).
   const ALL_COLLECTION = { key: 'all', label: 'Sve', img: 'assets/hero/hero1-landscape.jpg' };
 
+  // A Classic collection candle: sold by the piece, one price per size (given in dinars).
+  // The size is stored under the `pack` key, so the same price code as the gift candles applies.
+  const classic = (id, name, color, images, desc, dinars) => {
+    // The shop counts in euros (whole cents); `din` keeps the exact dinar prices, and dinar amounts are added up from them.
+    const packPrices = Object.fromEntries(Object.entries(dinars).map(([k, din]) => [k, Math.round(din / RATE * 100) / 100]));
+    return {
+      id, name, color, desc, packPrices, din: dinars, price: Math.min(...Object.values(packPrices)),
+      category: 'classic', family: 'Classic kolekcija', size: '', minQty: 1, defaultQty: 1, showDesc: true,
+      images: images.map((f) => `assets/products/${f}`),
+      options: [{ key: 'pack', label: 'Veličina', type: 'choice', choices: Object.keys(dinars) }],
+    };
+  };
   const PRODUCTS = [
     //            id  name                      shape         box   color      photos
     giftBox(7,  'Mali meda',             'bear',       1.70, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
@@ -89,6 +101,10 @@
     giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg', 'limun-3.jpg']),
     giftBox(16, 'Pahulja',               'snowflake',  2.00, '#cfe3f2', ['pahulja-1.jpg', 'pahulja-2.jpg']),
     giftBox(17, 'Cvetno srce',           'heart',      2.30, '#efc3cb', ['cvetno-srce-1.jpg']),
+    // Classic collection. Prices are set in dinars; the customer picks the size, and that sets the price.
+    classic(18, 'Flame sveća', '#f3ead8', ['flame-1.jpg', 'flame-2.jpg'],
+      'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.',
+      { 'Mala': 980, 'Velika': 1290, 'Set (mala + velika)': 2200 }),
   ];
 
   const $ = (s, r = document) => r.querySelector(s);
@@ -112,11 +128,13 @@
   // ---------- Money ----------
   // Serbian writes 1,87 € and 1.746 RSD; English writes €1.87 and 1,746 RSD.
   const EN = window.SC_LANG === 'en';
-  const money = (eur, cur = state.currency) => {
+  // `exactDin`: the amount in dinars when it is known exactly (candles priced in dinars); otherwise it is converted.
+  const money = (eur, cur = state.currency, exactDin = null) => {
     if (cur === 'EUR') return EN ? `€${eur.toFixed(2)}` : `${eur.toFixed(2).replace('.', ',')} €`;
-    const din = Math.max(0, Math.ceil(eur * RATE - 1e-7));        // dinars round up (and never show -0)
+    const din = exactDin ?? toDin(eur);
     return `${din.toLocaleString(EN ? 'en-US' : 'sr-RS')} RSD`;
   };
+  function toDin(eur) { return Math.max(0, Math.ceil(eur * RATE - 1e-7)); }   // dinars round up (and never show -0)
 
   // Delivery is paid by the customer (to the courier), so it is not part of the shop's totals.
   const shippingFor = () => 0;
@@ -127,7 +145,10 @@
   const basePriceOf = (p, pack) => p.packPrices?.[pack] ?? p.price;
   const tierMult = (p, qty) => (p.tiers || []).reduce((m, t) => (qty >= t.from ? t.mult : m), p.tiers?.[0]?.mult ?? 1);
   // Per-piece price for a product, packaging and total ordered quantity.
-  const unitPrice = (p, qty, pack) => (p.tiers ? round2(basePriceOf(p, pack) * tierMult(p, qty)) : p.price);
+  // Without quantity tiers the price is simply the packaging's (or size's) own price.
+  const unitPrice = (p, qty, pack) => (p.tiers ? round2(basePriceOf(p, pack) * tierMult(p, qty)) : basePriceOf(p, pack));
+  // Exact dinar price per piece for candles priced in dinars, otherwise null.
+  const unitDin = (p, pack) => p.din?.[pack] ?? null;
   // The next cheaper tier, if any (for the "order more" hint).
   const nextTier = (p, qty) => (p.tiers || []).find((t) => t.from > qty) || null;
 
@@ -272,7 +293,7 @@
         <h3 class="card__name"><a href="proizvod.html?id=${p.id}">${p.name}</a></h3>
         <div class="card__row">
           <span class="card__price">
-            <span class="card__amount">${isGift ? '<small class="card__from">od</small> ' : ''}${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price)}${isGift ? ' <small class="card__unit">/ po komadu</small>' : ''}</span>
+            <span class="card__amount">${isGift ? '<small class="card__from">od</small> ' : ''}${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price, undefined, isGift ? unitDin(p, p.options[0].choices[0]) : null)}${isGift ? ' <small class="card__unit">/ po komadu</small>' : ''}</span>
           </span>
           ${isGift
             ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberite</a>`
@@ -300,12 +321,16 @@
     lines.forEach((l) => { perProduct[l.id] = (perProduct[l.id] || 0) + l.qty; });
     const rows = lines.map((l) => {
       const unit = unitPrice(l.p, perProduct[l.id], l.opts?.pack);
-      return { ...l, unit, sum: round2(unit * l.qty) };
+      const uDin = unitDin(l.p, l.opts?.pack);
+      return { ...l, unit, sum: round2(unit * l.qty), unitDin: uDin, sumDin: uDin == null ? null : uDin * l.qty };
     });
     const count = rows.reduce((n, r) => n + r.qty, 0);
     const subtotal = round2(rows.reduce((t, r) => t + r.sum, 0));
     const shipping = shippingFor(subtotal);
-    return { rows, count, subtotal, shipping, total: round2(subtotal + shipping), perProduct };
+    // With a candle priced in dinars in the cart, the dinar totals are added up line by line, so they stay exact.
+    const subtotalDin = rows.some((r) => r.sumDin != null) ? rows.reduce((t, r) => t + (r.sumDin ?? toDin(r.sum)), 0) : null;
+    const totalDin = subtotalDin == null ? null : subtotalDin + toDin(shipping);
+    return { rows, count, subtotal, shipping, total: round2(subtotal + shipping), subtotalDin, totalDin, perProduct };
   }
 
   function addToCart(id, qty = 1, opts = {}) {
@@ -518,11 +543,11 @@
   const itemsEl = $('#drawer-items');
 
   function renderDrawer() {
-    const { rows, count, subtotal } = cartSummary();
+    const { rows, count, subtotal, subtotalDin } = cartSummary();
     const countEl = $('#cart-count');
     countEl.textContent = count;
     countEl.hidden = count === 0;
-    $('#drawer-total').textContent = money(subtotal);
+    $('#drawer-total').textContent = money(subtotal, undefined, subtotalDin);
     $('#checkout').classList.toggle('is-disabled', count === 0);
     $('#checkout').setAttribute('aria-disabled', String(count === 0));
     $('#drawer-note').textContent = count === 0 ? '' : 'Poštarinu plaćate kuriru.';
@@ -530,7 +555,7 @@
     // Don't rebuild the list while the user is typing a quantity.
     if (itemsEl.contains(document.activeElement) && document.activeElement.matches('[data-qty]')) return;
 
-    itemsEl.innerHTML = rows.length ? rows.map(({ p, qty, key, opts, unit, sum }) => {
+    itemsEl.innerHTML = rows.length ? rows.map(({ p, qty, key, opts, unit, sum, unitDin: uDin, sumDin }) => {
       const parts = describeOpts(p, opts);
       return `
       <div class="line" data-key="${esc(key)}">
@@ -538,7 +563,7 @@
         <div class="line__info">
           <a href="proizvod.html?id=${p.id}"><strong>${p.name}</strong></a>
           ${parts.length ? `<span class="line__opts">${esc(parts.join(' · '))}</span>` : ''}
-          <span class="muted">${money(unit)} / kom${p.minQty > 1 ? ` · min. ${p.minQty} kom` : ''}</span>
+          <span class="muted">${money(unit, undefined, uDin)} / kom${p.minQty > 1 ? ` · min. ${p.minQty} kom` : ''}</span>
           <div class="qty">
             <button type="button" data-dec aria-label="Manje">−</button>
             <input type="number" inputmode="numeric" min="${p.minQty || 1}" max="${MAX_QTY}" value="${qty}" data-qty aria-label="Količina">
@@ -546,7 +571,7 @@
           </div>
           <button type="button" class="line__remove" data-remove>Ukloni</button>
         </div>
-        <div class="line__sum">${money(sum)}</div>
+        <div class="line__sum">${money(sum, undefined, sumDin)}</div>
       </div>`;
     }).join('')
       : '<p class="drawer__empty">Korpa je prazna.<br>Dodajte neku sveću 🕯️</p>';
@@ -646,7 +671,7 @@
 
   window.SC = {
     PRODUCTS, CATEGORIES, ALL_COLLECTION, state, $, $$, esc, store,
-    money, shippingFor, unitPrice, nextTier, round2, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
+    money, shippingFor, unitPrice, unitDin, nextTier, round2, candleSVG, productSVG, thumbHTML, packSVG, describeOpts, cardHTML,
     SMALL_ORDER_MARKUP, MAX_QTY, CARD_PACK, PLAIN_PACK, minQtyOf,
     cartSummary, addToCart, setQty, clearCart, openCart, closeCart,
     subscribe, toast,

@@ -76,15 +76,20 @@
   // The "Sve" card on the collections page. Pictures are placeholders until the real ones are added (img: null shows a paw tile).
   const ALL_COLLECTION = { key: 'all', label: 'Sve', img: 'assets/hero/hero1-landscape.jpg' };
 
-  // A Classic collection candle: sold by the piece, one price per size (given in dinars).
-  // The size is stored under the `pack` key, so the same price code as the gift candles applies.
+  // A Classic collection candle, sold by the piece and priced in dinars: either one price (a number),
+  // or one price per size ({ size: dinars }). The size is stored under the `pack` key, so the same price code as the gift candles applies.
   const classic = (id, name, color, images, desc, dinars) => {
     // The shop counts in euros (whole cents); `din` keeps the exact dinar prices, and dinar amounts are added up from them.
-    const packPrices = Object.fromEntries(Object.entries(dinars).map(([k, din]) => [k, Math.round(din / RATE * 100) / 100]));
+    const toEur = (din) => Math.round(din / RATE * 100) / 100;
+    const base = {
+      id, name, color, desc, din: dinars,
+      category: 'classic', family: 'Classic kolekcija', size: '', minQty: 1, defaultQty: 1,
+      images: images.map((f) => (f.includes('/') ? f : `assets/products/${f}`)),   // a picture from another folder is given with its path
+    };
+    if (typeof dinars === 'number') return { ...base, price: toEur(dinars) };
+    const packPrices = Object.fromEntries(Object.entries(dinars).map(([k, din]) => [k, toEur(din)]));
     return {
-      id, name, color, desc, packPrices, din: dinars, price: Math.min(...Object.values(packPrices)),
-      category: 'classic', family: 'Classic kolekcija', size: '', minQty: 1, defaultQty: 1, showDesc: true,
-      images: images.map((f) => `assets/products/${f}`),
+      ...base, packPrices, price: Math.min(...Object.values(packPrices)), showDesc: true,
       options: [{ key: 'pack', label: 'Veličina', type: 'choice', choices: Object.keys(dinars) }],
     };
   };
@@ -105,6 +110,9 @@
     classic(18, 'Flame sveća', '#f3ead8', ['flame-1.jpg', 'flame-2.jpg'],
       'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.',
       { 'Mala': 980, 'Velika': 1290, 'Set (mala + velika)': 2200 }),
+    classic(19, 'Zevs sveća', '#efe6d6', ['zevs-1.jpg', 'zevs-2.jpg', 'zevs-3.jpg', 'assets/collections/classic.jpg'],
+      'Skulpturalna sveća od sojinog voska u obliku lika Zevsa, sa bogato izvajanom bradom i kovrdžama. Elegantan detalj za policu ili sto.',
+      1290),
   ];
 
   const $ = (s, r = document) => r.querySelector(s);
@@ -148,7 +156,7 @@
   // Without quantity tiers the price is simply the packaging's (or size's) own price.
   const unitPrice = (p, qty, pack) => (p.tiers ? round2(basePriceOf(p, pack) * tierMult(p, qty)) : basePriceOf(p, pack));
   // Exact dinar price per piece for candles priced in dinars, otherwise null.
-  const unitDin = (p, pack) => p.din?.[pack] ?? null;
+  const unitDin = (p, pack) => (typeof p.din === 'number' ? p.din : p.din?.[pack] ?? null);
   // The next cheaper tier, if any (for the "order more" hint).
   const nextTier = (p, qty) => (p.tiers || []).find((t) => t.from > qty) || null;
 
@@ -293,7 +301,7 @@
         <h3 class="card__name"><a href="proizvod.html?id=${p.id}">${p.name}</a></h3>
         <div class="card__row">
           <span class="card__price">
-            <span class="card__amount">${isGift ? '<small class="card__from">od</small> ' : ''}${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price, undefined, isGift ? unitDin(p, p.options[0].choices[0]) : null)}${isGift ? ' <small class="card__unit">/ po komadu</small>' : ''}</span>
+            <span class="card__amount">${isGift ? '<small class="card__from">od</small> ' : ''}${money(isGift ? unitPrice(p, p.defaultQty || p.minQty || 1, p.options[0].choices[0]) : p.price, undefined, unitDin(p, isGift ? p.options[0].choices[0] : undefined))}${isGift ? ' <small class="card__unit">/ po komadu</small>' : ''}</span>
           </span>
           ${isGift
             ? `<a class="btn btn--small" href="proizvod.html?id=${p.id}">Odaberite</a>`

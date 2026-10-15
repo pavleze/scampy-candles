@@ -51,6 +51,10 @@
       'A sculptural soy wax candle in the shape of Zeus, with a richly carved beard and curls. An elegant touch for a shelf or table.',
     'Rebrasta sveća od sojinog voska u boji slonovače, sa elegantnim uvrnutim detaljem na sredini. Dolazi u dve veličine, a zajedno čine skladan par.':
       'A ribbed ivory soy wax candle with an elegant twist in the middle. It comes in two sizes, and together they make a lovely pair.',
+    'Za koju priliku birate?': 'What is the occasion?', 'Šta tražite?': 'What are you looking for?',
+    'Izaberite poklon': 'Choose a gift', 'Sveće za vaš dom': 'Candles for your home', 'Pogledajte sveće': 'See the candles',
+    'Za venčanja, krštenja i rođendane, sa vašom posvetom. Od 10 komada.': 'For weddings, christenings and birthdays, with your own message. From 10 pieces.',
+    'Skulpturalne sveće za policu, sto ili poklon nekom dragom. Od jednog komada.': 'Sculptural candles for a shelf or table, or as a gift for someone dear. From one piece.',
     'Veličina': 'Size', 'Mala': 'Small', 'Velika': 'Large', 'Set (mala + velika)': 'Set (small + large)',
     'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.':
       'An elegant ivory soy wax candle on a ribbed base. It comes in two sizes, and together they make a lovely set.',

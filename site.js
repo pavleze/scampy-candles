@@ -76,34 +76,35 @@
   // The "Sve" card on the collections page. Pictures are placeholders until the real ones are added (img: null shows a paw tile).
   const ALL_COLLECTION = { key: 'all', label: 'Sve', img: 'assets/hero/hero1-landscape.jpg' };
 
-  // A Classic collection candle, sold by the piece and priced in dinars: either one price (a number),
-  // or one price per size ({ size: dinars }). The size is stored under the `pack` key, so the same price code as the gift candles applies.
-  const classic = (id, name, color, images, desc, dinars) => {
-    // The shop counts in euros (whole cents); `din` keeps the exact dinar prices, and dinar amounts are added up from them.
-    const toEur = (din) => Math.round(din / RATE * 100) / 100;
+  // A Classic collection candle, sold by the piece: either one price (a number), or one price per size ({ size: price }).
+  // Prices are in dinars, or in euros with `currency` 'EUR'. The size is stored under the `pack` key, so the same price code as the gift candles applies.
+  const classic = (id, name, color, images, desc, prices, currency = 'RSD') => {
+    // The shop counts in euros (whole cents); for dinar prices `din` keeps them exact, and dinar amounts are added up from them.
+    const inDin = currency === 'RSD';
+    const toEur = (v) => (inDin ? Math.round(v / RATE * 100) / 100 : v);
     const base = {
-      id, name, color, desc, din: dinars,
+      id, name, color, desc, ...(inDin ? { din: prices } : {}),
       category: 'classic', family: 'Classic kolekcija', size: '', minQty: 1, defaultQty: 1,
       images: images.map((f) => (f.includes('/') ? f : `assets/products/${f}`)),   // a picture from another folder is given with its path
     };
-    if (typeof dinars === 'number') return { ...base, price: toEur(dinars) };
-    const packPrices = Object.fromEntries(Object.entries(dinars).map(([k, din]) => [k, toEur(din)]));
+    if (typeof prices === 'number') return { ...base, price: toEur(prices) };
+    const packPrices = Object.fromEntries(Object.entries(prices).map(([k, v]) => [k, toEur(v)]));
     return {
       ...base, packPrices, price: Math.min(...Object.values(packPrices)), showDesc: true,
-      options: [{ key: 'pack', label: 'Veličina', type: 'choice', choices: Object.keys(dinars) }],
+      options: [{ key: 'pack', label: 'Veličina', type: 'choice', choices: Object.keys(prices) }],
     };
   };
   const PRODUCTS = [
     //            id  name                      shape         box   color      photos
     giftBox(7,  'Mali meda',             'bear',       1.70, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
     giftBox(8,  'Meda sa srcem',         'bear-heart', 2.50, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg', 'meda-sa-srcem-3.jpg'], { tiers: TIERS_FULL_40, bulkMin: 40 }),   // base tier from 40 pieces
-    giftBox(9,  'Lavić',                 'lion',       1.70, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
+    giftBox(9,  'Lavić',                 'lion',       1.70, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg', 'lavic-4.jpg']),
     giftBox(10, 'Bubble',                'bubble',     2.00, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
     giftBox(11, 'Božur',                 'peony',      2.40, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg']),
     giftBox(12, 'Always & Forever srce', 'heart',      2.50, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),
     giftBox(13, 'Dijamant srce',         'diamond',    2.40, '#c6b4df', ['dijamant-srce-1.jpg']),
     giftBox(14, 'Astronaut',             'astronaut',  2.40, '#a9c4e4', ['astronaut-1.jpg', 'astronaut-2.jpg']),
-    giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-2.jpg', 'limun-3.jpg']),
+    giftBox(15, 'Limun',                 'lemon',      2.50, '#f1dc8d', ['limun-1.jpg', 'limun-4.jpg', 'limun-2.jpg', 'limun-3.jpg']),
     giftBox(16, 'Pahulja',               'snowflake',  2.00, '#cfe3f2', ['pahulja-1.jpg', 'pahulja-2.jpg']),
     giftBox(17, 'Cvetno srce',           'heart',      2.30, '#efc3cb', ['cvetno-srce-1.jpg']),
     // Classic collection. Prices are set in dinars; the customer picks the size, and that sets the price.
@@ -113,6 +114,9 @@
     classic(19, 'Zevs sveća', '#efe6d6', ['zevs-1.jpg', 'zevs-2.jpg', 'zevs-3.jpg', 'assets/collections/classic.jpg'],
       'Skulpturalna sveća od sojinog voska u obliku lika Zevsa, sa bogato izvajanom bradom i kovrdžama. Elegantan detalj za policu ili sto.',
       1290),
+    classic(20, 'Twist sveća', '#f3ead8', ['twist-1.jpg', 'twist-2.jpg'],
+      'Rebrasta sveća od sojinog voska u boji slonovače, sa elegantnim uvrnutim detaljem na sredini. Dolazi u dve veličine, a zajedno čine skladan par.',
+      { 'Mala': 5, 'Velika': 8 }, 'EUR'),
   ];
 
   const $ = (s, r = document) => r.querySelector(s);

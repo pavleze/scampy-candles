@@ -1616,3 +1616,23 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
   .path { aspect-ratio: 5 / 4; }
   .path__text { font-size: .92rem; }
 }
+
+/* Home: the season (see SEASONS in pages.js) — a big picture, the season's text and a countdown */
+.season__grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.season__art { position: relative; aspect-ratio: 5 / 4; border-radius: 6px; overflow: hidden; }
+.season__art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.season__text .section__title { margin-bottom: 14px; }
+.season__lead { color: #4b443d; font-size: 1.1rem; max-width: 30em; }
+.season__count { display: flex; align-items: baseline; gap: 12px; margin-top: 26px; padding: 16px 0; border-block: 1px solid var(--line); }
+.season__count strong { font-family: var(--display); font-size: clamp(2.6rem, 5vw, 3.6rem); font-weight: 500; line-height: 1; color: var(--gold-deep); }
+.season__count .season__today { font-size: clamp(1.8rem, 3.4vw, 2.4rem); }
+.season__count span { font-size: .85rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.season__note { margin-top: 10px; font-size: .95rem; color: var(--muted); }
+.season__soon { margin: 22px 0 18px; color: #4b443d; }
+.grid--season { grid-template-columns: repeat(3, 1fr); margin: 22px 0; }
+@media (max-width: 820px) {
+  .season__grid { grid-template-columns: 1fr; }
+  .season__text { text-align: center; }
+  .season__lead { margin-inline: auto; }
+  .season__count { justify-content: center; }
+}

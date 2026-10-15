@@ -1636,3 +1636,4 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
   .season__lead { margin-inline: auto; }
   .season__count { justify-content: center; }
 }
+.paths__all { margin-top: 32px; }

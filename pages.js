@@ -166,8 +166,7 @@
         else ready();
       })();
 
-      // the first three collections are featured on the home page (change the number to show more or fewer)
-      $('#home-collections').innerHTML = window.SC.CATEGORIES.slice(0, 3).map(collectionCard).join('');
+      renderSeason();
       bindNewsletter();
     },
 
@@ -660,6 +659,78 @@
       ].join('<br>');
     },
   };
+
+  // ---------- Season on the home page ----------
+  // The season is picked by today's date: `from` and `to` are month-day ('MM-DD'), both included.
+  // `countdown`: the upcoming days to count down to; the nearest one still ahead is shown, and `today` on the day itself.
+  // Pictures and texts can be changed here; candles of the "sezonska" collection are shown next to the picture.
+  // To preview a season: index.html?sezona=praznici
+  const SEASONS = [
+    { key: 'jesen', from: '09-01', to: '11-30', img: 'assets/collections/sezonska.jpg',
+      eyebrow: 'Jesen', title: 'Miris jeseni',
+      text: 'Bundeve, šišarke i sovice za duge večeri, tople šolje i dom koji miriše na cimet.',
+      countdown: [{ md: '01-01', label: 'do Nove godine', today: 'Srećna Nova godina!' }] },
+    { key: 'praznici', from: '12-01', to: '01-07', img: 'assets/products/pahulja-1.jpg',
+      eyebrow: 'Praznična sezona', title: 'Praznici su blizu',
+      text: 'Sveće koje greju dom i pokloni koji se pamte, za Novu godinu, Božić i sve vaše drage.',
+      countdown: [{ md: '01-01', label: 'do Nove godine', today: 'Srećna Nova godina!' }, { md: '01-07', label: 'do Božića', today: 'Srećan Božić!' }] },
+    { key: 'ljubav', from: '01-08', to: '02-14', img: 'assets/products/always-forever-srce-1.jpg',
+      eyebrow: 'Dan zaljubljenih', title: 'Za nekog posebnog',
+      text: 'Srca, medići i nežne boje, mali znak pažnje koji kaže mnogo.',
+      countdown: [{ md: '02-14', label: 'do Dana zaljubljenih', today: 'Srećan Dan zaljubljenih!' }] },
+    { key: 'prolece', from: '02-15', to: '05-31', img: 'assets/products/bozur-1.jpg',
+      eyebrow: 'Proleće', title: 'Sve cveta',
+      text: 'Božuri, cvetna srca i buketi koji nikada ne venu, za proleće u vašem domu.',
+      countdown: [] },
+    { key: 'leto', from: '06-01', to: '08-31', img: 'assets/products/limun-4.jpg',
+      eyebrow: 'Leto', title: 'Ukus leta',
+      text: 'Limunovi, svetle boje i sveže note, za duge letnje večeri.',
+      countdown: [] },
+  ];
+
+  const seasonFor = (date) => {
+    const md = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return SEASONS.find((x) => (x.from <= x.to ? md >= x.from && md <= x.to : md >= x.from || md <= x.to)) || SEASONS[0];   // a season can run over New Year
+  };
+  // Whole days from today to the next `MM-DD` (today itself counts as 0).
+  const daysUntil = (md, today) => {
+    const [m, d] = md.split('-').map(Number);
+    const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    let target = new Date(start.getFullYear(), m - 1, d);
+    if (target < start) target = new Date(start.getFullYear() + 1, m - 1, d);
+    return Math.round((target - start) / 86400000);
+  };
+
+  function renderSeason() {
+    const box = $('#season');
+    if (!box) return;
+    const today = new Date();
+    const season = SEASONS.find((x) => x.key === params.get('sezona')) || seasonFor(today);
+    const next = season.countdown
+      .map((c) => ({ ...c, days: daysUntil(c.md, today) }))
+      .sort((a, b) => a.days - b.days)[0];
+    const items = PRODUCTS.filter((x) => x.category === 'sezonska').slice(0, 3);
+    box.innerHTML = `
+      <div class="season__grid">
+        <div class="season__art"><img src="${esc(season.img)}" alt="" loading="lazy"></div>
+        <div class="season__text">
+          <p class="eyebrow">${esc(season.eyebrow)}</p>
+          <h2 class="section__title">${esc(season.title)}</h2>
+          <p class="season__lead">${esc(season.text)}</p>
+          ${next ? `
+            <div class="season__count">${next.days === 0
+              ? `<strong class="season__today">${esc(next.today)}</strong>`
+              : `<strong>${next.days}</strong><span>${next.days % 10 === 1 && next.days % 100 !== 11 ? 'dan' : 'dana'} ${esc(next.label)}</span>`}
+            </div>
+            <p class="season__note">Poručite na vreme, jer svaku sveću pravimo ručno.</p>` : ''}
+          ${items.length
+            ? `<div class="grid grid--season">${items.map(cardHTML).join('')}</div>
+               <p><a class="btn btn--solid" href="prodavnica.html?c=sezonska">Pogledajte sezonsku kolekciju</a></p>`
+            : `<p class="season__soon">Nove sezonske sveće stižu uskoro. Za porudžbine i pitanja pišite nam.</p>
+               <p><a class="btn btn--solid" href="kontakt.html">Pišite nam</a></p>`}
+        </div>
+      </div>`;
+  }
 
   function bindNewsletter() {
     const f = $('#newsletter');

@@ -51,10 +51,27 @@
       'A sculptural soy wax candle in the shape of Zeus, with a richly carved beard and curls. An elegant touch for a shelf or table.',
     'Rebrasta sveća od sojinog voska u boji slonovače, sa elegantnim uvrnutim detaljem na sredini. Dolazi u dve veličine, a zajedno čine skladan par.':
       'A ribbed ivory soy wax candle with an elegant twist in the middle. It comes in two sizes, and together they make a lovely pair.',
-    'Za koju priliku birate?': 'What is the occasion?', 'Šta tražite?': 'What are you looking for?',
+    'Pronađite nešto posebno': 'Find something special', 'Za koju priliku birate?': 'What is the occasion?',
     'Izaberite poklon': 'Choose a gift', 'Sveće za vaš dom': 'Candles for your home', 'Pogledajte sveće': 'See the candles',
-    'Za venčanja, krštenja i rođendane, sa vašom posvetom. 10+ oblika.': 'For weddings, christenings and birthdays, with your own message. 10+ shapes.',
-    'Skulpturalne sveće za policu, sto ili poklon nekom dragom. Pojedinačni komadi i setovi.': 'Sculptural candles for a shelf or table, or as a gift for someone dear. Single pieces and sets.',
+    'Za venčanja, krštenja i rođendane, sa vašom posvetom.': 'For weddings, christenings and birthdays, with your own message.', '10+ oblika.': '10+ shapes.',
+    'Skulpturalne sveće za policu, sto ili poklon nekom dragom.': 'Sculptural candles for a shelf or table, or as a gift for someone dear.', 'Pojedinačni komadi i setovi.': 'Single pieces and sets.',
+    'Jesen': 'Autumn', 'Miris jeseni': 'The scent of autumn',
+    'Bundeve, šišarke i sovice za duge večeri, tople šolje i dom koji miriše na cimet.': 'Pumpkins, pine cones and little owls for long evenings, warm mugs and a home that smells of cinnamon.',
+    'Praznična sezona': 'Festive season', 'Praznici su blizu': 'The holidays are near',
+    'Sveće koje greju dom i pokloni koji se pamte, za Novu godinu, Božić i sve vaše drage.': 'Candles that warm the home and gifts to remember, for New Year, Christmas and everyone dear to you.',
+    'Dan zaljubljenih': "Valentine's Day", 'Za nekog posebnog': 'For someone special',
+    'Srca, medići i nežne boje, mali znak pažnje koji kaže mnogo.': 'Hearts, teddy bears and soft colours, a small gesture that says a lot.',
+    'Proleće': 'Spring', 'Sve cveta': 'Everything is blooming',
+    'Božuri, cvetna srca i buketi koji nikada ne venu, za proleće u vašem domu.': 'Peonies, flower hearts and bouquets that never wilt, for spring in your home.',
+    'Leto': 'Summer', 'Ukus leta': 'A taste of summer',
+    'Limunovi, svetle boje i sveže note, za duge letnje večeri.': 'Lemons, bright colours and fresh notes, for long summer evenings.',
+    'Poručite na vreme, jer svaku sveću pravimo ručno.': 'Order in time, as we make every candle by hand.',
+    'Nove sezonske sveće stižu uskoro. Za porudžbine i pitanja pišite nam.': 'New seasonal candles are coming soon. Write to us with orders and questions.',
+    "dana do Nove godine": "days until New Year", "dan do Nove godine": "day until New Year",
+    "dana do Božića": "days until Christmas", "dan do Božića": "day until Christmas",
+    "dana do Dana zaljubljenih": "days until Valentine's Day", "dan do Dana zaljubljenih": "day until Valentine's Day",
+    'Srećna Nova godina!': 'Happy New Year!', 'Srećan Božić!': 'Merry Christmas!', 'Srećan Dan zaljubljenih!': "Happy Valentine's Day!",
+    'Pišite nam': 'Write to us', 'Pogledajte sezonsku kolekciju': 'See the seasonal collection',
     'Veličina': 'Size', 'Mala': 'Small', 'Velika': 'Large', 'Set (mala + velika)': 'Set (small + large)',
     'Elegantna sveća od sojinog voska u boji slonovače, sa rebrastim postoljem. Dolazi u dve veličine, a zajedno čine skladan set.':
       'An elegant ivory soy wax candle on a ribbed base. It comes in two sizes, and together they make a lovely set.',
@@ -94,8 +111,8 @@
       'Scampy Candles began quite spontaneously, in a small dining room, out of a wish to make something with our own hands.',
     'Nas dvoje smo po struci softverski inženjeri, ali smo oduvek imali i kreativnu stranu koja je tražila svoj prostor. Iako je svet tehnologije naš svakodnevni posao, Scampy je postao mnogo više od hobija – naš mali svet u kome ideje pretvaramo u nešto opipljivo.':
       'We are both software engineers by profession, but we have always had a creative side looking for its own space. Technology is our everyday job, yet Scampy has become much more than a hobby – our little world where ideas turn into something you can hold.',
-    'Sve je počelo jednim loncem voska, prvim cvetnim svećama i idejom da napravimo bukete koji nikada ne venu. A sve to uz budno oko našeg psa Scampyja (Švrće), po kome je naš mali brend i dobio ime.':
-      'It all started with one pot of wax, our first flower candles and the idea of making bouquets that never wilt. All under the watchful eye of our dog Scampy (Švrća), who gave our small brand its name.',
+    'Sve je počelo jednim loncem voska, prvim cvetnim svećama i idejom da napravimo bukete koji nikada ne venu. A sve to uz budno oko našeg psa, po kome je naš mali brend i dobio ime.':
+      'It all started with one pot of wax, our first flower candles and the idea of making bouquets that never wilt. All under the watchful eye of our dog, who gave our small brand its name.',
     'Od prvih buketa za naše najbliže stigli smo do desetina rođendana, krštenja i drugih posebnih trenutaka čiji smo danas mali deo.':
       'From the first bouquets for our loved ones, we have come to dozens of birthdays, christenings and other special moments we are now a small part of.',
     'Iako je Scampy porastao, trpezariju zamenila naša radionica, a prve eksperimente pažljivo osmišljen proces izrade, neke stvari se nisu promenile.':

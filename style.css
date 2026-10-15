@@ -1606,7 +1606,7 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
 .path:hover img { transform: scale(1.04); }
 .path::after { content: ""; position: absolute; inset: 0; background: rgba(28, 19, 12, .5); transition: background .4s var(--ease); }   /* the same veil as the collection cards */
 .path:hover::after { background: rgba(28, 19, 12, .58); }
-.path__body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
+.path__body { position: absolute; inset: 0; z-index: 1; padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }   /* centred, like the collection cards */
 .path__name { font-family: var(--display); font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.1; }
 .path__text { max-width: 26em; font-size: 1rem; opacity: .95; }
 .path__btn { margin-top: 6px; padding: 11px 22px; border: 1px solid #fff; font-size: .82rem; letter-spacing: .18em; text-transform: uppercase; text-shadow: none; transition: background .3s, color .3s; }

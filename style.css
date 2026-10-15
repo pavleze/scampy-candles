@@ -424,7 +424,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   .card__row { flex-direction: column; align-items: flex-start; }
   .features { grid-template-columns: repeat(2, 1fr); }   /* phones: a 2 × 2 grid */
   .features > div { padding: 22px 12px; }
-  /* dividers: thin gold lines that fade out towards their ends, with a small diamond where they cross */
+  /* dividers: thin gold lines that fade out towards their ends, with a small circle where they cross */
   .features { position: relative; grid-auto-rows: 1fr; }   /* equal rows, so the lines cross between them */
   .features::before, .features::after { content: ""; position: absolute; pointer-events: none; }
   .features::before {
@@ -434,8 +434,8 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
       linear-gradient(to right, transparent, rgba(194, 166, 123, .55) 25%, rgba(194, 166, 123, .55) 75%, transparent) center / calc(100% - 28px) 1px no-repeat;
   }
   .features::after {
-    left: 50%; top: 50%; width: 7px; height: 7px;
-    transform: translate(-50%, -50%) rotate(45deg);
+    left: 50%; top: 50%; width: 9px; height: 9px; border-radius: 50%;
+    transform: translate(-50%, -50%);
     background: var(--cream); border: 1px solid rgba(194, 166, 123, .8);
   }
   .features strong { font-size: .95rem; letter-spacing: .04em; line-height: 1.3; }

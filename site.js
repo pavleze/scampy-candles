@@ -98,7 +98,7 @@
     //            id  name                      shape         box   color      photos
     giftBox(7,  'Mali meda',             'bear',       1.70, '#eadfc8', ['mali-meda-1.jpg', 'mali-meda-2.jpg', 'mali-meda-3.jpg']),
     giftBox(8,  'Meda sa srcem',         'bear-heart', 2.50, '#efc3cb', ['meda-sa-srcem-1.jpg', 'meda-sa-srcem-2.jpg', 'meda-sa-srcem-3.jpg'], { tiers: TIERS_FULL_40, bulkMin: 40 }),   // base tier from 40 pieces
-    giftBox(9,  'Lavić',                 'lion',       1.70, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg']),
+    giftBox(9,  'Lavić',                 'lion',       1.70, '#f1dc8d', ['lavic-1.jpg', 'lavic-2.jpg', 'lavic-3.jpg', 'lavic-4.jpg']),
     giftBox(10, 'Bubble',                'bubble',     2.00, '#a9c4e4', ['bubble-1.jpg', 'bubble-2.jpg']),
     giftBox(11, 'Božur',                 'peony',      2.40, '#efc3cb', ['bozur-1.jpg', 'bozur-2.jpg', 'bozur-3.jpg']),
     giftBox(12, 'Always & Forever srce', 'heart',      2.50, '#c8444f', ['always-forever-srce-1.jpg', 'always-forever-srce-2.jpg']),

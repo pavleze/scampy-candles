@@ -1598,3 +1598,20 @@ html.type-intro--typing .hero__title { position: relative; white-space: nowrap; 
 .footer .footer__brand { max-width: var(--maxw); margin: 0 auto 6px; font-family: inherit; font-size: 1rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: #fff; }
 @media (min-width: 961px) { .footer__grid { grid-template-columns: repeat(3, 1fr); } }   /* narrower screens keep two columns */
 .footer .footer__motto { max-width: var(--maxw); margin: 0 auto 40px; padding-bottom: 32px; border-bottom: 1px solid #332e27; font-style: italic; font-size: 1rem; letter-spacing: .03em; color: var(--gold); }
+
+/* Home: "Šta tražite?" — two big photo cards, gifts for guests or candles for the home */
+.paths__grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.path { position: relative; display: block; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; color: #fff; }
+.path img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); transition: transform .7s var(--ease); }
+.path:hover img { transform: scale(1.04); }
+.path::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(28, 19, 12, .82), rgba(28, 19, 12, .45) 45%, rgba(28, 19, 12, .05) 75%); }
+.path__body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
+.path__name { font-family: var(--display); font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.1; }
+.path__text { max-width: 26em; font-size: 1rem; opacity: .95; }
+.path__btn { margin-top: 6px; padding: 11px 22px; border: 1px solid #fff; font-size: .82rem; letter-spacing: .18em; text-transform: uppercase; text-shadow: none; transition: background .3s, color .3s; }
+.path:hover .path__btn { background: #fff; color: var(--ink); }
+@media (max-width: 640px) {
+  .paths__grid { grid-template-columns: 1fr; gap: 14px; }
+  .path { aspect-ratio: 5 / 4; }
+  .path__text { font-size: .92rem; }
+}

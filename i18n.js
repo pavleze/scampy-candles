@@ -111,8 +111,8 @@
       'Scampy Candles began quite spontaneously, in a small dining room, out of a wish to make something with our own hands.',
     'Nas dvoje smo po struci softverski inženjeri, ali smo oduvek imali i kreativnu stranu koja je tražila svoj prostor. Iako je svet tehnologije naš svakodnevni posao, Scampy je postao mnogo više od hobija – naš mali svet u kome ideje pretvaramo u nešto opipljivo.':
       'We are both software engineers by profession, but we have always had a creative side looking for its own space. Technology is our everyday job, yet Scampy has become much more than a hobby – our little world where ideas turn into something you can hold.',
-    'Sve je počelo jednim loncem voska, prvim cvetnim svećama i idejom da napravimo bukete koji nikada ne venu. A sve to uz budno oko našeg psa Scampyja (Švrće), po kome je naš mali brend i dobio ime.':
-      'It all started with one pot of wax, our first flower candles and the idea of making bouquets that never wilt. All under the watchful eye of our dog Scampy (Švrća), who gave our small brand its name.',
+    'Sve je počelo jednim loncem voska, prvim cvetnim svećama i idejom da napravimo bukete koji nikada ne venu. A sve to uz budno oko našeg psa, po kome je naš mali brend i dobio ime.':
+      'It all started with one pot of wax, our first flower candles and the idea of making bouquets that never wilt. All under the watchful eye of our dog, who gave our small brand its name.',
     'Od prvih buketa za naše najbliže stigli smo do desetina rođendana, krštenja i drugih posebnih trenutaka čiji smo danas mali deo.':
       'From the first bouquets for our loved ones, we have come to dozens of birthdays, christenings and other special moments we are now a small part of.',
     'Iako je Scampy porastao, trpezariju zamenila naša radionica, a prve eksperimente pažljivo osmišljen proces izrade, neke stvari se nisu promenile.':

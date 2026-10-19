@@ -46,7 +46,7 @@
 
       // Hero pictures: change by themselves every HERO_SECONDS seconds (the ring in style.css uses the same number), or with the dots
       (() => {
-        const HERO_SECONDS = 6;
+        const HERO_SECONDS = 4.5;
         const slides = $$('.hero-bg span');
         const dotsBox = $('#hero-dots');
         if (slides.length < 2 || !dotsBox) return;
@@ -71,7 +71,7 @@
           const d = e.target.closest('.hero-dot');
           if (!d) return;
           show(Number(d.dataset.i));
-          start();                                   // after a manual change the 10 seconds begin again
+          start();                                   // after a manual change the countdown begins again
         });
         $('.hero-bg').classList.add('is-ready');
         show(0);
